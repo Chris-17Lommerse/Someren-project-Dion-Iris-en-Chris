@@ -1,0 +1,3 @@
+Taakverdeling:
+Chris: Totaliteit in ERD verwerkt inclusief in geschreven tekst. Daarbij heb ik een gedeelte van de attributenlijst gemaakt.
+Dion: 
