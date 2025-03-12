@@ -1,8 +1,17 @@
+DROP TABLE DEELNEMER;
+DROP TABLE BEGELEIDER;
+DROP TABLE ACTIVITEIT;
+DROP TABLE BESTELLING;
+DROP TABLE DRANKJE;
+DROP TABLE DOCENT;
+DROP TABLE STUDENT;
+DROP TABLE SLAAPKAMER;
+
 --Create tables
 
 CREATE TABLE SLAAPKAMER(
-	kamernr char(2) NOT NULL PRIMARY KEY,
-	aantal_slaapkamers int NOT NULL,
+	kamernr char(5) NOT NULL PRIMARY KEY,
+	aantal_slaapplekken int NOT NULL,
 	type_kamer bit NOT NULL
 );
 
@@ -12,7 +21,7 @@ CREATE TABLE STUDENT(
 	achternaam varchar(25) NOT NULL,
 	telefoonnr varchar(14) NOT NULL,
 	klas varchar(14) NOT NULL,
-	kamernr char(2) NOT NULL FOREIGN KEY REFERENCES SLAAPKAMER(kamernr)
+	kamernr char(5) NOT NULL FOREIGN KEY REFERENCES SLAAPKAMER(kamernr)
 );
 
 CREATE TABLE DOCENT(
@@ -21,7 +30,7 @@ CREATE TABLE DOCENT(
 	achternaam varchar(25) NOT NULL,
 	telefoonnr varchar(14) NOT NULL,
 	leeftijd int NOT NULL,
-	kamernr char(2) NOT NULL FOREIGN KEY REFERENCES SLAAPKAMER(kamernr)
+	kamernr char(5) NOT NULL FOREIGN KEY REFERENCES SLAAPKAMER(kamernr)
 );
 
 CREATE TABLE DRANKJE(

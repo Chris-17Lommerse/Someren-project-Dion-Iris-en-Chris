@@ -36,7 +36,20 @@ namespace Someren_Applicatie.Repositories.Students
 
         public void Delete(Student student)
         {
-            throw new NotImplementedException();
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = "DELETE FROM dbo.STUDENT WHERE studentennr = @studentnr;";
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("@studentnr", student.StudentNr);
+
+                command.Connection.Open();
+                int nRowsAffected = command.ExecuteNonQuery();
+                if (nRowsAffected == 0)
+                {
+                    throw new Exception("Geen studenten gedelete");
+                }
+            }
         }
 
         public List<Student> GetAll()
@@ -88,7 +101,26 @@ namespace Someren_Applicatie.Repositories.Students
 
         public void Update(Student student)
         {
-            throw new NotImplementedException();
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = "UPDATE dbo.STUDENT SET voornaam = @voornaam, achternaam = @achternaam, telefoonnr = @telefoonnr, klas = @klas, kamernr = @kamernr " +
+                                "WHERE studentennr = @studentennr";
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("@studentennr", student.Voornaam);
+                command.Parameters.AddWithValue("@voornaam", student.Voornaam);
+                command.Parameters.AddWithValue("@achternaam", student.Achternaam);
+                command.Parameters.AddWithValue("@telefoonnr", student.TelefoonNr);
+                command.Parameters.AddWithValue("@klas", student.Klas);
+                command.Parameters.AddWithValue("@kamernr", student.KamerNr);
+
+                command.Connection.Open();
+                int nRowsAffected = command.ExecuteNonQuery();
+                if (nRowsAffected == 0)
+                {
+                    throw new Exception("No records updated.");
+                }
+            }
         }
 
         private Student ReadStudent(SqlDataReader reader)
