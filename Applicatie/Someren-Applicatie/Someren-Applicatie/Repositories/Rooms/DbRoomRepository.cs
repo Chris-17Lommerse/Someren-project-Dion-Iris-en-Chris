@@ -30,7 +30,20 @@ namespace Someren_Applicatie.Repositories.Rooms
         }
         public void Delete(Room room)
         {
-            throw new NotImplementedException();
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = $"DELETE FROM ROOM WHERE kamernr = @kamernr";
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("@kamernr", room.KamerNummer);
+
+                command.Connection.Open();
+                int nrOfAffectedRows = command.ExecuteNonQuery();
+                if (nrOfAffectedRows == 0)
+                {
+                    throw new Exception("No records deleted");
+                }
+            }
         }
 
         public List<Room> GetAll()
@@ -89,7 +102,23 @@ namespace Someren_Applicatie.Repositories.Rooms
 
         public void Update(Room room)
         {
-            throw new NotImplementedException();
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = "UPDATE ROOM SET kamernr = @kamernr, aantal_slaapplekken = @aantal_slaaplekken, " +
+                          "type_kamer = @type_kamer WHERE kamernr = @kamernr";
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("@kamernr", room.KamerNummer);
+                command.Parameters.AddWithValue("@aantal_slaapplekken", room.Aantal_Slaaplekken);
+                command.Parameters.AddWithValue("@type_kamer", room.TypeKamer);
+
+                command.Connection.Open();
+                int nrOfAffectedRows = command.ExecuteNonQuery();
+                if (nrOfAffectedRows == 0)
+                {
+                    throw new Exception("No records updated");
+                }
+            }
         }
     }
 }
