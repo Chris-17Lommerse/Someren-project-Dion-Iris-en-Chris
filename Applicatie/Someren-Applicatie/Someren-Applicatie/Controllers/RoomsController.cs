@@ -28,7 +28,7 @@ namespace Someren_Applicatie.Controllers
 
         // POST: RoomsController/Create
         [HttpPost]
-        public ActionResult Create(Room room)
+        public IActionResult Create(Room room)
         {
             try
             {
@@ -47,7 +47,7 @@ namespace Someren_Applicatie.Controllers
 
         // GET: UsersController/Edit/5
         [HttpGet]
-        public ActionResult Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
@@ -55,12 +55,12 @@ namespace Someren_Applicatie.Controllers
             }
 
             // get user via repository
-            Room? user = _roomsRepository.GetById((int)id);
-            return View(user);
+            Room? room = _roomsRepository.GetById((int)id);
+            return View(room);
         }
         [HttpPost]
         // POST: UsersController/Edit
-        public ActionResult Edit(Room room)
+        public IActionResult Edit(Room room)
         {
             try
             {
@@ -77,7 +77,7 @@ namespace Someren_Applicatie.Controllers
             }
         }
         [HttpGet]
-        public ActionResult Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
@@ -90,7 +90,7 @@ namespace Someren_Applicatie.Controllers
         }
         [HttpPost]
         // POST: UsersController/Delete
-        public ActionResult Delete(Room room)
+        public IActionResult Delete(Room room)
         {
             try
             {

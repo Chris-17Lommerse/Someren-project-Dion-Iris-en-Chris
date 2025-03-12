@@ -22,5 +22,22 @@ namespace Someren_Applicatie.Controllers
 
             
         }
+        // GET: ActivitiesController/Create
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpGet]
+        public IActionResult Update()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Delete()
+        {
+            return View();
+        }
     }
 }

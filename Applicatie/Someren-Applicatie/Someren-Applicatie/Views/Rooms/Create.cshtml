@@ -1,12 +1,9 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-    @model Someren_Applicatie.Models.Room
+﻿@model Someren_Applicatie.Models.Room
 @{
     ViewData["Title"] = "Create Room";
 }
 
-<h4>New Room</h4>
+<h4>Nieuwe Slaapkamer</h4>
 <form action="/Rooms/Create" method="post">
     <div class="form-group py-2">
         <label for="kamerNr">Kamernummer:</label>
@@ -22,7 +19,7 @@
     </div>
 
     <button type="submit" class="btn btn-primary">Add</button>
-    </form>
+</form>
 
-    <a href="/Rooms/Index">Back to List</a>
+<a href="/Rooms/Index">Ga terug naar lijst met slaapkamers</a>
 

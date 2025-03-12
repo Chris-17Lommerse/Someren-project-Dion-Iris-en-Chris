@@ -12,7 +12,7 @@
 <div class="text-center">
     <h1 class="display-4">Activities</h1>
     <p>All Activities are displayed here.</p>
-
+    <a href="/Activities/Create">Create new</a>
 </div>
 
 <table class="table table-striped">
@@ -32,7 +32,10 @@
                     <td>@activiteit.Activiteitid</td>
                     <td>@activiteit.Naam</td>
                     <td>@activiteit.Datum</td>
-                    
+                    <td>
+                        <a href="/Activities/Edit/@activiteit.Activiteitid">Edit</a>
+                        <a href="/Rooms/Delete/@activiteit.Activiteitid">Delete</a>
+                    </td>
                 </tr>
             }
         }
