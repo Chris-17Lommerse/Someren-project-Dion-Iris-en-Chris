@@ -6,7 +6,7 @@
         public string Voornaam { get; set; }
         public string Achternaam { get; set; }
         public string TelefoonNr { get; set; }
-        public string KamerNr { get; set; }
+        public int KamerNr { get; set; }
 
         public Student()
         {
@@ -14,10 +14,10 @@
             Voornaam = "";
             Achternaam = "";
             TelefoonNr = "";
-            KamerNr = "";
+            KamerNr = 0;
         }
 
-        public Student(int studentNr, string voornaam, string achternaam, string telefoonNr, string kamerNr)
+        public Student(int studentNr, string voornaam, string achternaam, string telefoonNr, int kamerNr)
         {
             StudentNr = studentNr;
             Voornaam = voornaam;
