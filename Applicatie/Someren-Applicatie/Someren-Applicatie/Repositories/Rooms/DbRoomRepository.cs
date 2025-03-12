@@ -47,13 +47,31 @@ namespace Someren_Applicatie.Repositories.Rooms
             // retrieve data from fields
             string kamerNummer = (string)reader["kamernr"];
             int aantalSlaapplekken = (int)reader["aantal_slaapplekken"];
-            
+            bool typeKamer = reader.GetBoolean(reader.GetOrdinal("type_kamer"));
 
             return new Room(kamerNummer, aantalSlaapplekken);
         }
         public Room? GetById(int roomId)
         {
-            throw new NotImplementedException();
+            Room room = null;
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = "SELECT kamernr, aantal_slaapplekken, type_kamer FROM SLAAPKAMER " +
+                    "WHERE kanmernr = @KamerNr";
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("@KamerNr", roomId);
+
+                command.Connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    room = ReadRoom(reader);
+                }
+                reader.Close();
+            }
+            return room;
         }
 
         public void Update(Room room)
