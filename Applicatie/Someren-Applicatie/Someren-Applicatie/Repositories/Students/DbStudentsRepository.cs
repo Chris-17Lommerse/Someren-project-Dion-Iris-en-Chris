@@ -1,4 +1,5 @@
-﻿using Someren_Applicatie.Models;
+﻿using Microsoft.Data.SqlClient;
+using Someren_Applicatie.Models;
 
 namespace Someren_Applicatie.Repositories.Students
 {
