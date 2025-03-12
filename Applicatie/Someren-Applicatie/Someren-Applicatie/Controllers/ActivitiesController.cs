@@ -8,17 +8,10 @@ namespace Someren_Applicatie.Controllers
     {
         public IActionResult Index()
         {
-            DateTime dt2 = new DateTime(2015, 12, 31);
-
-            List<Activity> activities =
-                [
-                new Activity("test"),
-                new Activity("test2")
-                
-                ];
+            
 
             //pass the list to the View
-            return View(activities);
+            return View();
         }
     }
 }
