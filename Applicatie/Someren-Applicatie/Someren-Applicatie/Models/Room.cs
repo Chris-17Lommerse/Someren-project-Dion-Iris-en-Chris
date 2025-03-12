@@ -7,7 +7,7 @@
 
         public Room()
         {
-            KamerNummer = 0;
+            KamerNummer = "";
             Aantal_Slaaplekken = 0;
         }
         public Room(string kamerNummer, int aantal_Slaaplekken)

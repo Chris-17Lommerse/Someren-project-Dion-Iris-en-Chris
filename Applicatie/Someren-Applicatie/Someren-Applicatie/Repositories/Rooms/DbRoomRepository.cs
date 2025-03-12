@@ -4,7 +4,7 @@ namespace Someren_Applicatie.Repositories.Rooms
 {
     public class DbRoomRepository : IRoomRepository
     {
-        private readonly string? _connectionString
+        private readonly string? _connectionString;
 
         public DbRoomRepository(IConfiguration configuration)
         {
