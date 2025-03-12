@@ -15,7 +15,9 @@ namespace Someren_Applicatie.Controllers
 
         public IActionResult Index()
         {
-            return View();
+
+            List<Room> rooms = _roomsRepository.GetAll();
+            return View(rooms);
         }
         // GET: RoomsController/Create
         [HttpGet]
