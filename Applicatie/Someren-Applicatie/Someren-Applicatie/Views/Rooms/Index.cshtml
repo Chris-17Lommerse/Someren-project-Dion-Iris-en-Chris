@@ -1,6 +1,42 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+   @model List<Someren_Applicatie.Models.Room>
 @{
+    ViewData["Title"] = "Rooms";
 
+
+    <div class="text-center">
+        <h1 class="display-4">Users</h1>
+        <a href="/Users/Create">Create new</a>
+        <p>Aantal kamers: @Model.Count</p>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Mobile number</th>
+                    <th>Email Adress</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (Room room in Model)
+                    {
+                        <tr>
+                            <td>@room.KamerNummer</td>
+                            <td>@room.Aantal_Slaaplekken</td>
+                            <td>
+                                <a href="/Users/Edit/@room.KamerNummer">Edit</a>
+                                <a href="/Users/Delete/@room.KamerNummer">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
 }
+}
+
+
