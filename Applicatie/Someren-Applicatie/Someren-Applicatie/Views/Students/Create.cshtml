@@ -1,0 +1,30 @@
+﻿@model Someren_Applicatie.Models.Student
+@{
+    ViewData["Title"] = "Student aanmaken";
+}
+<h1>Nieuwe student</h1>
+<form action="/Students/Create" method="POST">
+    <div class="form-group py-2">
+        <label for="Voornaam">Voornaam</label>
+        <input type="text" id="Voornaam" name="Voornaam" class="form-control" required value="@Model?.Voornaam" />
+    </div>
+
+    <div class="form-group py-2">
+        <label for="Achternaam">Achternaam</label>
+        <input type="text" id="Achternaam" name="Achternaam" class="form-control" required value="@Model?.Achternaam" />
+    </div>
+
+    <div class="form-group py-2">
+        <label for="TelefoonNr">Telefoon nummer</label>
+        <input type="tel" id="TelefoonNr" name="TelefoonNr" class="form-control" required value="@Model?.TelefoonNr" />
+    </div>
+
+    <div class="form-group py-2">
+        <label for="Klas">Klas</label>
+        <input type="text" id="Klas" name="Klas" class="form-control" required value="@Model?.Klas" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Aanmaken</button>
+</form>
+
+<a href="/Users/Index">Terug naar lijst</a>
