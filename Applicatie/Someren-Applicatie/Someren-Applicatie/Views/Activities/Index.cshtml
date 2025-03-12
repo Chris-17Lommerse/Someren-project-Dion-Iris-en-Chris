@@ -3,7 +3,7 @@
 *@
 @{
 }
-@model List<Someren_Applicatie.Models.Activitys>
+@model List<Someren_Applicatie.Models.Activiteit>
 
 @{
     ViewData["Title"] = "Activities";
@@ -26,12 +26,12 @@
     </thead>
     <tbody>
         @{
-            foreach (var activitys in Model)
+            foreach (var activiteit in Model)
             {
                 <tr>
-                    <td>@activitys.Activiteitid</td>
-                    <td>@activitys.Naam</td>
-                    <td>@activitys.Datum</td>
+                    <td>@activiteit.Activiteitid</td>
+                    <td>@activiteit.Naam</td>
+                    <td>@activiteit.Datum</td>
                     
                 </tr>
             }
