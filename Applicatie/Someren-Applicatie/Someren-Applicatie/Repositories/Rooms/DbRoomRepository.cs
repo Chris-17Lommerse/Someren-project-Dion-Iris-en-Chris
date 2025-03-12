@@ -4,6 +4,12 @@ namespace Someren_Applicatie.Repositories.Rooms
 {
     public class DbRoomRepository : IRoomRepository
     {
+        private readonly string? _connectionString
+
+        public DbRoomRepository(IConfiguration configuration)
+        {
+            _connectionString = configuration.GetConnectionString("SomerenDatabase");
+        }
         public void Add(Room room)
         {
             throw new NotImplementedException();
