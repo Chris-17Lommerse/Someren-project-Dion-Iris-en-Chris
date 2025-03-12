@@ -9,15 +9,13 @@
 
     <div class="text-center">
         <h1 class="display-4">Users</h1>
-        <a href="/Users/Create">Create new</a>
+        <a href="/Rooms/Create">Create new</a>
         <p>Aantal kamers: @Model.Count</p>
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Mobile number</th>
-                    <th>Email Adress</th>
+                    <th>Kamernummer</th>
+                    <th>Aantal slaapplekken</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,8 +26,8 @@
                             <td>@room.KamerNummer</td>
                             <td>@room.Aantal_Slaaplekken</td>
                             <td>
-                                <a href="/Users/Edit/@room.KamerNummer">Edit</a>
-                                <a href="/Users/Delete/@room.KamerNummer">Delete</a>
+                                <a href="/Rooms/Edit/@room.KamerNummer">Edit</a>
+                                <a href="/Rooms/Delete/@room.KamerNummer">Delete</a>
                             </td>
                         </tr>
                     }
@@ -37,7 +35,6 @@
             </tbody>
         </table>
     </div>
-}
-}
+
 
 

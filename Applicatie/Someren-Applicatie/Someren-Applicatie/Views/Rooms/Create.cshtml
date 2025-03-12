@@ -9,24 +9,20 @@
 <h4>New Room</h4>
 <form action="/Rooms/Create" method="post">
     <div class="form-group py-2">
-        <label for="">Name:</label>
-        <input type="text" id="UserName" name="UserName" class="form-control" required value="@Model?.UserName" />
+        <label for="kamerNr">Kamernummer:</label>
+        <input type="text" id="KamerNummer" name="KamerNummer" class="form-control" required value="@Model?.KamerNummer" />
     </div>
     <div class="form-group py-2">
-        <label for="MobileNumber">Mobile Number:</label>
-        <input type="text" id="MobileNumber" name="MobileNumber" class="form-control" required value="@Model?.MobileNumber" />
+        <label for="Aantal_Slaapplekken">Aantal slaaplekken:</label>
+        <input type="number" id="Aantal_Slaapplekken" name="Aantal_Slaaplekken" class="form-control" required value="@Model?.Aantal_Slaaplekken" />
     </div>
     <div class="form-group py-2">
-        <label for="EmailAddress">Email Adress:</label>
-        <input type="text" id="EmailAdress" name="EmailAddress" class="form-control" required value="@Model?.EmailAddress" />
-    </div>
-    <div class="form-group py-2">
-        <label for="Password">Password:</label>
-        <input type="password" id="Password" name="Password" class="form-control" required value="@Model?.Password" />
+        <label for="TypeKamer">Type kamer:</label>
+        <input type="checkbox" id="TypeKamer" name="TypeKamer" class="form-control" @* required value="@Model?.TypeKamer" *@ />
     </div>
 
     <button type="submit" class="btn btn-primary">Add</button>
     </form>
 
-    <a href="/Users/Index">Back to List</a>
-}
+    <a href="/Rooms/Index">Back to List</a>
+

@@ -60,9 +60,9 @@ namespace Someren_Applicatie.Repositories.Rooms
             // retrieve data from fields
             string kamerNummer = (string)reader["kamernr"];
             int aantalSlaapplekken = (int)reader["aantal_slaapplekken"];
-            TypeKamer typeKamer = (TypeKamer)reader["type_kamer"];
+            //TypeKamer typeKamer = (TypeKamer)reader["type_kamer"];
 
-            return new Room(kamerNummer, aantalSlaapplekken, typeKamer);
+            return new Room(kamerNummer, aantalSlaapplekken, TypeKamer.Lecture);
         }
         public Room? GetById(int roomId)
         {
