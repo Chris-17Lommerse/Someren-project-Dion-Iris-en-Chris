@@ -4,6 +4,12 @@ namespace Someren_Applicatie.Repositories.Activities
 {
     public class DbActivitiesRepository : IActivitiesRepository
     {
+        private readonly string? _connectionString;
+
+        public DbActivitiesRepository(IConfiguration configuration)
+        {
+            _connectionString = configuration.GetConnectionString("SomerenDatabase");
+        }
         public void Add(Activiteit activiteit)
         {
             throw new NotImplementedException();
