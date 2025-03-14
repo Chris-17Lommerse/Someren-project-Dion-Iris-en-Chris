@@ -1,0 +1,26 @@
+﻿@model Someren_Applicatie.Models.Activiteit
+@{
+    ViewData["Title"] = "Edit Activity";
+}
+
+<h4> Pas activiteit aan</h4>
+<form action="/Activities/Edit" method="post">
+    <input hidden type="text" name="Activiteitid" value="@Model?.ActiviteitId" />
+
+    <div class="form-group py-2">
+        <label for="Naam">Naam activiteit:</label>
+        <input type="text" id="Naam" name="Naam" class="form-control" required value="@Model?.Naam" />
+    </div>
+    <div class="form-group py-2">
+        <label for="StartTijd">Starttijd:</label>
+        <input type="datetime" id="StartTijd" name="StartTijd" class="form-control" required value="@Model?.StartTijd" />
+    </div>
+    <div class="form-group py-2">
+        <label for="EindTijd">Eindtijd:</label>
+        <input type="datetime" id="EindTijd" name="EindTijd" class="form-control" required value="@Model?.EindTijd" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Opslaan</button>
+</form>
+
+<a href="/Activities/Index">Ga terug naar de lijst van activiteiten</a>

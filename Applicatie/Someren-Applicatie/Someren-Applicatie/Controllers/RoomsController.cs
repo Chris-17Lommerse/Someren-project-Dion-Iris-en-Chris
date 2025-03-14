@@ -15,13 +15,13 @@ namespace Someren_Applicatie.Controllers
 
         public IActionResult Index()
         {
-
             List<Room> rooms = _roomsRepository.GetAll();
             return View(rooms);
         }
+
         // GET: RoomsController/Create
         [HttpGet]
-        public IActionResult Create()
+        public ActionResult Create()
         {
             return View();
         }
@@ -41,13 +41,14 @@ namespace Someren_Applicatie.Controllers
             catch (Exception ex)
             {
                 // Something went wrong, go back to Index
+                ViewBag.ErrorMessage = ex.Message;
                 return View(room);
             }
         }
 
         // GET: UsersController/Edit/5
         [HttpGet]
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(char? id)
         {
             if (id == null)
             {
@@ -55,9 +56,10 @@ namespace Someren_Applicatie.Controllers
             }
 
             // get user via repository
-            Room? user = _roomsRepository.GetById((int)id);
-            return View(user);
+            Room? room = _roomsRepository.GetById((char)id);
+            return View(room);
         }
+
         [HttpPost]
         // POST: UsersController/Edit
         public ActionResult Edit(Room room)
@@ -73,11 +75,12 @@ namespace Someren_Applicatie.Controllers
             catch (Exception ex)
             {
                 // Something went wrong, go back to Index
+                ViewBag.ErrorMessage = ex.Message;
                 return View(room);
             }
         }
         [HttpGet]
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(char? id)
         {
             if (id == null)
             {
@@ -85,7 +88,7 @@ namespace Someren_Applicatie.Controllers
             }
 
             // get user via repository
-            Room? room = _roomsRepository.GetById((int)id);
+            Room? room = _roomsRepository.GetById((char)id);
             return View(room);
         }
         [HttpPost]
@@ -103,6 +106,7 @@ namespace Someren_Applicatie.Controllers
             catch (Exception ex)
             {
                 // Something went wrong, go back to Index
+                ViewBag.ErrorMessage = ex.Message;
                 return View(room);
             }
         }

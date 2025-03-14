@@ -30,7 +30,20 @@ namespace Someren_Applicatie.Repositories.Rooms
         }
         public void Delete(Room room)
         {
-            throw new NotImplementedException();
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = $"DELETE FROM SLAAPKAMER WHERE kamernr = @kamernr";
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("@kamernr", room.KamerNummer);
+
+                command.Connection.Open();
+                int nrOfAffectedRows = command.ExecuteNonQuery();
+                if (nrOfAffectedRows == 0)
+                {
+                    throw new Exception("No records deleted");
+                }
+            }
         }
 
         public List<Room> GetAll()
@@ -39,7 +52,7 @@ namespace Someren_Applicatie.Repositories.Rooms
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = "SELECT kamernr, aantal_slaapplekken, type_kamer FROM SLAAPKAMER";
+                string query = "SELECT kamernr, aantal_slaapplekken, type_kamer FROM SLAAPKAMER ORDER BY kamernr";
                 SqlCommand command = new SqlCommand(query, connection);
 
                 command.Connection.Open();
@@ -60,11 +73,13 @@ namespace Someren_Applicatie.Repositories.Rooms
             // retrieve data from fields
             string kamerNummer = (string)reader["kamernr"];
             int aantalSlaapplekken = (int)reader["aantal_slaapplekken"];
-            //TypeKamer typeKamer = (TypeKamer)reader["type_kamer"];
+            bool typeKamerValue = (bool)reader["type_kamer"];
+            TypeKamer typeKamer = typeKamerValue ? TypeKamer.Lecture :
+                TypeKamer.Student;
 
-            return new Room(kamerNummer, aantalSlaapplekken, TypeKamer.Lecture);
+            return new Room(kamerNummer, aantalSlaapplekken, typeKamer);
         }
-        public Room? GetById(int roomId)
+        public Room? GetById(char roomId)
         {
             Room room = null;
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -89,7 +104,23 @@ namespace Someren_Applicatie.Repositories.Rooms
 
         public void Update(Room room)
         {
-            throw new NotImplementedException();
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = "UPDATE SLAAPKAMER SET kamernr = @kamernr, aantal_slaapplekken = @aantal_slaaplekken, " +
+                          "type_kamer = @type_kamer WHERE kamernr = @kamernr";
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("@kamernr", room.KamerNummer);
+                command.Parameters.AddWithValue("@aantal_slaapplekken", room.Aantal_Slaaplekken);
+                command.Parameters.AddWithValue("@type_kamer", room.TypeKamer);
+
+                command.Connection.Open();
+                int nrOfAffectedRows = command.ExecuteNonQuery();
+                if (nrOfAffectedRows == 0)
+                {
+                    throw new Exception("No records updated");
+                }
+            }
         }
     }
 }

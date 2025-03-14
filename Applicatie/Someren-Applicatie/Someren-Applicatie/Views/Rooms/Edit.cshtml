@@ -1,5 +1,26 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Someren_Applicatie.Models.Room
 @{
+    ViewData["Title"] = "Edit Room";
 }
+
+<h4> Pas kamergegevens aan</h4>
+<form action="/Room/Edit" method="post">
+    <input hidden type="text" name="KamerNummer" value="@Model?.KamerNummer" />
+
+    <div class="form-group py-2">
+        <label for="KamerNummer">Kamernummer:</label>
+        <input type="text" id="KamerNummer" name="KamerNummer" class="form-control" required value="@Model?.KamerNummer" />
+    </div>
+    <div class="form-group py-2">
+        <label for="Aantal_Slaapplekken">Aantal slaapplekken:</label>
+        <input type="text" id="Aantal_Slaapplekken" name="Aantal_Slaapplekken" class="form-control" required value="@Model?.Aantal_Slaaplekken" />
+    </div>
+    <div class="form-group py-2">
+        <label for="TypeKamer">Type kamer:</label>
+        <input type="checkbox" id="TypeKamer" name="TypeKamer" class="form-control" @* required value="@Model?.TypeKamer" *@ />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+<a href="/Rooms/Index">Ga terug naar lijst met slaapkamers</a>

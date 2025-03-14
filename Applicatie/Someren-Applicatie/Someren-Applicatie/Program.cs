@@ -1,3 +1,4 @@
+using Someren_Applicatie.Repositories.Activities;
 using Someren_Applicatie.Repositories.Rooms;
 using Someren_Applicatie.Repositories.Students;
 
@@ -13,6 +14,7 @@ namespace Someren_Applicatie
             builder.Services.AddControllersWithViews();
             builder.Services.AddSingleton<IStudentsRepository, DbStudentsRepository>();
             builder.Services.AddSingleton<IRoomRepository, DbRoomRepository>();
+            builder.Services.AddSingleton<IActivitiesRepository, DbActivitiesRepository>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

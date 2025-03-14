@@ -1,0 +1,24 @@
+﻿@model Someren_Applicatie.Models.Activiteit
+@{
+    ViewData["Title"] = "Create Activiteit";
+}
+
+<h4>Nieuwe Activiteit</h4>
+<form action="/Activities/Create" method="post">
+    <div class="form-group py-2">
+        <label for="Naam">Naam activiteit:</label>
+        <input type="text" id="Naam" name="Naam" class="form-control" required value="@Model?.Naam" />
+    </div>
+    <div class="form-group py-2">
+        <label for="StartTijd">Starttijd:</label>
+        <input type="datetime" id="StartTijd" name="StartTijd" class="form-control" required value="@Model?.StartTijd" />
+    </div>
+    <div class="form-group py-2">
+        <label for="EindTijd">Eindtijd:</label>
+        <input type="datetime" id="EindTijd" name="EindTijd" class="form-control" required value="@Model?.EindTijd" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add</button>
+</form>
+
+<a href="/Activities/Index">Ga terug naar de lijst met activiteiten</a>
