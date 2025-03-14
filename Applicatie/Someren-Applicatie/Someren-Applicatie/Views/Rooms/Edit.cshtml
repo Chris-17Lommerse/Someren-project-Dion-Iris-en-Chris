@@ -4,7 +4,8 @@
 }
 
 <h4> Pas kamergegevens aan</h4>
-<form action="/Room/Edit" method="post">
+<form action="/Rooms/Edit" method="post">
+
     <input hidden type="text" name="KamerNummer" value="@Model?.KamerNummer" />
 
     <div class="form-group py-2">
@@ -13,11 +14,11 @@
     </div>
     <div class="form-group py-2">
         <label for="Aantal_Slaapplekken">Aantal slaapplekken:</label>
-        <input type="text" id="Aantal_Slaapplekken" name="Aantal_Slaapplekken" class="form-control" required value="@Model?.Aantal_Slaaplekken" />
+        <input type="text" id="Aantal_Slaapplekken" name="AantalSlaapplekken" class="form-control" required value="@Model?.AantalSlaaplekken" />
     </div>
     <div class="form-group py-2">
         <label for="TypeKamer">Type kamer:</label>
-        <input type="checkbox" id="TypeKamer" name="TypeKamer" class="form-control" @* required value="@Model?.TypeKamer" *@ />
+        <input type="checkbox" id="TypeKamer" name="TypeKamer" class="form-control" required value="@Model?.TypeKamer" />
     </div>
 
     <button type="submit" class="btn btn-primary">Save</button>

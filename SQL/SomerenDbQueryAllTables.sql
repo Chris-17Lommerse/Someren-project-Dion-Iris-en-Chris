@@ -10,6 +10,7 @@ DROP TABLE SLAAPKAMER;
 --Create tables
 
 CREATE TABLE SLAAPKAMER(
+	kamerid INT NOT NULL,
 	kamernr nchar(5) NOT NULL PRIMARY KEY,
 	aantal_slaapplekken int NOT NULL,
 	type_kamer bit NOT NULL

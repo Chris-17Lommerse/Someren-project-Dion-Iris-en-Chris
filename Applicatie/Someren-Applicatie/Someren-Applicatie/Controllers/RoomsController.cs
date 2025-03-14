@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Someren_Applicatie.Models;
 using Someren_Applicatie.Repositories.Rooms;
+using Someren_Applicatie.Models.Enums;
 
 namespace Someren_Applicatie.Controllers
 {
@@ -15,7 +16,12 @@ namespace Someren_Applicatie.Controllers
 
         public IActionResult Index()
         {
-            List<Room> rooms = _roomsRepository.GetAll();
+            List<Room> rooms =
+            [
+                new Room("A1-01", 8, TypeKamer.Student),
+                new Room("A1-02", 1, TypeKamer.Lecture)
+                ,
+                ];
             return View(rooms);
         }
 
@@ -46,9 +52,9 @@ namespace Someren_Applicatie.Controllers
             }
         }
 
-        // GET: UsersController/Edit/5
+        // GET: RoomsController/Edit/5
         [HttpGet]
-        public ActionResult Edit(char? id)
+        public ActionResult Edit(string? id)
         {
             if (id == null)
             {
@@ -56,12 +62,12 @@ namespace Someren_Applicatie.Controllers
             }
 
             // get user via repository
-            Room? room = _roomsRepository.GetById((char)id);
+            Room? room = _roomsRepository.GetById((string)id);
             return View(room);
         }
 
         [HttpPost]
-        // POST: UsersController/Edit
+        // POST: RoomsController/Edit
         public ActionResult Edit(Room room)
         {
             try
@@ -80,7 +86,7 @@ namespace Someren_Applicatie.Controllers
             }
         }
         [HttpGet]
-        public ActionResult Delete(char? id)
+        public ActionResult Delete(string? id)
         {
             if (id == null)
             {
@@ -88,7 +94,7 @@ namespace Someren_Applicatie.Controllers
             }
 
             // get user via repository
-            Room? room = _roomsRepository.GetById((char)id);
+            Room? room = _roomsRepository.GetById((string)id);
             return View(room);
         }
         [HttpPost]

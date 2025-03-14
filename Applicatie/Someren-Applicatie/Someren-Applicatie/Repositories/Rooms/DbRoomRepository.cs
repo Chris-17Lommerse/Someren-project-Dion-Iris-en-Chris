@@ -16,16 +16,17 @@ namespace Someren_Applicatie.Repositories.Rooms
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = $"INSERT INTO SLAAPKAMER (kamernr, aantal_slaapplekken, type_kamer" +
-                               "VALUES (@kamernr, @aantal_slaapplekken, @ type_kamer); " +
+                string query = $"INSERT INTO SLAAPKAMER (kamernr, aantal_slaapplekken, type_kamer)" +
+                               "VALUES (@kamernr, @aantal_slaapplekken, @type_kamer); " +
                                "SELECT SCOPE_IDENTITY();";
                 SqlCommand command = new SqlCommand(query, connection);
 
                 command.Parameters.AddWithValue("@kamernr", room.KamerNummer);
-                command.Parameters.AddWithValue("@aantal_slaaplekken", room.Aantal_Slaaplekken);
+                command.Parameters.AddWithValue("@aantal_slaaplekken", room.AantalSlaaplekken);
                 command.Parameters.AddWithValue("@type_kamer", room.TypeKamer);
 
                 command.Connection.Open();
+                command.ExecuteNonQuery();
             }
         }
         public void Delete(Room room)
@@ -79,13 +80,13 @@ namespace Someren_Applicatie.Repositories.Rooms
 
             return new Room(kamerNummer, aantalSlaapplekken, typeKamer);
         }
-        public Room? GetById(char roomId)
+        public Room? GetById(string roomId)
         {
             Room room = null;
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 string query = "SELECT kamernr, aantal_slaapplekken, type_kamer FROM SLAAPKAMER " +
-                    "WHERE kanmernr = @KamerNr";
+                    "WHERE kamernr = @KamerNr";
                 SqlCommand command = new SqlCommand(query, connection);
 
                 command.Parameters.AddWithValue("@KamerNr", roomId);
@@ -106,12 +107,12 @@ namespace Someren_Applicatie.Repositories.Rooms
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = "UPDATE SLAAPKAMER SET kamernr = @kamernr, aantal_slaapplekken = @aantal_slaaplekken, " +
+                string query = "UPDATE SLAAPKAMER SET aantal_slaapplekken = @aantal_slaaplekken, " +
                           "type_kamer = @type_kamer WHERE kamernr = @kamernr";
                 SqlCommand command = new SqlCommand(query, connection);
 
                 command.Parameters.AddWithValue("@kamernr", room.KamerNummer);
-                command.Parameters.AddWithValue("@aantal_slaapplekken", room.Aantal_Slaaplekken);
+                command.Parameters.AddWithValue("@aantal_slaapplekken", room.AantalSlaaplekken);
                 command.Parameters.AddWithValue("@type_kamer", room.TypeKamer);
 
                 command.Connection.Open();
