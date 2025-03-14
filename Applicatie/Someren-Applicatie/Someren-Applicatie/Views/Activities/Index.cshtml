@@ -20,21 +20,22 @@
         <tr>
             <th>Activiteitid</th>
             <th>Naam</th>
-            <th>Datum</th>
-           
+            <th>Starttijd</th>
+            <th>Eindtijd</th>
         </tr>
     </thead>
     <tbody>
         @{
-            foreach (var activiteit in Model)
+            foreach (Activiteit activiteit in Model)
             {
                 <tr>
-                    <td>@activiteit.Activiteitid</td>
+                    <td>@activiteit.ActiviteitId</td>
                     <td>@activiteit.Naam</td>
-                    <td>@activiteit.Datum</td>
+                    <td>@activiteit.StartTijd</td>
+                    <td>@activiteit.EindTijd</td>
                     <td>
-                        <a href="/Activities/Edit/@activiteit.Activiteitid">Edit</a>
-                        <a href="/Rooms/Delete/@activiteit.Activiteitid">Delete</a>
+                        <a href="/Activities/Edit/@activiteit.ActiviteitId">Edit</a>
+                        <a href="/Rooms/Delete/@activiteit.ActiviteitId">Delete</a>
                     </td>
                 </tr>
             }

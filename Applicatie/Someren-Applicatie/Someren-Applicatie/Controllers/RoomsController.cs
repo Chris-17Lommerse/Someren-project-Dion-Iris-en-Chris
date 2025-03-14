@@ -15,20 +15,20 @@ namespace Someren_Applicatie.Controllers
 
         public IActionResult Index()
         {
-
             List<Room> rooms = _roomsRepository.GetAll();
             return View(rooms);
         }
+
         // GET: RoomsController/Create
         [HttpGet]
-        public IActionResult Create()
+        public ActionResult Create()
         {
             return View();
         }
 
         // POST: RoomsController/Create
         [HttpPost]
-        public IActionResult Create(Room room)
+        public ActionResult Create(Room room)
         {
             try
             {
@@ -41,13 +41,14 @@ namespace Someren_Applicatie.Controllers
             catch (Exception ex)
             {
                 // Something went wrong, go back to Index
+                ViewBag.ErrorMessage = ex.Message;
                 return View(room);
             }
         }
 
         // GET: UsersController/Edit/5
         [HttpGet]
-        public IActionResult Edit(int? id)
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
@@ -58,9 +59,10 @@ namespace Someren_Applicatie.Controllers
             Room? room = _roomsRepository.GetById((int)id);
             return View(room);
         }
+
         [HttpPost]
         // POST: UsersController/Edit
-        public IActionResult Edit(Room room)
+        public ActionResult Edit(Room room)
         {
             try
             {
@@ -73,11 +75,12 @@ namespace Someren_Applicatie.Controllers
             catch (Exception ex)
             {
                 // Something went wrong, go back to Index
+                ViewBag.ErrorMessage = ex.Message;
                 return View(room);
             }
         }
         [HttpGet]
-        public IActionResult Delete(int? id)
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
@@ -90,7 +93,7 @@ namespace Someren_Applicatie.Controllers
         }
         [HttpPost]
         // POST: UsersController/Delete
-        public IActionResult Delete(Room room)
+        public ActionResult Delete(Room room)
         {
             try
             {
@@ -103,6 +106,7 @@ namespace Someren_Applicatie.Controllers
             catch (Exception ex)
             {
                 // Something went wrong, go back to Index
+                ViewBag.ErrorMessage = ex.Message;
                 return View(room);
             }
         }

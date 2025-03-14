@@ -32,7 +32,7 @@ namespace Someren_Applicatie.Repositories.Rooms
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = $"DELETE FROM ROOM WHERE kamernr = @kamernr";
+                string query = $"DELETE FROM SLAAPKAMER WHERE kamernr = @kamernr";
                 SqlCommand command = new SqlCommand(query, connection);
 
                 command.Parameters.AddWithValue("@kamernr", room.KamerNummer);
@@ -52,7 +52,7 @@ namespace Someren_Applicatie.Repositories.Rooms
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = "SELECT kamernr, aantal_slaapplekken, type_kamer FROM SLAAPKAMER";
+                string query = "SELECT kamernr, aantal_slaapplekken, type_kamer FROM SLAAPKAMER ORDER BY kamernr";
                 SqlCommand command = new SqlCommand(query, connection);
 
                 command.Connection.Open();
@@ -104,7 +104,7 @@ namespace Someren_Applicatie.Repositories.Rooms
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = "UPDATE ROOM SET kamernr = @kamernr, aantal_slaapplekken = @aantal_slaaplekken, " +
+                string query = "UPDATE SLAAPKAMER SET kamernr = @kamernr, aantal_slaapplekken = @aantal_slaaplekken, " +
                           "type_kamer = @type_kamer WHERE kamernr = @kamernr";
                 SqlCommand command = new SqlCommand(query, connection);
 
