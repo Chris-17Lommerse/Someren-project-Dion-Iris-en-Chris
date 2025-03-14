@@ -73,11 +73,13 @@ namespace Someren_Applicatie.Repositories.Rooms
             // retrieve data from fields
             string kamerNummer = (string)reader["kamernr"];
             int aantalSlaapplekken = (int)reader["aantal_slaapplekken"];
-            //TypeKamer typeKamer = (TypeKamer)reader["type_kamer"];
+            bool typeKamerValue = (bool)reader["type_kamer"];
+            TypeKamer typeKamer = typeKamerValue ? TypeKamer.Lecture :
+                TypeKamer.Student;
 
-            return new Room(kamerNummer, aantalSlaapplekken, TypeKamer.Lecture);
+            return new Room(kamerNummer, aantalSlaapplekken, typeKamer);
         }
-        public Room? GetById(int roomId)
+        public Room? GetById(char roomId)
         {
             Room room = null;
             using (SqlConnection connection = new SqlConnection(_connectionString))
