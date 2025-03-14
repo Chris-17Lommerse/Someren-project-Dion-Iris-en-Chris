@@ -17,7 +17,7 @@ namespace Someren_Applicatie.Repositories.Activities
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 string query = $"INSERT INTO ACTIVITEIT (naam, starttijd, eindtijd" +
-                               "VALUES (@naam, @starttijd, @ eindtijd); " +
+                               "VALUES (@naam, @starttijd, @eindtijd); " +
                                "SELECT SCOPE_IDENTITY();";
                 SqlCommand command = new SqlCommand(query, connection);
 

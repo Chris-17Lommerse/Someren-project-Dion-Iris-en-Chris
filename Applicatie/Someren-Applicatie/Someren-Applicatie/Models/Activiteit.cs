@@ -7,6 +7,13 @@
         public DateTime StartTijd { get; set; }
         public DateTime EindTijd { get; set;}
 
+        public Activiteit()
+        {
+            ActiviteitId = 0;
+            Naam = "";
+            StartTijd = DateTime.Now;
+            EindTijd = DateTime.Now;
+        }
         public Activiteit(int activiteitId, string naam, DateTime startTijd, DateTime eindTijd)
         {
             ActiviteitId = activiteitId;
