@@ -4,14 +4,10 @@
 }
 <h1>Nieuwe student</h1>
 <form action="/Students/Create" method="POST">
-    <div class="form-group py-2">
-        <label for="Voornaam">Voornaam</label>
-        <input type="text" id="Voornaam" name="Voornaam" class="form-control" required value="@Model?.Voornaam" />
-    </div>
-
-    <div class="form-group py-2">
-        <label for="Achternaam">Achternaam</label>
-        <input type="text" id="Achternaam" name="Achternaam" class="form-control" required value="@Model?.Achternaam" />
+    <div class="input-group">
+        <span class="input-group-text">Voor en Achternaam</span>
+        <input type="text" id="Voornaam" name="Voornaam" aria-label="Voornaam" class="form-control" required value="@Model?.Voornaam" />
+        <input type="text" id="Achternaam" name="Achternaam" aria-label="Achternaam" class="form-control" required value="@Model?.Achternaam" />
     </div>
 
     <div class="form-group py-2">

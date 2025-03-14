@@ -5,7 +5,7 @@ namespace Someren_Applicatie.Repositories.Students
 {
     public class DbStudentsRepository : IStudentsRepository
     {
-        // EDIT AND DELETE NEED TO BE ADDED, DONT USE CREATE IF NO ROOMS ARE MADE
+        // DONT USE CREATE IF NO ROOMS ARE MADE
 
         private readonly string? _connectionString;
 
@@ -84,10 +84,10 @@ namespace Someren_Applicatie.Repositories.Students
                 string query = "SELECT studentennr, voornaam, achternaam, telefoonnr, klas, kamernr FROM dbo.STUDENT WHERE studentennr = @studentnr";
                 SqlCommand command = new SqlCommand(query, connection);
 
+                command.Parameters.AddWithValue("@studentnr", studentNr);
+
                 command.Connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
-
-                command.Parameters.AddWithValue("@studentnr", studentNr);
 
                 while (reader.Read())
                 {
@@ -107,7 +107,7 @@ namespace Someren_Applicatie.Repositories.Students
                                 "WHERE studentennr = @studentennr";
                 SqlCommand command = new SqlCommand(query, connection);
 
-                command.Parameters.AddWithValue("@studentennr", student.Voornaam);
+                command.Parameters.AddWithValue("@studentennr", student.StudentNr);
                 command.Parameters.AddWithValue("@voornaam", student.Voornaam);
                 command.Parameters.AddWithValue("@achternaam", student.Achternaam);
                 command.Parameters.AddWithValue("@telefoonnr", student.TelefoonNr);
@@ -130,7 +130,7 @@ namespace Someren_Applicatie.Repositories.Students
             string achternaam = (string)reader["achternaam"];
             string telefoonnr = (string)reader["telefoonnr"];
             string klas = (string)reader["klas"];
-            int kamernr = (int)reader["kamernr"];
+            string kamernr = (string)reader["kamernr"];
 
             return new Student(studentnr, voornaam, achternaam, telefoonnr, klas, kamernr);
         }

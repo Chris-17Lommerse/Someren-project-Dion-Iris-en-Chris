@@ -12,11 +12,6 @@ namespace Someren_Applicatie.Controllers
             _studentsRepository = studentsRepository;
         }
 
-        /* 
-         Students controller
-            !- DON'T USE CREATE
-             - Edit and delete need to be implemented
-         */
 
         public IActionResult Index()
         {
