@@ -17,15 +17,7 @@ namespace Someren_Applicatie.Controllers
         }
         public IActionResult Index()
         {
-            List<Activiteit> activities =
-                [
-                new Activiteit(1,"Test", new DateTime(2025, 5, 15,16,0,0), new DateTime(2025, 5, 15, 18, 0, 0)),
-                new Activiteit(2,"Test2", new DateTime(2025,6, 10,14,30,0), new DateTime(2025, 6, 10, 18, 30, 30))
-                
-                ,
-                ];
-
-            //pass the list to the View
+            List<Activiteit> activities = _activitiesRepository.GetAll();
             return View(activities);
 
             

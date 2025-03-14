@@ -16,7 +16,7 @@ namespace Someren_Applicatie.Repositories.Activities
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = $"INSERT INTO ACTIVITEIT (naam, starttijd, eindtijd" +
+                string query = $"INSERT INTO ACTIVITEIT (naam, starttijd, eindtijd)" +
                                "VALUES (@naam, @starttijd, @eindtijd); " +
                                "SELECT SCOPE_IDENTITY();";
                 SqlCommand command = new SqlCommand(query, connection);
@@ -26,6 +26,7 @@ namespace Someren_Applicatie.Repositories.Activities
                 command.Parameters.AddWithValue("@eindtijd", activiteit.EindTijd);
 
                 command.Connection.Open();
+                command.ExecuteNonQuery();
             }
         }
 
@@ -53,7 +54,7 @@ namespace Someren_Applicatie.Repositories.Activities
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = "SELECT naam, starttijd, eindtijd FROM ACTIVITEIT";
+                string query = "SELECT activiteitid, naam, starttijd, eindtijd FROM ACTIVITEIT";
                 SqlCommand command = new SqlCommand(query, connection);
 
                 command.Connection.Open();
@@ -111,6 +112,7 @@ namespace Someren_Applicatie.Repositories.Activities
                            "WHERE activiteitid = @activiteitId";
                 SqlCommand command = new SqlCommand(query, connection);
 
+                command.Parameters.AddWithValue("@activiteitId", activiteit.ActiviteitId);
                 command.Parameters.AddWithValue("@naam", activiteit.Naam);
                 command.Parameters.AddWithValue("@startTijd", activiteit.StartTijd);
                 command.Parameters.AddWithValue("@eindTijd", activiteit.EindTijd);

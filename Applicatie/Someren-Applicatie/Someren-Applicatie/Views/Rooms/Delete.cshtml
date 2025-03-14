@@ -9,18 +9,20 @@
         <input hidden type="text" name="KamerNummer" value="@Model?.KamerNummer" />
 
         <div class="form-group py-2">
-            <label for="KamerNr">Kamernummer:</label>
-            <input type="text" id="KamerNummer" name="KamerNummer" class="form-control" required value="@Model?.KamerNummer" />
+            <label asp-for="KamerNummer">Kamernummer:</label>
+            <input asp-for="KamerNummer" class="form-control" required value="@Model?.KamerNummer" />
         </div>
         <div class="form-group py-2">
-            <label for="Aantal_Slaapplekken">Aantal slaapplekken:</label>
-            <input type="text" id="Aantal_Slaapplekken" name="Aantal_Slaapplekken" class="form-control" required value="@Model?.AantalSlaaplekken" />
+            <label asp-for="AantalSlaaplekken">Aantal slaaplekken:</label>
+            <input asp-for="AantalSlaaplekken" class="form-control" required value="@Model?.AantalSlaaplekken" />
         </div>
-        <label for="TypeKamer">Type kamer:</label>
-        <select id="TypeKamer" name="TypeKamer" class="form-control">
-            <option value="Student">Student</option>
-            <option value="Lecturer">Lecturer</option>
-        </select>
+        <div class="form-group py-2">
+            <label for="TypeKamer">Type kamer:</label>
+            <select id="TypeKamer" name="TypeKamer" class="form-control">
+                <option value="Student">Student</option>
+                <option value="Lecturer">Lecturer</option>
+            </select>
+        </div>
 
         <button type="submit" class="btn btn-danger">Delete</button>
     </form>

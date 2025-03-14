@@ -5,19 +5,19 @@
 
 <h4> Verwijder activiteit</h4>
 <form action="/Activities/Delete" method="post">
-    <input hidden type="text" name="Activiteitid" value="@Model?.ActiviteitId" />
+    <input hidden type="number" name="Activiteitid" value="@Model?.ActiviteitId" />
 
     <div class="form-group py-2">
-        <label for="Naam">Naam activiteit:</label>
-        <input type="text" id="Naam" name="Naam" class="form-control" required value="@Model?.Naam" />
+        <label asp-for="Naam">Naam activiteit:</label>
+        <input asp-for="Naam" class="form-control" required value="@Model?.Naam" />
     </div>
     <div class="form-group py-2">
-        <label for="StartTijd">Starttijd:</label>
-        <input type="datetime" id="StartTijd" name="StartTijd" class="form-control" required value="@Model?.StartTijd" />
+        <label asp-for="StartTijd">Starttijd:</label>
+        <input asp-for="StartTijd" class="form-control" required value="@Model?.StartTijd" />
     </div>
     <div class="form-group py-2">
-        <label for="EindTijd">Eindtijd:</label>
-        <input type="datetime" id="EindTijd" name="EindTijd" class="form-control" required value="@Model?.EindTijd" />
+        <label asp-for="EindTijd">Eindtijd:</label>
+        <input asp-for="EindTijd" class="form-control" required value="@Model?.EindTijd" />
     </div>
 
     <button type="submit" class="btn btn-danger">Verwijder</button>
