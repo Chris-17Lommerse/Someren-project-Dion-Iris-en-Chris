@@ -16,10 +16,11 @@
             <label for="Aantal_Slaapplekken">Aantal slaapplekken:</label>
             <input type="text" id="Aantal_Slaapplekken" name="Aantal_Slaapplekken" class="form-control" required value="@Model?.AantalSlaaplekken" />
         </div>
-        <div class="form-group py-2">
-            <label for="TypeKamer">Type kamer:</label>
-            <input type="checkbox" id="TypeKamer" name="TypeKamer" class="form-control"  required value="@Model?.TypeKamer" />
-        </div>
+        <label for="TypeKamer">Type kamer:</label>
+        <select id="TypeKamer" name="TypeKamer" class="form-control">
+            <option value="Student">Student</option>
+            <option value="Lecturer">Lecturer</option>
+        </select>
 
         <button type="submit" class="btn btn-danger">Delete</button>
     </form>

@@ -16,12 +16,7 @@ namespace Someren_Applicatie.Controllers
 
         public IActionResult Index()
         {
-            List<Room> rooms =
-            [
-                new Room("A1-01", 8, TypeKamer.Student),
-                new Room("A1-02", 1, TypeKamer.Lecture)
-                ,
-                ];
+            List<Room> rooms = _roomsRepository.GetAll();
             return View(rooms);
         }
 

@@ -22,7 +22,7 @@ namespace Someren_Applicatie.Repositories.Rooms
                 SqlCommand command = new SqlCommand(query, connection);
 
                 command.Parameters.AddWithValue("@kamernr", room.KamerNummer);
-                command.Parameters.AddWithValue("@aantal_slaaplekken", room.AantalSlaaplekken);
+                command.Parameters.AddWithValue("@aantal_slaapplekken", room.AantalSlaaplekken);
                 command.Parameters.AddWithValue("@type_kamer", room.TypeKamer);
 
                 command.Connection.Open();
@@ -75,7 +75,7 @@ namespace Someren_Applicatie.Repositories.Rooms
             string kamerNummer = (string)reader["kamernr"];
             int aantalSlaapplekken = (int)reader["aantal_slaapplekken"];
             bool typeKamerValue = (bool)reader["type_kamer"];
-            TypeKamer typeKamer = typeKamerValue ? TypeKamer.Lecture :
+            TypeKamer typeKamer = typeKamerValue ? TypeKamer.Lecturer :
                 TypeKamer.Student;
 
             return new Room(kamerNummer, aantalSlaapplekken, typeKamer);
@@ -107,7 +107,7 @@ namespace Someren_Applicatie.Repositories.Rooms
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = "UPDATE SLAAPKAMER SET aantal_slaapplekken = @aantal_slaaplekken, " +
+                string query = "UPDATE SLAAPKAMER SET aantal_slaapplekken = @aantal_slaapplekken, " +
                           "type_kamer = @type_kamer WHERE kamernr = @kamernr";
                 SqlCommand command = new SqlCommand(query, connection);
 

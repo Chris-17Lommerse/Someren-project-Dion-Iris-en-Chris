@@ -2,6 +2,6 @@
 {
     public enum TypeKamer
     {
-        Student, Lecture
+        Student, Lecturer
     }
 }
