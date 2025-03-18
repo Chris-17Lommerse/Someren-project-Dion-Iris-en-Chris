@@ -1,22 +1,104 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Someren_Applicatie.Models;
+using Someren_Applicatie.Repositories.Lecturers;
 
 namespace Someren_Applicatie.Controllers
 {
     public class LecturersController : Controller
     {
-        public IActionResult Index()
-        {
-            //create a list of hardcoded test lecturers
-            List<Lecturer> lecturers =
-                [
-                new Lecturer(1,"John", "Doe", "06-12345678", 45, 478),
-                new Lecturer(2, "Jane", "Doe",  "06-87654321", 32, 221)
-                ,
-                ];
+        private readonly ILecturersRepository _lecturersRepository;
 
-            //pass the list to the View
+        public LecturersController(ILecturersRepository lecturersRepository)
+        {
+            _lecturersRepository = lecturersRepository;
+        }
+
+        public ActionResult Index()
+        {
+            List<Lecturer> lecturers = _lecturersRepository.GetAll();
             return View(lecturers);
+
+        }
+ 
+        [HttpGet]
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Create(Lecturer lecturer)
+        {
+            try
+            {
+                _lecturersRepository.Add(lecturer);
+
+                
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+                return View(lecturer);
+            }
+        }
+
+        
+        [HttpGet]
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Lecturer ? lecturer = _lecturersRepository.GetById((int)id);
+            return View(lecturer);
+        }
+
+        
+        [HttpPost]
+        public ActionResult Edit(Lecturer lecturer)
+        {
+            try
+            {
+                _lecturersRepository.Update(lecturer);
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+                return View(lecturer);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Lecturer? lecturer = _lecturersRepository.GetById((int)id);
+            return View(lecturer);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(Lecturer lecturer)
+        {
+            try
+            {
+                _lecturersRepository.Delete(lecturer);
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+                return View(lecturer);
+            }
         }
     }
 }

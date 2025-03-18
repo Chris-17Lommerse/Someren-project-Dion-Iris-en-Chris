@@ -1,24 +1,33 @@
-﻿using System.Net.Mail;
-
-namespace Someren_Applicatie.Models
+﻿namespace Someren_Applicatie.Models
 {
     public class Lecturer
     {
-        public int Docentnr { get; set; }
+        public int DocentNr { get; set; }
         public string Voornaam { get; set; }
         public string Achternaam { get; set; }
-        public string Telefoonnummer { get; set; }
+        public string TelefoonNr { get; set; }
         public int Leeftijd { get; set; }
-        public int Kamernr { get; set; }
+        public string KamerNr { get; set; }
 
-        public Lecturer(int docentnr, string voornaam, string achternaam, string telefoonnummer, int leeftijd, int kamernr)
+
+        public Lecturer() 
         {
-            Docentnr = docentnr;
+            DocentNr = 0;
+            Voornaam = "";
+            Achternaam = "";
+            TelefoonNr = "";
+            Leeftijd = 0;
+            KamerNr = "";
+        }
+        public Lecturer(int docentNr, string voornaam, string achternaam, string telefoonNr, int leeftijd, string kamerNr)
+        {
+            DocentNr = docentNr;
             Voornaam = voornaam;
             Achternaam = achternaam;
-            Telefoonnummer = telefoonnummer;
+            TelefoonNr = telefoonNr;
             Leeftijd = leeftijd;
-            Kamernr = kamernr;
+            KamerNr = kamerNr;
         }
+        
     }
 }
