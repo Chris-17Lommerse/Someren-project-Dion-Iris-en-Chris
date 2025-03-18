@@ -1,0 +1,11 @@
+Taakverdeling opdracht 2:
+Dion: User Story “View all students“ (variant A) 
+Iris: User Story “View all lecturers” (variant B) en User Story “View all activities” (variant D)
+Chris: User Story “View all rooms” (variant C)
+
+Iedereen heeft een deel van de user stories: User Story “Create the database based on the relational model“ en User Story “Prepare Visual Studio solution“ gedaan.
+
+Taakverdeling opdracht 3:
+Dion: User Story “Manage students” (variant A)
+Iris: User Story “Manage lecturers” (variant B)
+Chris: User Story “Manage rooms” (variant C) en User Story “Manage activities” (variant D)
