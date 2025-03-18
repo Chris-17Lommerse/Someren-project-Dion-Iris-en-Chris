@@ -4,12 +4,18 @@
  }
 
     <div class="text-center">
-        <h1 class="display-4">Rooms</h1>
-        <a href="/Rooms/Create">Create new</a>
+        <h1 class="display-4">Slaapkamers</h1>
+        <a href="/Rooms/Create" class="btn btn-success">Voeg een slaapkamer toe</a>
         <p>Aantal kamers: @Model.Count</p>
-        <table class="table table-striped">
+        <!--Filter functionaliteit-->
+            <select>
+                <option value="1">1</option>
+                <option value="8">8</option>
+            </select>
+            <input type="submit" />
+        <table class="table table-info">
             <thead>
-                <tr>
+                <tr class="table-dark">
                     <th>Kamernummer</th>
                     <th>Aantal slaapplekken</th>
                     <th>Type kamer</th>
@@ -25,8 +31,8 @@
                             <td>@room.AantalSlaaplekken</td>
                             <td>@room.TypeKamer</td>
                             <td>
-                                <a href="/Rooms/Edit/@room.KamerNummer">Edit</a>
-                                <a href="/Rooms/Delete/@room.KamerNummer">Delete</a>
+                                <a href="/Rooms/Edit/@room.KamerNummer" class="btn btn-dark">Aanpassen</a>
+                                <a href="/Rooms/Delete/@room.KamerNummer" class="btn btn-danger">Verwijderen</a>
                             </td>
                         </tr>
                     }
