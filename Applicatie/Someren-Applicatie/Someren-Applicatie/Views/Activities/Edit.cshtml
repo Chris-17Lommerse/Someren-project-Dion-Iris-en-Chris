@@ -4,6 +4,12 @@
 }
 
 <h4> Pas activiteit aan</h4>
+@{
+    if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger" role="alert">@ViewBag.ErrorMessage</div>
+    }
+}
 <form action="/Activities/Edit" method="post">
     <input hidden type="number" name="Activiteitid" value="@Model?.ActiviteitId" />
 
@@ -20,7 +26,7 @@
         <input asp-for="EindTijd" class="form-control" required value="@Model?.EindTijd.ToString("yyyy-MM-ddTHH:mm")" />
     </div>
 
-    <button type="submit" class="btn btn-primary m-1">Opslaan</button>
+    <button type="submit" class="btn btn-success m-1">Opslaan</button>
 </form>
 
 <a href="/Activities/Index" class="btn btn-dark m-1">Ga terug naar de lijst van activiteiten</a>

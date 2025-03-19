@@ -15,6 +15,11 @@ namespace Someren_Applicatie.Repositories.Activities
         }
         public void Add(Activiteit activiteit)
         {
+            Activiteit? checkActiviteit = GetByActivityName(activiteit.Naam);
+            if (checkActiviteit != null)
+            {
+                throw new Exception($"Activiteit {activiteit.Naam} bestaat al");
+            }
             try
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -37,7 +42,7 @@ namespace Someren_Applicatie.Repositories.Activities
             }
             catch (Exception ex)
             {
-                throw new Exception("Cannot add activity");
+                throw new Exception("Kan activiteit niet toevoegen");
             }
         }
 
@@ -64,7 +69,7 @@ namespace Someren_Applicatie.Repositories.Activities
             }
             catch (Exception ex)
             {
-                throw new Exception("Activity cannot be deleted");
+                throw new Exception("Activititeit kan niet worden verwijderd");
             }
         }
 
@@ -81,7 +86,7 @@ namespace Someren_Applicatie.Repositories.Activities
                     command.Connection.Open();
                     SqlDataReader reader = command.ExecuteReader();
 
-                    if(reader.Read())
+                    while(reader.Read())
                     {
                         Activiteit activiteit = ReadActivity(reader);
                         activiteiten.Add(activiteit);
@@ -91,7 +96,7 @@ namespace Someren_Applicatie.Repositories.Activities
             } 
             catch (Exception ex)
             {
-                throw new Exception("Cannot load activities");
+                throw new Exception("Activiteiten kunnen niet worden geladen");
             }
             return activiteiten;
         }
@@ -109,7 +114,7 @@ namespace Someren_Applicatie.Repositories.Activities
                 return new Activiteit(activiteitId, naam, startTijd, eindTijd);
             } catch (Exception ex)
             {
-                throw new Exception("Cannot read activities");
+                throw new Exception("Kan activiteiten niet lezen.");
             } 
             
         }
@@ -138,7 +143,37 @@ namespace Someren_Applicatie.Repositories.Activities
                 }
             } catch (Exception ex)
             {
-                throw new Exception("Cannot load the activity chosen");
+                throw new Exception("Kan de activiteit niet laden.");
+            }
+            return activiteit;
+        }
+
+        public Activiteit? GetByActivityName(string activityName)
+        {
+            Activiteit? activiteit = null;
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    string query = "SELECT activiteitid, naam, starttijd, eindtijd FROM ACTIVITEIT " +
+                        "WHERE naam = @naam";
+                    SqlCommand command = new SqlCommand(query, connection);
+
+                    command.Parameters.AddWithValue("@naam", activityName);
+
+                    command.Connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if(reader.Read())
+                    {
+                        activiteit = ReadActivity(reader);
+                    }
+                    reader.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Kan activiteit niet laden");
             }
             return activiteit;
         }
@@ -170,7 +205,7 @@ namespace Someren_Applicatie.Repositories.Activities
             }
             catch (Exception ex)
             {
-                throw new Exception("Cannot update activity");
+                throw new Exception("Activiteit kan niet worden aangepast");
             }
         }
     }

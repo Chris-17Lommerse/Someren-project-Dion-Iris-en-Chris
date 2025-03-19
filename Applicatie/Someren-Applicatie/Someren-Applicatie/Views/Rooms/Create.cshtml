@@ -4,6 +4,12 @@
 }
 
 <h4>Nieuwe Slaapkamer</h4>
+@{
+    if(ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger" role="alert">@ViewBag.ErrorMessage</div>
+    }
+}
     <form action="/Rooms/Create" method="post" >
         <div class="form-group py-2">
             <label asp-for="KamerNummer">Kamernummer:</label>

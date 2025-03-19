@@ -4,6 +4,12 @@
 }
 
 <h4>Nieuwe Activiteit</h4>
+@{
+    if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger" role="alert">@ViewBag.ErrorMessage</div>
+    }
+}
 <form action="/Activities/Create" method="post">
     <div class="form-group py-2">
         <label asp-for="Naam">Naam activiteit:</label>
@@ -18,7 +24,7 @@
         <input asp-for="EindTijd" class="form-control" required value="@Model?.EindTijd.ToString("yyyy-MM-ddTHH:mm")"  />
     </div>
 
-    <button type="submit" class="btn btn-primary">Add</button>
+    <button type="submit" class="btn btn-success m-1">Add</button>
 </form>
 
-<a href="/Activities/Index" class="btn btn-dark">Ga terug naar de lijst met activiteiten</a>
+<a href="/Activities/Index" class="btn btn-dark m-1">Ga terug naar de lijst met activiteiten</a>

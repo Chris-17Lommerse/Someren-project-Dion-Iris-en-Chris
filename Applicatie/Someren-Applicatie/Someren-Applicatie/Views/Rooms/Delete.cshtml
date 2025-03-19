@@ -2,9 +2,13 @@
 @{
     ViewData["Title"] = "Delete Room";
 }
-
-@{
     <h1>Verwijder slaapkamer</h1>
+    @{
+    if(ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger" role="alert">@ViewBag.ErrorMessage</div>
+    }
+}
     <form action="/Rooms/Delete" method="post">
         <input hidden type="text" name="KamerNummer" value="@Model?.KamerNummer" />
 
@@ -28,4 +32,3 @@
     </form>
 
     <a href="/Rooms/Index" class="btn btn-dark btn-hover m-1">Ga terug naar de lijst met slaapkamers</a>
-}

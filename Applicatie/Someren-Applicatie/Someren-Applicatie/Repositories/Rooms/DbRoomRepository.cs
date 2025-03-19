@@ -15,6 +15,11 @@ namespace Someren_Applicatie.Repositories.Rooms
         }
         public void Add(Room room)
         {
+            Room? checkRoom = GetById(room.KamerNummer);
+            if (checkRoom != null)
+            {
+                throw new Exception($"Kamer {room.KamerNummer} bestaat al");
+            }
             try
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -35,7 +40,7 @@ namespace Someren_Applicatie.Repositories.Rooms
             }
             catch (Exception ex)
             {
-                throw new Exception("Cannot add room");
+                throw new Exception("Kamer kan niet worden toegevoegd");
             }
         }
         public void Delete(Room room)
@@ -59,7 +64,7 @@ namespace Someren_Applicatie.Repositories.Rooms
             }
             catch (Exception ex)
             {
-                throw new Exception("Room cannot be deleted.");
+                throw new Exception("Kamer kan niet worden verwijderd.");
             }
         }
         public List<Room> GetAll()
@@ -75,7 +80,7 @@ namespace Someren_Applicatie.Repositories.Rooms
                     command.Connection.Open();
                     SqlDataReader reader = command.ExecuteReader();
 
-                    if(reader.Read())
+                    while (reader.Read())
                     {
                         Room room = ReadRoom(reader);
                         rooms.Add(room);
@@ -85,7 +90,7 @@ namespace Someren_Applicatie.Repositories.Rooms
             }
             catch (Exception ex)
             {
-                throw new Exception("Cannot load rooms from the database");
+                throw new Exception("Kan geen kamers laden vanuit de database");
             }
             return rooms;
         }
@@ -124,7 +129,7 @@ namespace Someren_Applicatie.Repositories.Rooms
                     command.Connection.Open();
                     SqlDataReader reader = command.ExecuteReader();
 
-                    if (reader.Read())
+                    while (reader.Read())
                     {
                         room = ReadRoom(reader);
                     }
@@ -133,7 +138,7 @@ namespace Someren_Applicatie.Repositories.Rooms
             }
             catch (Exception ex)
             {
-                throw new Exception("Cannot load the room chosen");
+                throw new Exception("Kan de kamer niet laden");
             }
             return room;
         }
@@ -151,7 +156,7 @@ namespace Someren_Applicatie.Repositories.Rooms
                 command.Connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
 
-                if (reader.Read())
+                while (reader.Read())
                 {
                     Room room = ReadRoom(reader);
                     rooms.Add(room);
@@ -184,7 +189,7 @@ namespace Someren_Applicatie.Repositories.Rooms
             }
             catch (Exception ex)
             {
-                throw new Exception("Cannot update room");
+                throw new Exception("Kamer kan niet worden aangepast");
             }
         }
     }

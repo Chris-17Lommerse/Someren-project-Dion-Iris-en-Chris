@@ -4,6 +4,12 @@
 }
 
 <h4> Verwijder activiteit</h4>
+@{
+    if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger" role="alert">@ViewBag.ErrorMessage</div>
+    }
+}
 <form action="/Activities/Delete" method="post">
     <input hidden type="number" name="Activiteitid" value="@Model?.ActiviteitId" />
 
