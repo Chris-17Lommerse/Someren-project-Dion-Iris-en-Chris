@@ -18,9 +18,16 @@ namespace Someren_Applicatie.Controllers
 
         public IActionResult Index()
         {
-            // Get all rooms from the database and return the Index View of the Activities
-            List<Room> rooms = _roomsRepository.GetAll();
-            return View(rooms);
+            try
+            {
+                // Get all rooms from the database and return the Index View of the Activities
+                List<Room> rooms = _roomsRepository.GetAll();
+                return View(rooms);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         // GET: RoomsController/Create
@@ -55,15 +62,22 @@ namespace Someren_Applicatie.Controllers
         [HttpGet]
         public ActionResult Edit(string? id)
         {
-            // 404 Not Found error
-            if (id == null)
+            try
             {
-                return NotFound();
-            }
+                // 404 Not Found error
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
-            // get room via repository
-            Room? room = _roomsRepository.GetById((string)id);
-            return View(room);
+                // get room via repository
+                Room? room = _roomsRepository.GetById((string)id);
+                return View(room);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         [HttpPost]
@@ -89,15 +103,24 @@ namespace Someren_Applicatie.Controllers
         // GET: RoomsController/Delete
         public ActionResult Delete(string? id)
         {
-            // 404 Not Found error
-            if (id == null)
+            try
             {
-                return NotFound();
-            }
+                // 404 Not Found error
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
-            // get room via repository
-            Room? room = _roomsRepository.GetById((string)id);
-            return View(room);
+                // get room via repository
+                Room? room = _roomsRepository.GetById((string)id);
+                return View(room);
+            }
+            catch (Exception ex)
+            {
+                {
+                    throw new Exception(ex.Message);
+                }
+            }
         }
         [HttpPost]
         // POST: RoomsController/Delete
