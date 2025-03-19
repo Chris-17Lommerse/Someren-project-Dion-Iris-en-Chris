@@ -21,7 +21,7 @@ namespace Someren_Applicatie.Repositories.Students
                 throw new Exception($"Room {student.KamerNr} is full");
             Student? checkStudent = GetByName(student.Voornaam, student.Achternaam);
             if (checkStudent != null)
-                throw new Exception("Student already exists!");
+                throw new Exception($"Student {student.Voornaam} {student.Achternaam} already exists!");
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -159,8 +159,15 @@ namespace Someren_Applicatie.Repositories.Students
         {
             Student previousStudent = GetById(student.StudentNr);
             Student? checkStudent = GetByName(student.Voornaam, student.Achternaam);
-            if (((student.Voornaam != previousStudent.Voornaam) && (student.Achternaam != previousStudent.Achternaam)) && ((student.Voornaam == checkStudent.Voornaam) && (student.Achternaam == checkStudent.Achternaam)))
-                throw new Exception("Student already exists!");
+            //fix Jan Verhoef > Dion Verhoef > changed student to [Dion Verhoef] while [Dion Verhoef] already exists
+            //    Previous      Change
+            //  geef error als nieuwe naam al bestaat (als nieuwe naam niet bestaat dan is check een null) en nieuwe naam niet hetzelfde is als vorige naam
+            //  bestaande naam kan null zijn
+            if (checkStudent != null)
+            {
+                if (((student.Voornaam + student.Achternaam) == (checkStudent.Voornaam + checkStudent.Achternaam)) && (student.Voornaam + student.Achternaam) != (previousStudent.Voornaam + previousStudent.Achternaam))
+                    throw new Exception($"Student {student.Voornaam} {student.Achternaam} already exists!");
+            }
             if (previousStudent.KamerNr != student.KamerNr)
             {
                 bool IsRoomForStudent = IsBedAvailableInRoom(student.KamerNr);
