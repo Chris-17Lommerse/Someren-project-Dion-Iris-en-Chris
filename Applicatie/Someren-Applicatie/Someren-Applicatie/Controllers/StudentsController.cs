@@ -44,10 +44,7 @@ namespace Someren_Applicatie.Controllers
         [HttpGet]
         public IActionResult Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
             Student? student = _studentsRepository.GetById((int)id);
             return View(student);
         }
@@ -70,10 +67,7 @@ namespace Someren_Applicatie.Controllers
         [HttpGet]
         public IActionResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
             Student? student = _studentsRepository.GetById((int)id);
             return View(student);
         }
