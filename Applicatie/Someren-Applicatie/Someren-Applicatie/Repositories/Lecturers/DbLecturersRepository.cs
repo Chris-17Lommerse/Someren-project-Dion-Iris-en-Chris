@@ -136,6 +136,31 @@ namespace Someren_Applicatie.Repositories.Lecturers
                 }
             }
         }
+
+        //search
+        public List<Lecturer> GetByLastName(string lastName)
+        {
+            List<Lecturer> lecturers = new List<Lecturer>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = "SELECT docentnr, voornaam, achternaam, telefoonnr, leeftijd, kamernr " +
+                               "FROM DOCENT WHERE achternaam LIKE @LastName ORDER BY achternaam";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@LastName", "%" + lastName + "%");
+
+                command.Connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Lecturer lecturer = ReadLecturer(reader);
+                    lecturers.Add(lecturer);
+                }
+                reader.Close();
+            }
+            return lecturers;
+        }
     }
 }
 
