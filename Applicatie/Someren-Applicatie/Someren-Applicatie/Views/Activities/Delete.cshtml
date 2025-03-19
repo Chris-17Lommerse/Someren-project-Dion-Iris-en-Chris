@@ -13,11 +13,11 @@
     </div>
     <div class="form-group py-2">
         <label asp-for="StartTijd">Starttijd:</label>
-        <input asp-for="StartTijd" class="form-control" required value="@Model?.StartTijd" />
+        <input asp-for="StartTijd" class="form-control" required value="@Model?.StartTijd.ToString("yyyy-MM-ddTHH:mm")"  />
     </div>
     <div class="form-group py-2">
         <label asp-for="EindTijd">Eindtijd:</label>
-        <input asp-for="EindTijd" class="form-control" required value="@Model?.EindTijd" />
+        <input asp-for="EindTijd" class="form-control" required value="@Model?.EindTijd.ToString("yyyy-MM-ddTHH:mm")" />
     </div>
 
     <button type="submit" class="btn btn-danger m-1">Verwijder</button>

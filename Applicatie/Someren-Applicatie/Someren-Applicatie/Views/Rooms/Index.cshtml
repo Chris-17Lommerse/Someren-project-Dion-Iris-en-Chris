@@ -7,7 +7,7 @@
     <!--Filter functionaliteit-->
     <div class="form-group">
         <label for="search">Filter op het aantal slaaplekken:</label>
-        <select id="search", name="searchString" class="form-control">
+        <select id="search", name="searchString" class="form-control w-25 m-2">
             <option>Kies een optie</option>
             <option value="1">1 slaapplek</option>
             <option value="2">2 slaapplekken</option>
@@ -15,13 +15,13 @@
         </select>
     </div>
 
-    <button type="submit" class="btn btn-primary">Search</button>
+    <button type="submit" class="btn btn-primary m-2">Search</button>
 </form>
 <div class="text-center">
     <h1 class="display-4">Slaapkamers</h1>
     <a href="/Rooms/Create" class="btn btn-success">Voeg een slaapkamer toe</a>
     <p>Aantal kamers: @Model.Count</p>
-        <table class="table table-info">
+        <table class="table table-info table-hover">
             <thead>
                 <tr class="table-dark">
                     <th>Kamernummer</th>
@@ -39,8 +39,8 @@
                             <td>@room.AantalSlaaplekken</td>
                             <td>@room.TypeKamer</td>
                             <td>
-                                <a href="/Rooms/Edit/@room.KamerNummer" class="btn btn-dark">Aanpassen</a>
-                                <a href="/Rooms/Delete/@room.KamerNummer" class="btn btn-danger">Verwijderen</a>
+                                <a href="/Rooms/Edit/@room.KamerNummer" class="btn btn-dark btn-hover">Aanpassen</a>
+                                <a href="/Rooms/Delete/@room.KamerNummer" class="btn btn-danger btn-hover">Verwijderen</a>
                             </td>
                         </tr>
                     }
