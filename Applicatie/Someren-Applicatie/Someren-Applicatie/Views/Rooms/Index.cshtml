@@ -2,17 +2,25 @@
 @{
     ViewData["Title"] = "Rooms";
  }
+<form action="/Rooms/Index" method="post">
 
-    <div class="text-center">
-        <h1 class="display-4">Slaapkamers</h1>
-        <a href="/Rooms/Create" class="btn btn-success">Voeg een slaapkamer toe</a>
-        <p>Aantal kamers: @Model.Count</p>
-        <!--Filter functionaliteit-->
-            <select>
-                <option value="1">1</option>
-                <option value="8">8</option>
-            </select>
-            <input type="submit" />
+    <!--Filter functionaliteit-->
+    <div class="form-group">
+        <label for="search">Filter op het aantal slaaplekken:</label>
+        <select id="search", name="searchString" class="form-control">
+            <option>Kies een optie</option>
+            <option value="1">1 slaapplek</option>
+            <option value="2">2 slaapplekken</option>
+            <option value="8">8 slaapplekken</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+<div class="text-center">
+    <h1 class="display-4">Slaapkamers</h1>
+    <a href="/Rooms/Create" class="btn btn-success">Voeg een slaapkamer toe</a>
+    <p>Aantal kamers: @Model.Count</p>
         <table class="table table-info">
             <thead>
                 <tr class="table-dark">
