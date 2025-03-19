@@ -142,7 +142,6 @@ namespace Someren_Applicatie.Repositories.Activities
             }
             return activiteit;
         }
-
         public void Update(Activiteit activiteit)
         {
             try

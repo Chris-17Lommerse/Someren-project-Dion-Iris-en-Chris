@@ -137,7 +137,29 @@ namespace Someren_Applicatie.Repositories.Rooms
             }
             return room;
         }
+        public List<Room> GetByRoomSize(string aantalSlaapplekken)
+        {
+            List<Room> rooms = new List<Room>();
 
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = "SELECT kamernr, aantal_slaapplekken, type_kamer " +
+                               "FROM SLAAPKAMER WHERE aantal_slaapplekken LIKE @aantal_slaapplekken ORDER BY aantal_slaapplekken";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@aantal_slaapplekken", aantalSlaapplekken);
+
+                command.Connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Room room = ReadRoom(reader);
+                    rooms.Add(room);
+                }
+                reader.Close();
+            }
+            return rooms;
+        }
         public void Update(Room room)
         {
             try

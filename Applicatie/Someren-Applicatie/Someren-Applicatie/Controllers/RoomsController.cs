@@ -16,12 +16,20 @@ namespace Someren_Applicatie.Controllers
             _roomsRepository = roomsRepository;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string? searchString)
         {
             try
             {
+                List<Room> rooms;
                 // Get all rooms from the database and return the Index View of the Activities
-                List<Room> rooms = _roomsRepository.GetAll();
+                if (!string.IsNullOrEmpty(searchString))
+                {
+                    rooms = _roomsRepository.GetByRoomSize(searchString);
+                }
+                else
+                {
+                    rooms = _roomsRepository.GetAll();
+                }
                 return View(rooms);
             }
             catch (Exception ex)
