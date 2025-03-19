@@ -81,7 +81,7 @@ namespace Someren_Applicatie.Repositories.Activities
                     command.Connection.Open();
                     SqlDataReader reader = command.ExecuteReader();
 
-                    while (reader.Read())
+                    if(reader.Read())
                     {
                         Activiteit activiteit = ReadActivity(reader);
                         activiteiten.Add(activiteit);
@@ -130,7 +130,7 @@ namespace Someren_Applicatie.Repositories.Activities
                     command.Connection.Open();
                     SqlDataReader reader = command.ExecuteReader();
 
-                    while (reader.Read())
+                    if(reader.Read())
                     {
                         activiteit = ReadActivity(reader);
                     }
@@ -173,7 +173,5 @@ namespace Someren_Applicatie.Repositories.Activities
                 throw new Exception("Cannot update activity");
             }
         }
-
-       
     }
 }
