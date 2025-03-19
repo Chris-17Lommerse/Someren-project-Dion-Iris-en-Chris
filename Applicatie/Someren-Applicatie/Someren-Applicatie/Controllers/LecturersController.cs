@@ -13,13 +13,22 @@ namespace Someren_Applicatie.Controllers
             _lecturersRepository = lecturersRepository;
         }
 
-        public ActionResult Index()
+        public ActionResult Index(string? searchString)
         {
-            List<Lecturer> lecturers = _lecturersRepository.GetAll();
-            return View(lecturers);
+            List<Lecturer> lecturers;
 
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                lecturers = _lecturersRepository.GetByLastName(searchString);
+            }
+            else
+            {
+                lecturers = _lecturersRepository.GetAll();
+            }
+
+            return View(lecturers);
         }
- 
+
         [HttpGet]
         public ActionResult Create()
         {
@@ -32,8 +41,6 @@ namespace Someren_Applicatie.Controllers
             try
             {
                 _lecturersRepository.Add(lecturer);
-
-                
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -100,5 +107,7 @@ namespace Someren_Applicatie.Controllers
                 return View(lecturer);
             }
         }
+
+        
     }
 }

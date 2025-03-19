@@ -19,10 +19,18 @@ namespace Someren_Applicatie.Controllers
         }
         public IActionResult Index()
         {
-            // Get sll activities from the database and return the Index View with all activities
-            List<Activiteit> activities = _activitiesRepository.GetAll();
-            return View(activities);
+            try
+            {
+                // Get sll activities from the database and return the Index View with all activities
+                List<Activiteit> activities = _activitiesRepository.GetAll();
+                return View(activities);
+            } catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
+
+      
         // GET: ActivitiesController/Create
         [HttpGet]
         public IActionResult Create()
@@ -61,15 +69,21 @@ namespace Someren_Applicatie.Controllers
         [HttpGet]
         public ActionResult Edit(int? id)
         {
-            // 404 Not Found error
-            if (id == null)
+            try
             {
-                return NotFound();
-            }
+                // 404 Not Found error
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
-            // get activity via repository
-            Activiteit? activiteit = _activitiesRepository.GetById((int)id);
-            return View(activiteit);
+                // get activity via repository
+                Activiteit? activiteit = _activitiesRepository.GetById((int)id);
+                return View(activiteit);
+            } catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         [HttpPost]
@@ -95,15 +109,22 @@ namespace Someren_Applicatie.Controllers
         // GET: ActivitiesController/Delete
         public ActionResult Delete(int? id)
         {
-            // 404 Not Found error
-            if (id == null)
+            try
             {
-                return NotFound();
-            }
+                // 404 Not Found error
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
-            // get activity via repository
-            Activiteit? activiteit =_activitiesRepository.GetById((int)id);
-            return View(activiteit);
+                // get activity via repository
+                Activiteit? activiteit = _activitiesRepository.GetById((int)id);
+                return View(activiteit);
+            } 
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
         [HttpPost]
         // POST: ActivitiesController/Delete

@@ -9,5 +9,8 @@ namespace Someren_Applicatie.Repositories.Lecturers
         void Add(Lecturer lecturer);
         void Update(Lecturer lecturer);
         void Delete(Lecturer lecturer);
+
+        // Add this method for searching by last name
+        List<Lecturer> GetByLastName(string lastName);
     }
 }
