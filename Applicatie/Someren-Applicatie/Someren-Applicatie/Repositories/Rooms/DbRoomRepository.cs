@@ -33,22 +33,28 @@ namespace Someren_Applicatie.Repositories.Rooms
         }
         public void Delete(Room room)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            try
             {
-                string query = $"DELETE FROM SLAAPKAMER WHERE kamernr = @kamernr";
-                SqlCommand command = new SqlCommand(query, connection);
-
-                command.Parameters.AddWithValue("@kamernr", room.KamerNummer);
-
-                command.Connection.Open();
-                int nrOfAffectedRows = command.ExecuteNonQuery();
-                if (nrOfAffectedRows == 0)
+                using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
-                    throw new Exception("No records deleted");
+                    string query = $"DELETE FROM SLAAPKAMER WHERE kamernr = @kamernr";
+                    SqlCommand command = new SqlCommand(query, connection);
+
+                    command.Parameters.AddWithValue("@kamernr", room.KamerNummer);
+
+                    command.Connection.Open();
+                    int nrOfAffectedRows = command.ExecuteNonQuery();
+                    if (nrOfAffectedRows == 0)
+                    {
+                        throw new Exception("No records deleted");
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                throw new Exception("Room cannot be deleted.");
+            }
         }
-
         public List<Room> GetAll()
         {
             List<Room> rooms = new List<Room>();
