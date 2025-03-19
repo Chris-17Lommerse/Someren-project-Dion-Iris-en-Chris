@@ -54,7 +54,7 @@ namespace Someren_Applicatie.Repositories.Activities
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = "SELECT activiteitid, naam, starttijd, eindtijd FROM ACTIVITEIT";
+                string query = "SELECT activiteitid, naam, starttijd, eindtijd FROM ACTIVITEIT ORDER BY starttijd";
                 SqlCommand command = new SqlCommand(query, connection);
 
                 command.Connection.Open();

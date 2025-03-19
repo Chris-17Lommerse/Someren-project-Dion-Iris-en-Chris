@@ -16,12 +16,12 @@ namespace Someren_Applicatie.Repositories.Lecturers
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = $"INSERT INTO DOCENT (docentnr, voornaam, achternaam, telefoonnr, leeftijd, kamernr)" +
-                               "VALUES (@docentnr, @voornaam, @achternaam, @telefoonnr, @leeftijd, @kamernr); " +
+                string query = $"INSERT INTO DOCENT (voornaam, achternaam, telefoonnr, leeftijd, kamernr)" +
+                               "VALUES (@voornaam, @achternaam, @telefoonnr, @leeftijd, @kamernr); " +
                                "SELECT SCOPE_IDENTITY();";
                 SqlCommand command = new SqlCommand(query, connection);
 
-                command.Parameters.AddWithValue("@docentnr", lecturer.DocentNr);
+               
                 command.Parameters.AddWithValue("@voornaam", lecturer.Voornaam);
                 command.Parameters.AddWithValue("@achternaam", lecturer.Achternaam);
                 command.Parameters.AddWithValue("@telefoonnr", lecturer.TelefoonNr);
@@ -30,7 +30,7 @@ namespace Someren_Applicatie.Repositories.Lecturers
 
                 command.Connection.Open();
                 lecturer.DocentNr = Convert.ToInt32(command.ExecuteScalar());
-                command.ExecuteNonQuery();
+                
             }
         }
 

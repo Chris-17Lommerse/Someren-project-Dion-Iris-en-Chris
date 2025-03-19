@@ -8,28 +8,28 @@
 <form action="/Lecturers/Create" method="POST">
     @*Voornaam*@
     <div class="form-group py-2">
-        <label for="Voornaam">Voornaam</label>
-        <input type="text" id="Voornaam" name="Voornaam" aria-label="Voornaam" class="form-control" required value="@Model?.Voornaam" />
+        <label asp-for="Voornaam">Voornaam:</label>
+        <input asp-for="Voornaam" class="form-control" required value="@Model?.Voornaam" />
     </div>
     @*Achternaam*@
     <div class="form-group py-2">
-        <label for="Achternaam">Achternaam</label>
-        <input type="text" id="Achternaam" name="Achternaam" aria-label="Achternaam" class="form-control" required value="@Model?.Achternaam" />
+        <label asp-for="Achternaam">Achternaam:</label>
+        <input asp-for="Achternaam" class="form-control" required value="@Model?.Achternaam" />
     </div>
     @*Telefoonnummer*@
     <div class="form-group py-2">
-        <label for="TelefoonNr">Telefoon nummer</label>
-        <input type="tel" id="TelefoonNr" name="TelefoonNr" class="form-control" required value="@Model?.TelefoonNr" />
+        <label asp-for="TelefoonNr">Telefoonnummer:</label>
+        <input asp-for="TelefoonNr" class="form-control" required value="@Model?.TelefoonNr" />
     </div>
     @*Leeftijd*@
     <div class="form-group py-2">
-        <label for="Leeftijd">Leeftijd</label>
-        <input type="number" id="Leeftijd" name="Leeftijd" class="form-control" required value="@Model?.Leeftijd" />
+        <label asp-for="Leeftijd">Leeftijd:</label>
+        <input asp-for="Leeftijd" class="form-control" required value="@Model?.Leeftijd" />
     </div>
     @*Kamernummer*@
     <div class="form-group py-2">
-        <label for="Kamernr">Kamernummer</label>
-        <input type="text" id="Kamernr" name="Kamernr" class="form-control" required value="@Model?.KamerNr" />
+        <label asp-for="KamerNr">Kamernr:</label>
+        <input asp-for="KamerNr" class="form-control" required value="@Model?.KamerNr" />
     </div>
 
     <button type="submit" class="btn btn-primary">Create</button>
