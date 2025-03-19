@@ -80,7 +80,7 @@ namespace Someren_Applicatie.Repositories.Activities
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
-                    string query = "SELECT activiteitid, naam, starttijd, eindtijd FROM ACTIVITEIT ORDER BY starttijd";
+                    string query = $"{ReadQuery()} ORDER BY starttijd";
                     SqlCommand command = new SqlCommand(query, connection);
 
                     command.Connection.Open();
@@ -119,6 +119,12 @@ namespace Someren_Applicatie.Repositories.Activities
             
         }
 
+        private string ReadQuery()
+        {
+            string query = $"SELECT activiteitid, naam, starttijd, eindtijd FROM ACTIVITEIT";
+            return query;
+        }
+
         public Activiteit? GetById(int activiteitId)
         {
             Activiteit? activiteit = null;
@@ -126,8 +132,7 @@ namespace Someren_Applicatie.Repositories.Activities
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
-                    string query = "SELECT activiteitid, naam, starttijd, eindtijd FROM ACTIVITEIT " +
-                        "WHERE activiteitid = @activiteitId";
+                    string query = $"{ReadQuery()} WHERE activiteitid = @activiteitId";
                     SqlCommand command = new SqlCommand(query, connection);
 
                     command.Parameters.AddWithValue("@activiteitId", activiteitId);
@@ -155,8 +160,7 @@ namespace Someren_Applicatie.Repositories.Activities
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
-                    string query = "SELECT activiteitid, naam, starttijd, eindtijd FROM ACTIVITEIT " +
-                        "WHERE naam = @naam";
+                    string query = $"{ReadQuery()} WHERE naam = @naam";
                     SqlCommand command = new SqlCommand(query, connection);
 
                     command.Parameters.AddWithValue("@naam", activityName);

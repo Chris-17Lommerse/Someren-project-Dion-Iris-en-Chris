@@ -43,6 +43,12 @@ namespace Someren_Applicatie.Repositories.Rooms
                 throw new Exception("Kamer kan niet worden toegevoegd");
             }
         }
+
+        private string ReadQuery()
+        {
+            string query = $"SELECT kamernr, aantal_slaapplekken, type_kamer FROM SLAAPKAMER";
+            return query;
+        }
         public void Delete(Room room)
         {
             try
@@ -74,7 +80,7 @@ namespace Someren_Applicatie.Repositories.Rooms
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
-                    string query = "SELECT kamernr, aantal_slaapplekken, type_kamer FROM SLAAPKAMER ORDER BY kamernr";
+                    string query = $"{ReadQuery()} ORDER BY kamernr";
                     SqlCommand command = new SqlCommand(query, connection);
 
                     command.Connection.Open();
@@ -120,8 +126,7 @@ namespace Someren_Applicatie.Repositories.Rooms
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
-                    string query = "SELECT kamernr, aantal_slaapplekken, type_kamer FROM SLAAPKAMER " +
-                        "WHERE kamernr = @KamerNr";
+                    string query = $"{ReadQuery()} WHERE kamernr = @KamerNr";
                     SqlCommand command = new SqlCommand(query, connection);
 
                     command.Parameters.AddWithValue("@KamerNr", roomId);
@@ -148,8 +153,7 @@ namespace Someren_Applicatie.Repositories.Rooms
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = "SELECT kamernr, aantal_slaapplekken, type_kamer " +
-                               "FROM SLAAPKAMER WHERE aantal_slaapplekken LIKE @aantal_slaapplekken ORDER BY aantal_slaapplekken";
+                string query = $"{ReadQuery()} WHERE aantal_slaapplekken LIKE @aantal_slaapplekken ORDER BY aantal_slaapplekken";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@aantal_slaapplekken", aantalSlaapplekken);
 
