@@ -31,7 +31,6 @@ namespace Someren_Applicatie.Controllers
             try
             {
                 _studentsRepository.Add(student);
-                //Back to index page
                 return RedirectToAction("Index");
             }
             catch (Exception ex)

@@ -10,6 +10,6 @@ namespace Someren_Applicatie.Repositories.Students
         void Update(Student student);
         void Delete(Student student);
         Student? GetByName(string firstName, string lastName);
-        bool CheckRoom(string roomName);
+        bool IsBedAvailableInRoom(string roomName);
     }
 }
