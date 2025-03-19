@@ -29,6 +29,8 @@ namespace Someren_Applicatie.Controllers
                 throw new Exception(ex.Message);
             }
         }
+
+      
         // GET: ActivitiesController/Create
         [HttpGet]
         public IActionResult Create()

@@ -174,5 +174,7 @@ namespace Someren_Applicatie.Repositories.Activities
                 throw new Exception("Cannot update activity");
             }
         }
+
+       
     }
 }
