@@ -10,6 +10,7 @@
 }
 
 <h3>Docenten</h3>
+Alle docenten zijn hier getoond:<br>
 <a href="/Lecturers/Create">Docent aanmaken</a>
 
 <table class="table table-striped">
@@ -36,8 +37,8 @@
                     <td>@lecturer.Leeftijd</td>
                     <td>@lecturer.KamerNr</td>
                     <td>
-                        <a href="/Lecturers/Edit/@lecturer.DocentNr">Bewerken</a> |
-                        <a href="/Lecturers/Delete/@lecturer.DocentNr">Verwijderen</a>
+                        <a href="/Lecturers/Edit/@lecturer.DocentNr" class="btn btn-dark">Bewerken</a> |
+                        <a href="/Lecturers/Delete/@lecturer.DocentNr" class="btn btn-danger">Verwijderen</a>
                     </td>
                 </tr>
             }

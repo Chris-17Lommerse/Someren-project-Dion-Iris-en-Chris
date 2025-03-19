@@ -22,8 +22,6 @@ namespace Someren_Applicatie.Controllers
             // Get sll activities from the database and return the Index View with all activities
             List<Activiteit> activities = _activitiesRepository.GetAll();
             return View(activities);
-
-            
         }
         // GET: ActivitiesController/Create
         [HttpGet]
