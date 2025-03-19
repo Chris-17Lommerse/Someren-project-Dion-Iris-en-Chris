@@ -8,6 +8,7 @@ namespace Someren_Applicatie.Repositories.Activities
     {
         private readonly string? _connectionString;
 
+        // Connection to the database will be defined in the constructor
         public DbActivitiesRepository(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("SomerenDatabase");
@@ -16,15 +17,18 @@ namespace Someren_Applicatie.Repositories.Activities
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
+                // Query to add an activity to the database
                 string query = $"INSERT INTO ACTIVITEIT (naam, starttijd, eindtijd)" +
                                "VALUES (@naam, @starttijd, @eindtijd); " +
                                "SELECT SCOPE_IDENTITY();";
                 SqlCommand command = new SqlCommand(query, connection);
 
+                // Parameters will be combined with the activity 
                 command.Parameters.AddWithValue("@naam", activiteit.Naam);
                 command.Parameters.AddWithValue("@starttijd", activiteit.StartTijd);
                 command.Parameters.AddWithValue("@eindtijd", activiteit.EindTijd);
 
+                // Query will be exexcuted
                 command.Connection.Open();
                 command.ExecuteNonQuery();
             }
@@ -34,12 +38,14 @@ namespace Someren_Applicatie.Repositories.Activities
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
+                // Query to delete an activity
                 string query = $"DELETE FROM ACTIVITEIT WHERE activiteitid = @activiteitId";
                 SqlCommand command = new SqlCommand(query, connection);
 
                 command.Parameters.AddWithValue("@activiteitId", activiteit.ActiviteitId);
 
                 command.Connection.Open();
+                // Query will be executed
                 int nrOfAffectedRows = command.ExecuteNonQuery();
                 if (nrOfAffectedRows == 0)
                 {
@@ -108,6 +114,7 @@ namespace Someren_Applicatie.Repositories.Activities
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
+                // Query to update an activity
                 string query = "UPDATE ACTIVITEIT SET naam = @naam, starttijd = @startTijd, eindtijd = @eindTijd " +
                            "WHERE activiteitid = @activiteitId";
                 SqlCommand command = new SqlCommand(query, connection);
@@ -118,7 +125,9 @@ namespace Someren_Applicatie.Repositories.Activities
                 command.Parameters.AddWithValue("@eindTijd", activiteit.EindTijd);
 
                 command.Connection.Open();
+                // Query will be executed
                 int nrOfAffectedRows = command.ExecuteNonQuery();
+
                 if (nrOfAffectedRows == 0)
                 {
                     throw new Exception("No records updated");

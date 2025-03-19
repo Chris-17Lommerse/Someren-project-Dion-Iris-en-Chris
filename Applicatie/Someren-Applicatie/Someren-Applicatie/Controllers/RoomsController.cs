@@ -7,8 +7,10 @@ namespace Someren_Applicatie.Controllers
 {
     public class RoomsController : Controller
     {
+        // Repository variable will be declared
         private readonly IRoomRepository _roomsRepository;
 
+        // Constructor
         public RoomsController(IRoomRepository roomsRepository)
         {
             _roomsRepository = roomsRepository;
@@ -16,6 +18,7 @@ namespace Someren_Applicatie.Controllers
 
         public IActionResult Index()
         {
+            // Get all rooms from the database and return the Index View of the Activities
             List<Room> rooms = _roomsRepository.GetAll();
             return View(rooms);
         }
@@ -24,6 +27,7 @@ namespace Someren_Applicatie.Controllers
         [HttpGet]
         public ActionResult Create()
         {
+            // Returns a create form to add a room
             return View();
         }
 
@@ -33,7 +37,7 @@ namespace Someren_Applicatie.Controllers
         {
             try
             {
-                // add user via repository
+                // add room via repository
                 _roomsRepository.Add(room);
 
                 // Go back to list (Via Index)
@@ -51,12 +55,13 @@ namespace Someren_Applicatie.Controllers
         [HttpGet]
         public ActionResult Edit(string? id)
         {
+            // 404 Not Found error
             if (id == null)
             {
                 return NotFound();
             }
 
-            // get user via repository
+            // get room via repository
             Room? room = _roomsRepository.GetById((string)id);
             return View(room);
         }
@@ -67,7 +72,7 @@ namespace Someren_Applicatie.Controllers
         {
             try
             {
-                // Edit user via repository
+                // Edit room via repository
                 _roomsRepository.Update(room);
 
                 // Go back to list (Via Index)
@@ -81,24 +86,26 @@ namespace Someren_Applicatie.Controllers
             }
         }
         [HttpGet]
+        // GET: RoomsController/Delete
         public ActionResult Delete(string? id)
         {
+            // 404 Not Found error
             if (id == null)
             {
                 return NotFound();
             }
 
-            // get user via repository
+            // get room via repository
             Room? room = _roomsRepository.GetById((string)id);
             return View(room);
         }
         [HttpPost]
-        // POST: UsersController/Delete
+        // POST: RoomsController/Delete
         public ActionResult Delete(Room room)
         {
             try
             {
-                // Delete user via repository
+                // Delete room via repository
                 _roomsRepository.Delete(room);
 
                 // Go back to list (Via Index)

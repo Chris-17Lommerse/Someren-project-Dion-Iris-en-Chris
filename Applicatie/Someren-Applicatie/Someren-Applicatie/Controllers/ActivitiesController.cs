@@ -9,14 +9,17 @@ namespace Someren_Applicatie.Controllers
 {
     public class ActivitiesController : Controller
     {
+        // Repository variable will be declared
         private readonly IActivitiesRepository _activitiesRepository;
 
+        // Constructor for the ActivitiesController
         public ActivitiesController(IActivitiesRepository activitiesRepository)
         {
             _activitiesRepository = activitiesRepository;
         }
         public IActionResult Index()
         {
+            // Get sll activities from the database and return the Index View with all activities
             List<Activiteit> activities = _activitiesRepository.GetAll();
             return View(activities);
 
@@ -26,6 +29,7 @@ namespace Someren_Applicatie.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            // returns a create form to add an activity
             return View();
         }
 
@@ -35,7 +39,7 @@ namespace Someren_Applicatie.Controllers
         {
             try
             {
-                // add user via repository
+                // add activity via repository
                 _activitiesRepository.Add(activiteit);
 
                 // Go back to list (Via Index)
@@ -51,6 +55,7 @@ namespace Someren_Applicatie.Controllers
         [HttpGet]
         public IActionResult Update()
         {
+            // returns a update forn to edit an activity
             return View();
         }
 
@@ -58,23 +63,24 @@ namespace Someren_Applicatie.Controllers
         [HttpGet]
         public ActionResult Edit(int? id)
         {
+            // 404 Not Found error
             if (id == null)
             {
                 return NotFound();
             }
 
-            // get user via repository
+            // get activity via repository
             Activiteit? activiteit = _activitiesRepository.GetById((int)id);
             return View(activiteit);
         }
 
         [HttpPost]
-        // POST: UsersController/Edit
+        // POST: ActivitiesController/Edit
         public ActionResult Edit(Activiteit activiteit)
         {
             try
             {
-                // Edit user via repository
+                // Edit activity via repository
                 _activitiesRepository.Update(activiteit);
 
                 // Go back to list (Via Index)
@@ -88,24 +94,26 @@ namespace Someren_Applicatie.Controllers
             }
         }
         [HttpGet]
+        // GET: ActivitiesController/Delete
         public ActionResult Delete(int? id)
         {
+            // 404 Not Found error
             if (id == null)
             {
                 return NotFound();
             }
 
-            // get user via repository
+            // get activity via repository
             Activiteit? activiteit =_activitiesRepository.GetById((int)id);
             return View(activiteit);
         }
         [HttpPost]
-        // POST: UsersController/Delete
+        // POST: ActivitiesController/Delete
         public ActionResult Delete(Activiteit activiteit)
         {
             try
             {
-                // Delete user via repository
+                // Delete activity via repository
                 _activitiesRepository.Delete(activiteit);
 
                 // Go back to list (Via Index)
