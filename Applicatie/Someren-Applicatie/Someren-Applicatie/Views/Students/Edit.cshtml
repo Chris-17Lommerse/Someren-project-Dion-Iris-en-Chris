@@ -3,6 +3,12 @@
     ViewData["Title"] = "Student bewerken";
 }
 <h1>Student bewerken</h1>
+@{
+    if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger" role="alert">@ViewBag.ErrorMessage</div>
+    }
+}
 <form action="/Students/Edit" method="POST">
     <input hidden type="number" name="StudentNr" value="@Model?.StudentNr" />
 
