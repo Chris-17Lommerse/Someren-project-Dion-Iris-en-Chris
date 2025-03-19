@@ -16,6 +16,13 @@ namespace Someren_Applicatie.Repositories.Students
 
         public void Add(Student student)
         {
+            bool IsRoomForStudent = CheckRoom(student.KamerNr);
+            if (!IsRoomForStudent)
+                throw new Exception("Room is full");
+            Student? checkStudent = GetByName(student.Voornaam, student.Achternaam);
+            if (checkStudent != null)
+                throw new Exception("Student already exists!");
+
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 string query = $"INSERT INTO dbo.STUDENT (voornaam, achternaam, telefoonnr, klas, kamernr) " +
@@ -32,6 +39,34 @@ namespace Someren_Applicatie.Repositories.Students
                 command.Connection.Open();
                 student.StudentNr = Convert.ToInt32(command.ExecuteScalar());
             }
+        }
+
+        public bool CheckRoom(string roomNr)
+        {
+            int numberOfStudents = 0;
+            int numberOfBeds = 0;
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = "SELECT SK.aantal_slaapplekken, COUNT(ST.studentennr) AS numberOfStudentsInRoom " +
+                                "FROM dbo.STUDENT AS ST " +
+                                "JOIN dbo.SLAAPKAMER AS SK ON ST.kamernr = SK.kamernr " +
+                                "WHERE ST.kamernr = @kamernr " +
+                                "GROUP BY SK.aantal_slaapplekken;";
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("@kamernr", roomNr);
+
+                command.Connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read()) {
+                    numberOfStudents = (int)reader["numberOfStudentsInRoom"];
+                    numberOfBeds = (int)reader["aantal_slaapplekken"];
+                }
+                reader.Close();
+            }
+
+            return numberOfStudents < numberOfBeds;
         }
 
         public void Delete(Student student)
@@ -89,10 +124,31 @@ namespace Someren_Applicatie.Repositories.Students
                 command.Connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
 
-                while (reader.Read())
-                {
+                if (reader.Read())
                     student = ReadStudent(reader);
-                }
+                reader.Close();
+            }
+
+            return student;
+        }
+
+        public Student? GetByName(string firstName, string lastName)
+        {
+            Student student = null;
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = "SELECT studentennr, voornaam, achternaam, telefoonnr, klas, kamernr FROM dbo.STUDENT WHERE voornaam = @voornaam AND achternaam = @achternaam";
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("@voornaam", firstName);
+                command.Parameters.AddWithValue("@achternaam", lastName);
+
+                command.Connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                    student = ReadStudent(reader);
                 reader.Close();
             }
 

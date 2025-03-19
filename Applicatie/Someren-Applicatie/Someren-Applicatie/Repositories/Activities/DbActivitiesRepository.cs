@@ -15,123 +15,163 @@ namespace Someren_Applicatie.Repositories.Activities
         }
         public void Add(Activiteit activiteit)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            try
             {
-                // Query to add an activity to the database
-                string query = $"INSERT INTO ACTIVITEIT (naam, starttijd, eindtijd)" +
-                               "VALUES (@naam, @starttijd, @eindtijd); " +
-                               "SELECT SCOPE_IDENTITY();";
-                SqlCommand command = new SqlCommand(query, connection);
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    // Query to add an activity to the database
+                    string query = $"INSERT INTO ACTIVITEIT (naam, starttijd, eindtijd)" +
+                                   "VALUES (@naam, @starttijd, @eindtijd); " +
+                                   "SELECT SCOPE_IDENTITY();";
+                    SqlCommand command = new SqlCommand(query, connection);
 
-                // Parameters will be combined with the activity 
-                command.Parameters.AddWithValue("@naam", activiteit.Naam);
-                command.Parameters.AddWithValue("@starttijd", activiteit.StartTijd);
-                command.Parameters.AddWithValue("@eindtijd", activiteit.EindTijd);
+                    // Parameters will be combined with the activity 
+                    command.Parameters.AddWithValue("@naam", activiteit.Naam);
+                    command.Parameters.AddWithValue("@starttijd", activiteit.StartTijd);
+                    command.Parameters.AddWithValue("@eindtijd", activiteit.EindTijd);
 
-                // Query will be exexcuted
-                command.Connection.Open();
-                command.ExecuteNonQuery();
+                    // Query will be exexcuted
+                    command.Connection.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Cannot add activity");
             }
         }
 
         public void Delete(Activiteit activiteit)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            try
             {
-                // Query to delete an activity
-                string query = $"DELETE FROM ACTIVITEIT WHERE activiteitid = @activiteitId";
-                SqlCommand command = new SqlCommand(query, connection);
-
-                command.Parameters.AddWithValue("@activiteitId", activiteit.ActiviteitId);
-
-                command.Connection.Open();
-                // Query will be executed
-                int nrOfAffectedRows = command.ExecuteNonQuery();
-                if (nrOfAffectedRows == 0)
+                using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
-                    throw new Exception("No records deleted");
+                    // Query to delete an activity
+                    string query = $"DELETE FROM ACTIVITEIT WHERE activiteitid = @activiteitId";
+                    SqlCommand command = new SqlCommand(query, connection);
+
+                    command.Parameters.AddWithValue("@activiteitId", activiteit.ActiviteitId);
+
+                    command.Connection.Open();
+                    // Query will be executed
+                    int nrOfAffectedRows = command.ExecuteNonQuery();
+                    if (nrOfAffectedRows == 0)
+                    {
+                        throw new Exception("No records deleted");
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Activity cannot be deleted");
             }
         }
 
         public List<Activiteit> GetAll()
         {
             List<Activiteit> activiteiten = new List<Activiteit>();
-
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            try
             {
-                string query = "SELECT activiteitid, naam, starttijd, eindtijd FROM ACTIVITEIT ORDER BY starttijd";
-                SqlCommand command = new SqlCommand(query, connection);
-
-                command.Connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
-
-                while (reader.Read())
+                using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
-                    Activiteit activiteit = ReadActivity(reader);
-                    activiteiten.Add(activiteit);
+                    string query = "SELECT activiteitid, naam, starttijd, eindtijd FROM ACTIVITEIT ORDER BY starttijd";
+                    SqlCommand command = new SqlCommand(query, connection);
+
+                    command.Connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Activiteit activiteit = ReadActivity(reader);
+                        activiteiten.Add(activiteit);
+                    }
+                    reader.Close();
                 }
-                reader.Close();
+            } 
+            catch (Exception ex)
+            {
+                throw new Exception("Cannot load activities");
             }
             return activiteiten;
         }
 
         private Activiteit ReadActivity(SqlDataReader reader)
         {
-            // retrieve data from fields
-            int activiteitId = (int)reader["activiteitid"];
-            string naam = (string)reader["naam"];
-            DateTime startTijd = (DateTime)reader["starttijd"];
-            DateTime eindTijd = (DateTime)reader["eindtijd"];
+            try
+            {
+                // retrieve data from fields
+                int activiteitId = (int)reader["activiteitid"];
+                string naam = (string)reader["naam"];
+                DateTime startTijd = (DateTime)reader["starttijd"];
+                DateTime eindTijd = (DateTime)reader["eindtijd"];
 
-            return new Activiteit(activiteitId, naam, startTijd, eindTijd);
+                return new Activiteit(activiteitId, naam, startTijd, eindTijd);
+            } catch (Exception ex)
+            {
+                throw new Exception("Cannot read activities");
+            } 
+            
         }
 
         public Activiteit? GetById(int activiteitId)
         {
             Activiteit? activiteit = null;
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            try
             {
-                string query = "SELECT activiteitid, naam, starttijd, eindtijd FROM ACTIVITEIT " +
-                    "WHERE activiteitid = @activiteitId";
-                SqlCommand command = new SqlCommand(query, connection);
-
-                command.Parameters.AddWithValue("@activiteitId", activiteitId);
-
-                command.Connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
-
-                while (reader.Read())
+                using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
-                    activiteit = ReadActivity(reader);
+                    string query = "SELECT activiteitid, naam, starttijd, eindtijd FROM ACTIVITEIT " +
+                        "WHERE activiteitid = @activiteitId";
+                    SqlCommand command = new SqlCommand(query, connection);
+
+                    command.Parameters.AddWithValue("@activiteitId", activiteitId);
+
+                    command.Connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        activiteit = ReadActivity(reader);
+                    }
+                    reader.Close();
                 }
-                reader.Close();
+            } catch (Exception ex)
+            {
+                throw new Exception("Cannot load the activity chosen");
             }
             return activiteit;
         }
 
         public void Update(Activiteit activiteit)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            try
             {
-                // Query to update an activity
-                string query = "UPDATE ACTIVITEIT SET naam = @naam, starttijd = @startTijd, eindtijd = @eindTijd " +
-                           "WHERE activiteitid = @activiteitId";
-                SqlCommand command = new SqlCommand(query, connection);
-
-                command.Parameters.AddWithValue("@activiteitId", activiteit.ActiviteitId);
-                command.Parameters.AddWithValue("@naam", activiteit.Naam);
-                command.Parameters.AddWithValue("@startTijd", activiteit.StartTijd);
-                command.Parameters.AddWithValue("@eindTijd", activiteit.EindTijd);
-
-                command.Connection.Open();
-                // Query will be executed
-                int nrOfAffectedRows = command.ExecuteNonQuery();
-
-                if (nrOfAffectedRows == 0)
+                using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
-                    throw new Exception("No records updated");
+                    // Query to update an activity
+                    string query = "UPDATE ACTIVITEIT SET naam = @naam, starttijd = @startTijd, eindtijd = @eindTijd " +
+                               "WHERE activiteitid = @activiteitId";
+                    SqlCommand command = new SqlCommand(query, connection);
+
+                    command.Parameters.AddWithValue("@activiteitId", activiteit.ActiviteitId);
+                    command.Parameters.AddWithValue("@naam", activiteit.Naam);
+                    command.Parameters.AddWithValue("@startTijd", activiteit.StartTijd);
+                    command.Parameters.AddWithValue("@eindTijd", activiteit.EindTijd);
+
+                    command.Connection.Open();
+                    // Query will be executed
+                    int nrOfAffectedRows = command.ExecuteNonQuery();
+
+                    if (nrOfAffectedRows == 0)
+                    {
+                        throw new Exception("No records updated");
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Cannot update activity");
             }
         }
     }
