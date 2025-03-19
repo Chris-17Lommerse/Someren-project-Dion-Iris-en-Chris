@@ -8,6 +8,7 @@ namespace Someren_Applicatie.Repositories.Rooms
     {
         private readonly string? _connectionString;
 
+        // Connection to the database will be set 
         public DbRoomRepository(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("SomerenDatabase");
@@ -16,6 +17,7 @@ namespace Someren_Applicatie.Repositories.Rooms
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
+                // Query to add a room to the database
                 string query = $"INSERT INTO SLAAPKAMER (kamernr, aantal_slaapplekken, type_kamer)" +
                                "VALUES (@kamernr, @aantal_slaapplekken, @type_kamer); " +
                                "SELECT SCOPE_IDENTITY();";

@@ -4,7 +4,7 @@
 }
 
 <h4>Nieuwe Slaapkamer</h4>
-    <form action="/Rooms/Create" method="post">
+    <form action="/Rooms/Create" method="post" >
         <div class="form-group py-2">
             <label asp-for="KamerNummer">Kamernummer:</label>
             <input asp-for="KamerNummer" class="form-control" required value="@Model?.KamerNummer" />
@@ -21,7 +21,7 @@
             </select>
         </div>
 
-        <button type="submit" class="btn btn-primary">Add</button>
+        <button type="submit" class="btn btn-success">Voeg toe</button>
     </form>
-<a href="/Rooms/Index">Ga terug naar lijst met slaapkamers</a>
+<a href="/Rooms/Index" class="btn btn-dark">Ga terug naar de lijst met slaapkamers</a>
 
