@@ -14,23 +14,30 @@ namespace Someren_Applicatie.Repositories.Lecturers
         }
         public void Add(Lecturer lecturer)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            try
             {
-                string query = $"INSERT INTO DOCENT (voornaam, achternaam, telefoonnr, leeftijd, kamernr)" +
-                               "VALUES (@voornaam, @achternaam, @telefoonnr, @leeftijd, @kamernr); " +
-                               "SELECT SCOPE_IDENTITY();";
-                SqlCommand command = new SqlCommand(query, connection);
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    string query = $"INSERT INTO DOCENT (voornaam, achternaam, telefoonnr, leeftijd, kamernr)" +
+                                   "VALUES (@voornaam, @achternaam, @telefoonnr, @leeftijd, @kamernr); " +
+                                   "SELECT SCOPE_IDENTITY();";
+                    SqlCommand command = new SqlCommand(query, connection);
 
-               
-                command.Parameters.AddWithValue("@voornaam", lecturer.Voornaam);
-                command.Parameters.AddWithValue("@achternaam", lecturer.Achternaam);
-                command.Parameters.AddWithValue("@telefoonnr", lecturer.TelefoonNr);
-                command.Parameters.AddWithValue("@leeftijd", lecturer.Leeftijd);
-                command.Parameters.AddWithValue("@kamernr", lecturer.KamerNr);
 
-                command.Connection.Open();
-                lecturer.DocentNr = Convert.ToInt32(command.ExecuteScalar());
-                
+                    command.Parameters.AddWithValue("@voornaam", lecturer.Voornaam);
+                    command.Parameters.AddWithValue("@achternaam", lecturer.Achternaam);
+                    command.Parameters.AddWithValue("@telefoonnr", lecturer.TelefoonNr);
+                    command.Parameters.AddWithValue("@leeftijd", lecturer.Leeftijd);
+                    command.Parameters.AddWithValue("@kamernr", lecturer.KamerNr);
+
+                    command.Connection.Open();
+                    lecturer.DocentNr = Convert.ToInt32(command.ExecuteScalar());
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Kan activiteit niet toevoegen");
             }
         }
 
@@ -38,21 +45,27 @@ namespace Someren_Applicatie.Repositories.Lecturers
         public List<Lecturer> GetAll()
         {
             List<Lecturer> lecturers = new List<Lecturer>();
-
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            try
             {
-                string query = "SELECT docentnr, voornaam, achternaam, telefoonnr, leeftijd, kamernr FROM DOCENT ORDER BY achternaam";
-                SqlCommand command = new SqlCommand(query, connection);
-
-                command.Connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
-
-                while (reader.Read())
+                using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
-                    Lecturer lecturer = ReadLecturer(reader);
-                    lecturers.Add(lecturer);
+                    string query = "SELECT docentnr, voornaam, achternaam, telefoonnr, leeftijd, kamernr FROM DOCENT ORDER BY achternaam";
+                    SqlCommand command = new SqlCommand(query, connection);
+
+                    command.Connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Lecturer lecturer = ReadLecturer(reader);
+                        lecturers.Add(lecturer);
+                    }
+                    reader.Close();
                 }
-                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Kan docent niet laden");
             }
             return lecturers;
         }
@@ -60,106 +73,141 @@ namespace Someren_Applicatie.Repositories.Lecturers
         //Delete
         public void Delete(Lecturer lecturer)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            try
             {
-                string query = $"DELETE FROM DOCENT WHERE docentnr = @docentnr";
-                SqlCommand command = new SqlCommand(query, connection);
-
-                command.Parameters.AddWithValue("@docentnr", lecturer.DocentNr);
-
-                command.Connection.Open();
-                int nrOfAffectedRows = command.ExecuteNonQuery();
-                if (nrOfAffectedRows == 0)
+                using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
-                    throw new Exception("No records deleted");
+                    string query = $"DELETE FROM DOCENT WHERE docentnr = @docentnr";
+                    SqlCommand command = new SqlCommand(query, connection);
+
+                    command.Parameters.AddWithValue("@docentnr", lecturer.DocentNr);
+
+                    command.Connection.Open();
+                    int nrOfAffectedRows = command.ExecuteNonQuery();
+                    if (nrOfAffectedRows == 0)
+                    {
+                        throw new Exception("No records deleted");
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Activititeit kan niet worden verwijderd");
             }
         }
 
         //Read Lecturer
         private Lecturer ReadLecturer(SqlDataReader reader)
         {
-            int docentnr = (int)reader["docentnr"];
-            string voornaam = (string)reader["voornaam"];
-            string achternaam = (string)reader["achternaam"];
-            string telefoonnr = (string)reader["telefoonnr"];
-            int leeftijd = (int)reader["leeftijd"];
-            string kamernr = (string)reader["kamernr"];
+            try
+            {
+                int docentnr = (int)reader["docentnr"];
+                string voornaam = (string)reader["voornaam"];
+                string achternaam = (string)reader["achternaam"];
+                string telefoonnr = (string)reader["telefoonnr"];
+                int leeftijd = (int)reader["leeftijd"];
+                string kamernr = (string)reader["kamernr"];
 
-            return new Lecturer(docentnr, voornaam, achternaam, telefoonnr, leeftijd, kamernr);
+                return new Lecturer(docentnr, voornaam, achternaam, telefoonnr, leeftijd, kamernr);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Kan activiteiten niet lezen.");
+            }
         }
 
-       //Get Id
+        //Get Id
         public Lecturer? GetById(int docentNr)
         {
             Lecturer lecturer = null;
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            try
             {
-                string query = "SELECT docentnr, voornaam, achternaam, telefoonnr, leeftijd, kamernr FROM DOCENT " +
-                    "WHERE docentnr = @DocentNr";
-                SqlCommand command = new SqlCommand(query, connection);
-
-                command.Parameters.AddWithValue("@DocentNr", docentNr);
-
-                command.Connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
-
-                if (reader.Read())
+                using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
-                    lecturer = ReadLecturer(reader);
+                    string query = "SELECT docentnr, voornaam, achternaam, telefoonnr, leeftijd, kamernr FROM DOCENT " +
+                        "WHERE docentnr = @DocentNr";
+                    SqlCommand command = new SqlCommand(query, connection);
+
+                    command.Parameters.AddWithValue("@DocentNr", docentNr);
+
+                    command.Connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        lecturer = ReadLecturer(reader);
+                    }
+                    reader.Close();
                 }
-                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Kan de activiteit niet laden.");
             }
             return lecturer;
         }
 
         public void Update(Lecturer lecturer)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            try
             {
-                string query = "UPDATE dbo.DOCENT SET voornaam = @voornaam, achternaam = @achternaam, telefoonnr = @telefoonnr, leeftijd = @leeftijd, kamernr = @kamernr " +
-                                "WHERE docentnr = @docentnr";
-                SqlCommand command = new SqlCommand(query, connection);
-
-                command.Parameters.AddWithValue("@docentnr", lecturer.DocentNr);
-                command.Parameters.AddWithValue("@voornaam", lecturer.Voornaam);
-                command.Parameters.AddWithValue("@achternaam", lecturer.Achternaam);
-                command.Parameters.AddWithValue("@telefoonnr", lecturer.TelefoonNr);
-                command.Parameters.AddWithValue("@leeftijd", lecturer.Leeftijd);
-                command.Parameters.AddWithValue("@kamernr", lecturer.KamerNr);
-
-                command.Connection.Open();
-                int nRowsAffected = command.ExecuteNonQuery();
-                if (nRowsAffected == 0)
+                using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
-                    throw new Exception("No records updated.");
+                    string query = "UPDATE dbo.DOCENT SET voornaam = @voornaam, achternaam = @achternaam, telefoonnr = @telefoonnr, leeftijd = @leeftijd, kamernr = @kamernr " +
+                                    "WHERE docentnr = @docentnr";
+                    SqlCommand command = new SqlCommand(query, connection);
+
+                    command.Parameters.AddWithValue("@docentnr", lecturer.DocentNr);
+                    command.Parameters.AddWithValue("@voornaam", lecturer.Voornaam);
+                    command.Parameters.AddWithValue("@achternaam", lecturer.Achternaam);
+                    command.Parameters.AddWithValue("@telefoonnr", lecturer.TelefoonNr);
+                    command.Parameters.AddWithValue("@leeftijd", lecturer.Leeftijd);
+                    command.Parameters.AddWithValue("@kamernr", lecturer.KamerNr);
+
+                    command.Connection.Open();
+                    int nRowsAffected = command.ExecuteNonQuery();
+                    if (nRowsAffected == 0)
+                    {
+                        throw new Exception("No records updated.");
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Docent kan niet worden aangepast");
             }
         }
 
         //search
         public List<Lecturer> GetByLastName(string lastName)
         {
-            List<Lecturer> lecturers = new List<Lecturer>();
-
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            
+                List<Lecturer> lecturers = new List<Lecturer>();
+            try
             {
-                string query = "SELECT docentnr, voornaam, achternaam, telefoonnr, leeftijd, kamernr " +
-                               "FROM DOCENT WHERE achternaam LIKE @LastName ORDER BY achternaam";
-                SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@LastName", "%" + lastName + "%");
-
-                command.Connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
-
-                if (reader.Read())
+                using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
-                    Lecturer lecturer = ReadLecturer(reader);
-                    lecturers.Add(lecturer);
+                    string query = "SELECT docentnr, voornaam, achternaam, telefoonnr, leeftijd, kamernr " +
+                                   "FROM DOCENT WHERE achternaam LIKE @LastName ORDER BY achternaam";
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@LastName", "%" + lastName + "%");
+
+                    command.Connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Lecturer lecturer = ReadLecturer(reader);
+                        lecturers.Add(lecturer);
+                    }
+                    reader.Close();
                 }
-                reader.Close();
+                return lecturers;
             }
-            return lecturers;
+            catch (Exception ex)
+            {
+                throw new Exception("Docent kan niet gevonden worden");
+            }
         }
     }
 }
