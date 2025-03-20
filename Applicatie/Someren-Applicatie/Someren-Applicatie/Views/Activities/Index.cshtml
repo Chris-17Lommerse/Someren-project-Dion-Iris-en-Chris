@@ -10,10 +10,25 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Activities</h1>
-    <p>All Activities are displayed here.</p>
-    <a href="/Activities/Create">Create new</a>
+    <h1 class="display-4">Activiteiten</h1>
+    <p>All Activiteiten worden hier getoont: </p>
+    <a href="/Activities/Create">Activiteit aanmaken</a>
 </div>
+
+
+@*Search form*@
+<form method="get" action="/Activities/Index">
+    <div class="form-group">
+        <label for="search">Filter op name:</label>
+        <input type="text" id="search" name="searchString" class="form-control" placeholder="Vul in activiteit naam">
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Zoek</button>
+</form>
+
+
+
 <table class="table table-striped">
     <thead>
         <tr>

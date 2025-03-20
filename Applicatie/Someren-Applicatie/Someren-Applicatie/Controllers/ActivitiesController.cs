@@ -17,20 +17,45 @@ namespace Someren_Applicatie.Controllers
         {
             _activitiesRepository = activitiesRepository;
         }
-        public IActionResult Index()
-        {
-            try
-            {
+
+
+
+
+
+
+  //      public IActionResult Index()
+  //      {
+   //         try
+   //         {
                 // Get sll activities from the database and return the Index View with all activities
-                List<Activiteit> activities = _activitiesRepository.GetAll();
-                return View(activities);
-            } catch (Exception ex)
+   //             List<Activiteit> activities = _activitiesRepository.GetAll();
+  //              return View(activities);
+  //          } catch (Exception ex)
+  //          {
+  //              throw new Exception(ex.Message);
+  //          }
+  //      }
+
+
+
+
+
+        public ActionResult Index(string? searchString)
+        {
+            List<Activiteit> activiteit;
+
+            if (!string.IsNullOrEmpty(searchString))
             {
-                throw new Exception(ex.Message);
+                activiteit = _activitiesRepository.GetByName(searchString);
             }
+            else
+            {
+                activiteit = _activitiesRepository.GetAll();
+            }
+
+            return View(activiteit);
         }
 
-      
         // GET: ActivitiesController/Create
         [HttpGet]
         public IActionResult Create()

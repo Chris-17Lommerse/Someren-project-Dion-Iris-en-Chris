@@ -9,6 +9,8 @@ namespace Someren_Applicatie.Repositories.Activities
         void Add(Activiteit activiteit);
         void Update(Activiteit activiteit);
         void Delete(Activiteit activiteit);
-        
+
+        List<Activiteit> GetByName(string naam);
+
     }
 }

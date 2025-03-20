@@ -212,5 +212,31 @@ namespace Someren_Applicatie.Repositories.Activities
                 throw new Exception("Activiteit kan niet worden aangepast");
             }
         }
+
+        public List<Activiteit> GetByName(string Naam)
+        {
+            List<Activiteit> activiteit = new List<Activiteit>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = "SELECT activiteitid, naam, starttijd, eindtijd" +
+                               "FROM ACTIVITEIT WHERE naam LIKE @naam ORDER BY naam";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@naam", "%" + Naam + "%");
+
+                command.Connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Activiteit activity = ReadActivity(reader);
+                    activiteit.Add(activity);
+                }
+                reader.Close();
+            }
+            return activiteit;
+        }
     }
 }
+
+
