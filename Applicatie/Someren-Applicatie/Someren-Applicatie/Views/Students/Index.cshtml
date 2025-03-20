@@ -9,9 +9,9 @@
 <h3>Studenten</h3>
 <a href="/Students/Create">Student aanmaken</a>
 
-<table class="table table-striped table-bordered">
+<table class="table table-info table-hover">
     <thead>
-        <tr>
+        <tr class="table-dark">
             <th>StudentNr</th>
             <th>Voornaam</th>
             <th>Achternaam</th>
@@ -33,8 +33,8 @@
                     <td>@student.Klas</td>
                     <td>@student.KamerNr</td>
                     <td>
-                        <a href="/Students/Edit/@student.StudentNr">Bewerken</a> |
-                        <a href="/Students/Delete/@student.StudentNr">Verwijderen</a>
+                        <a href="/Students/Edit/@student.StudentNr" class="btn btn-dark">Bewerken</a>
+                        <a href="/Students/Delete/@student.StudentNr" class="btn btn-danger">Verwijderen</a>
                     </td>
                 </tr>
             }
