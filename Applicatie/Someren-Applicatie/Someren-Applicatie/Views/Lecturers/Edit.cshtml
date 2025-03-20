@@ -4,6 +4,12 @@
 }
 
 <h1>Edit Docent</h1>
+@{
+    if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger" role="alert">@ViewBag.ErrorMessage</div>
+    }
+}
 <form action="/Lecturers/Edit" method="POST">
     <input type="hidden" name="DocentNr" value="@Model?.DocentNr" />
     @*Voornaam*@

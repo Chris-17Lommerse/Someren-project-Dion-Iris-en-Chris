@@ -16,6 +16,9 @@ namespace Someren_Applicatie.Repositories.Lecturers
         {
             try
             {
+                Lecturer? checkLecturer = GetByName(lecturer.Voornaam, lecturer.Achternaam);
+                if (checkLecturer != null)
+                    throw new Exception($"Docent {lecturer.Voornaam} {lecturer.Achternaam} bestaat al!");
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
                     string query = $"INSERT INTO DOCENT (voornaam, achternaam, telefoonnr, leeftijd, kamernr)" +
@@ -37,7 +40,7 @@ namespace Someren_Applicatie.Repositories.Lecturers
             }
             catch (Exception ex)
             {
-                throw new Exception("Kan activiteit niet toevoegen");
+                throw new Exception("Kan docent niet toevoegen");
             }
         }
 
@@ -92,7 +95,7 @@ namespace Someren_Applicatie.Repositories.Lecturers
             }
             catch (Exception ex)
             {
-                throw new Exception("Activititeit kan niet worden verwijderd");
+                throw new Exception("Docent kan niet worden verwijderd");
             }
         }
 
@@ -112,7 +115,7 @@ namespace Someren_Applicatie.Repositories.Lecturers
             }
             catch (Exception ex)
             {
-                throw new Exception("Kan activiteiten niet lezen.");
+                throw new Exception("Kan docent niet lezen.");
             }
         }
 
@@ -142,15 +145,24 @@ namespace Someren_Applicatie.Repositories.Lecturers
             }
             catch (Exception ex)
             {
-                throw new Exception("Kan de activiteit niet laden.");
+                throw new Exception("Kan de docent niet laden.");
             }
             return lecturer;
         }
 
         public void Update(Lecturer lecturer)
         {
-            try
-            {
+            try {
+                Lecturer previousLecturer = GetById(lecturer.DocentNr);
+                Lecturer? checkLecturer = GetByName(lecturer.Voornaam, lecturer.Achternaam);
+
+                if (checkLecturer != null)
+                {
+                    if (((lecturer.Voornaam + lecturer.Achternaam) == (checkLecturer.Voornaam + checkLecturer.Achternaam)) && (lecturer.Voornaam + lecturer.Achternaam) != (previousLecturer.Voornaam + previousLecturer.Achternaam))
+                        throw new Exception($"Docent {lecturer.Voornaam} {lecturer.Achternaam} bestaat al!");
+                }
+
+
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
                     string query = "UPDATE dbo.DOCENT SET voornaam = @voornaam, achternaam = @achternaam, telefoonnr = @telefoonnr, leeftijd = @leeftijd, kamernr = @kamernr " +
@@ -174,10 +186,33 @@ namespace Someren_Applicatie.Repositories.Lecturers
             }
             catch (Exception ex)
             {
-                throw new Exception("Docent kan niet worden aangepast");
+                throw new Exception("Kan de docent niet laden.");
             }
         }
 
+        //..
+        public Lecturer? GetByName(string firstName, string lastName)
+        {
+            Lecturer lecturer = null;
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = "SELECT docentnr, voornaam, achternaam, telefoonnr, leeftijd, kamernr FROM dbo.DOCENT WHERE voornaam = @voornaam AND achternaam = @achternaam";
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("@voornaam", firstName);
+                command.Parameters.AddWithValue("@achternaam", lastName);
+
+                command.Connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                    lecturer = ReadLecturer(reader);
+                reader.Close();
+            }
+
+            return lecturer;
+        }
         //search
         public List<Lecturer> GetByLastName(string lastName)
         {
