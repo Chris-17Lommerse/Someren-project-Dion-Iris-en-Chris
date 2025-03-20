@@ -9,23 +9,26 @@
     ViewData["Title"] = "Lecturers";
 }
 
-<h3>Docenten</h3>
+
 <form method="get" action="/Lecturers/Index">
     <div class="form-group">
         <label for="search">Filter op achternaam:</label>
-        <input type="text" id="search" name="searchString" class="form-control" placeholder="Vul in achternaam">
+        <input type="text" id="search" name="searchString" class="form-control w-25 m-2" placeholder="Vul in achternaam">
     </div>
 
 
     <button type="submit" class="btn btn-primary">Zoek</button>
 </form>
-<a href="/Lecturers/Create">Docent aanmaken</a>
 
 
-<table class="table table-striped">
+<div class="text-center">
+    <h1 class="display-4">Docenten</h1>
+    <a href="/Lecturers/Create" class="btn btn-success">Voeg een docent toe</a>
+    <p>Aantal docenten: @Model.Count</p>
+<table class="table table-info table-hover">
     <thead>
         <tr>
-            
+        <tr class="table-dark">
             <th>Voornaam</th>
             <th>Achternaam</th>
             <th>Telefoonnummer</th>

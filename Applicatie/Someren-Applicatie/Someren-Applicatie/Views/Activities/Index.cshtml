@@ -9,18 +9,13 @@
     ViewData["Title"] = "Activities";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Activiteiten</h1>
-    <p>All Activiteiten worden hier getoont: </p>
-    <a href="/Activities/Create">Activiteit aanmaken</a>
-</div>
 
 
 @*Search form*@
 <form method="get" action="/Activities/Index">
     <div class="form-group">
         <label for="search">Filter op name:</label>
-        <input type="text" id="search" name="searchString" class="form-control" placeholder="Vul in activiteit naam">
+        <input type="text" id="search" name="searchString" class="form-control w-25 m-2" placeholder="Vul in activiteit naam">
     </div>
 
 
@@ -28,13 +23,18 @@
 </form>
 
 
-
-<table class="table table-striped">
+<div class="text-center">
+    <h1 class="display-4">Activiteiten</h1>
+    <a href="/Activities/Create" class="btn btn-success">Voeg een activiteit toe</a>
+    <p>Aantal activiteiten: @Model.Count</p>
+<table class="table table-info table-hover">
     <thead>
         <tr>
+        <tr class="table-dark">
             <th>Naam</th>
             <th>Starttijd</th>
             <th>Eindtijd</th>
+            <th>Acties</th>
         </tr>
     </thead>
     <tbody>
@@ -46,8 +46,8 @@
                     <td>@activiteit.StartTijd</td>
                     <td>@activiteit.EindTijd</td>
                     <td>
-                        <a href="/Activities/Edit/@activiteit.ActiviteitId" class="btn btn-dark">Edit</a>
-                        <a href="/Activities/Delete/@activiteit.ActiviteitId" class="btn btn-danger">Delete</a>
+                        <a href="/Activities/Edit/@activiteit.ActiviteitId" class="btn btn-dark">Bewerken</a>
+                        <a href="/Activities/Delete/@activiteit.ActiviteitId" class="btn btn-danger">Verwijderen</a>
                     </td>
                 </tr>
             }

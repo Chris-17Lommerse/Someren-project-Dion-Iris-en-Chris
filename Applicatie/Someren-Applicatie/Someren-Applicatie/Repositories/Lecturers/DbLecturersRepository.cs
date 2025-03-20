@@ -104,7 +104,7 @@ namespace Someren_Applicatie.Repositories.Lecturers
                 command.Connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
 
-                while (reader.Read())
+                if (reader.Read())
                 {
                     lecturer = ReadLecturer(reader);
                 }
@@ -152,7 +152,7 @@ namespace Someren_Applicatie.Repositories.Lecturers
                 command.Connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
 
-                while (reader.Read())
+                if (reader.Read())
                 {
                     Lecturer lecturer = ReadLecturer(reader);
                     lecturers.Add(lecturer);

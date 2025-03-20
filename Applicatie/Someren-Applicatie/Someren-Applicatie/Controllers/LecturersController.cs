@@ -58,7 +58,6 @@ namespace Someren_Applicatie.Controllers
             {
                 return NotFound();
             }
-
             Lecturer ? lecturer = _lecturersRepository.GetById((int)id);
             return View(lecturer);
         }
