@@ -219,7 +219,7 @@ namespace Someren_Applicatie.Repositories.Activities
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = "SELECT activiteitid, naam, starttijd, eindtijd" +
+                string query = "SELECT activiteitid, naam, starttijd, eindtijd " +
                                "FROM ACTIVITEIT WHERE naam LIKE @naam ORDER BY naam";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@naam", "%" + Naam + "%");
