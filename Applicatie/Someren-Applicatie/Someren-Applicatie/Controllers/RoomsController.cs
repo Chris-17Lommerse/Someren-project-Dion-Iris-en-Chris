@@ -22,7 +22,7 @@ namespace Someren_Applicatie.Controllers
             {
                 List<Room> rooms;
                 // Get all rooms from the database and return the Index View of the Activities
-                if (!string.IsNullOrEmpty(searchString))
+                if (!string.IsNullOrEmpty(searchString) && (!searchString.Contains("Kies een optie")))
                 {
                     rooms = _roomsRepository.GetByRoomSize(searchString);
                 }

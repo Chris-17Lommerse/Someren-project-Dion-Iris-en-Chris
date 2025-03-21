@@ -17,29 +17,6 @@ namespace Someren_Applicatie.Controllers
         {
             _activitiesRepository = activitiesRepository;
         }
-
-
-
-
-
-
-  //      public IActionResult Index()
-  //      {
-   //         try
-   //         {
-                // Get sll activities from the database and return the Index View with all activities
-   //             List<Activiteit> activities = _activitiesRepository.GetAll();
-  //              return View(activities);
-  //          } catch (Exception ex)
-  //          {
-  //              throw new Exception(ex.Message);
-  //          }
-  //      }
-
-
-
-
-
         public ActionResult Index(string? searchString)
         {
             List<Activiteit> activiteit;

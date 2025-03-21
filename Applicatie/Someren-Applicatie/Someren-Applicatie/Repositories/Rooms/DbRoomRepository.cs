@@ -38,7 +38,7 @@ namespace Someren_Applicatie.Repositories.Rooms
                     command.ExecuteNonQuery();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new Exception("Kamer kan niet worden toegevoegd");
             }
@@ -68,7 +68,7 @@ namespace Someren_Applicatie.Repositories.Rooms
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new Exception("Kamer kan niet worden verwijderd.");
             }
@@ -94,7 +94,7 @@ namespace Someren_Applicatie.Repositories.Rooms
                     reader.Close();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new Exception("Kan geen kamers laden vanuit de database");
             }
@@ -114,14 +114,14 @@ namespace Someren_Applicatie.Repositories.Rooms
 
                 return new Room(kamerNummer, aantalSlaapplekken, typeKamer);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new Exception("Something went wrong");
             }
         }
         public Room? GetById(string roomId)
         {
-            Room room = null;
+            Room? room = null;
             try
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -141,7 +141,7 @@ namespace Someren_Applicatie.Repositories.Rooms
                     reader.Close();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new Exception("Kan de kamer niet laden");
             }
@@ -191,7 +191,7 @@ namespace Someren_Applicatie.Repositories.Rooms
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new Exception("Kamer kan niet worden aangepast");
             }

@@ -38,7 +38,7 @@ namespace Someren_Applicatie.Repositories.Lecturers
 
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new Exception("Kan docent niet toevoegen");
             }
@@ -66,7 +66,7 @@ namespace Someren_Applicatie.Repositories.Lecturers
                     reader.Close();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new Exception("Kan docent niet laden");
             }
@@ -93,7 +93,7 @@ namespace Someren_Applicatie.Repositories.Lecturers
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new Exception("Docent kan niet worden verwijderd");
             }
@@ -113,7 +113,7 @@ namespace Someren_Applicatie.Repositories.Lecturers
 
                 return new Lecturer(docentnr, voornaam, achternaam, telefoonnr, leeftijd, kamernr);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new Exception("Kan docent niet lezen.");
             }
@@ -122,7 +122,7 @@ namespace Someren_Applicatie.Repositories.Lecturers
         //Get Id
         public Lecturer? GetById(int docentNr)
         {
-            Lecturer lecturer = null;
+            Lecturer? lecturer = null;
             try
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -143,7 +143,7 @@ namespace Someren_Applicatie.Repositories.Lecturers
                     reader.Close();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new Exception("Kan de docent niet laden.");
             }
@@ -153,12 +153,12 @@ namespace Someren_Applicatie.Repositories.Lecturers
         public void Update(Lecturer lecturer)
         {
             try {
-                Lecturer previousLecturer = GetById(lecturer.DocentNr);
+                Lecturer? previousLecturer = GetById(lecturer.DocentNr);
                 Lecturer? checkLecturer = GetByName(lecturer.Voornaam, lecturer.Achternaam);
 
                 if (checkLecturer != null)
                 {
-                    if (((lecturer.Voornaam + lecturer.Achternaam) == (checkLecturer.Voornaam + checkLecturer.Achternaam)) && (lecturer.Voornaam + lecturer.Achternaam) != (previousLecturer.Voornaam + previousLecturer.Achternaam))
+                    if (((lecturer.Voornaam + lecturer.Achternaam) == (checkLecturer.Voornaam + checkLecturer.Achternaam)) && (lecturer.Voornaam + lecturer.Achternaam) != (previousLecturer?.Voornaam + previousLecturer?.Achternaam))
                         throw new Exception($"Docent {lecturer.Voornaam} {lecturer.Achternaam} bestaat al!");
                 }
 
@@ -184,7 +184,7 @@ namespace Someren_Applicatie.Repositories.Lecturers
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new Exception("Kan de docent niet laden.");
             }
@@ -193,7 +193,7 @@ namespace Someren_Applicatie.Repositories.Lecturers
         //..
         public Lecturer? GetByName(string firstName, string lastName)
         {
-            Lecturer lecturer = null;
+            Lecturer? lecturer = null;
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -239,7 +239,7 @@ namespace Someren_Applicatie.Repositories.Lecturers
                 }
                 return lecturers;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new Exception("Docent kan niet gevonden worden");
             }

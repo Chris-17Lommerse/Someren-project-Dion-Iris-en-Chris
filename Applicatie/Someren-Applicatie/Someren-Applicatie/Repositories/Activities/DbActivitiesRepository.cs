@@ -40,7 +40,7 @@ namespace Someren_Applicatie.Repositories.Activities
                     command.ExecuteNonQuery();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new Exception("Kan activiteit niet toevoegen");
             }
@@ -67,7 +67,7 @@ namespace Someren_Applicatie.Repositories.Activities
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new Exception("Activititeit kan niet worden verwijderd");
             }
@@ -94,7 +94,7 @@ namespace Someren_Applicatie.Repositories.Activities
                     reader.Close();
                 }
             } 
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new Exception("Activiteiten kunnen niet worden geladen");
             }
@@ -103,20 +103,13 @@ namespace Someren_Applicatie.Repositories.Activities
 
         private Activiteit ReadActivity(SqlDataReader reader)
         {
-            try
-            {
-                // retrieve data from fields
-                int activiteitId = (int)reader["activiteitid"];
-                string naam = (string)reader["naam"];
-                DateTime startTijd = (DateTime)reader["starttijd"];
-                DateTime eindTijd = (DateTime)reader["eindtijd"];
+            // retrieve data from fields
+            int activiteitId = (int)reader["activiteitid"];
+            string naam = (string)reader["naam"];
+            DateTime startTijd = (DateTime)reader["starttijd"];
+            DateTime eindTijd = (DateTime)reader["eindtijd"];
 
-                return new Activiteit(activiteitId, naam, startTijd, eindTijd);
-            } catch (Exception ex)
-            {
-                throw new Exception("Kan activiteiten niet lezen.");
-            } 
-            
+            return new Activiteit(activiteitId, naam, startTijd, eindTijd);
         }
 
         private string ReadQuery()
@@ -146,7 +139,7 @@ namespace Someren_Applicatie.Repositories.Activities
                     }
                     reader.Close();
                 }
-            } catch (Exception ex)
+            } catch (Exception)
             {
                 throw new Exception("Kan de activiteit niet laden.");
             }
@@ -175,7 +168,7 @@ namespace Someren_Applicatie.Repositories.Activities
                     reader.Close();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new Exception("Kan activiteit niet laden");
             }
@@ -207,7 +200,7 @@ namespace Someren_Applicatie.Repositories.Activities
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new Exception("Activiteit kan niet worden aangepast");
             }
