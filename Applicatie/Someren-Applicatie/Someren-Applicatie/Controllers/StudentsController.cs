@@ -12,10 +12,15 @@ namespace Someren_Applicatie.Controllers
             _studentsRepository = studentsRepository;
         }
 
-
-        public IActionResult Index()
+        public IActionResult Index(string? filter)
         {
-            List<Student> students = _studentsRepository.GetAll();
+            List<Student> students;  
+            if(filter != null) //als filter leeg dan sla de IF over
+            {
+                students = _studentsRepository.GetByLastName(filter);
+                return View(students);
+            }
+            students = _studentsRepository.GetAll();
             return View(students);
         }
 
@@ -33,7 +38,7 @@ namespace Someren_Applicatie.Controllers
                 _studentsRepository.Add(student);
                 return RedirectToAction("Index");
             }
-            catch (Exception ex)
+            catch (Exception ex) // Try Catch in de controller omdat de Repository niet over erro handeling gaat
             {
                 ViewBag.ErrorMessage = ex.Message;
                 return View(student);

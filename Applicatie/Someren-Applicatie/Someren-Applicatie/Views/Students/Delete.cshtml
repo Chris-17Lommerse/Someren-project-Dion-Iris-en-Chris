@@ -1,8 +1,12 @@
 ﻿@model Someren_Applicatie.Models.Student
+<h4>Student verwijderen</h4>
 @{
     ViewData["Title"] = "Student verwijderen";
+    if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger" role="alert">@ViewBag.ErrorMessage</div>
+    }
 }
-<h1>Student verwijderen</h1>
 <form action="/Students/Delete" method="POST">
     <input hidden type="number" name="StudentNr" value="@Model?.StudentNr" />
 
@@ -31,7 +35,7 @@
         <input type="text" id="Kamernr" name="Kamernr" class="form-control" required readonly value="@Model?.KamerNr" />
     </div>
 
-    <button type="submit" class="btn btn-primary">Verwijderen</button>
+    <button type="submit" class="btn btn-success btn-hover m-1">Verwijderen</button>
 </form>
 
-<a href="/Students/Index">Terug naar lijst</a>
+<a href="/Students/Index" class="btn btn-dark btn-hover m-1">Terug naar lijst</a>

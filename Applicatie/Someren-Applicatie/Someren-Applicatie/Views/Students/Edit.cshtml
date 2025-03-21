@@ -1,9 +1,7 @@
 ﻿@model Someren_Applicatie.Models.Student
+<h4>Student bewerken</h4>
 @{
     ViewData["Title"] = "Student bewerken";
-}
-<h1>Student bewerken</h1>
-@{
     if (ViewBag.ErrorMessage != null)
     {
         <div class="alert alert-danger" role="alert">@ViewBag.ErrorMessage</div>
@@ -37,7 +35,7 @@
         <input type="text" id="Kamernr" name="Kamernr" class="form-control" required value="@Model?.KamerNr" />
     </div>
 
-    <button type="submit" class="btn btn-primary">Veranderingen opslaan</button>
+    <button type="submit" class="btn btn-success btn-hover m-1">Veranderingen opslaan</button>
 </form>
 
-<a href="/Students/Index">Terug naar lijst</a>
+<a href="/Students/Index" class="btn btn-dark btn-hover m-1">Terug naar lijst</a>

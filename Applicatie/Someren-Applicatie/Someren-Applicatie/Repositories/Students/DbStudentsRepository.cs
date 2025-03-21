@@ -16,11 +16,12 @@ namespace Someren_Applicatie.Repositories.Students
 
         public void Add(Student student)
         {
+            //Error handling (eigenlijk moet het in nog een andere layer maar dat hebben wij nog niet geleerd)
             bool IsRoomForStudent = IsBedAvailableInRoom(student.KamerNr);
-            if (!IsRoomForStudent)
+            if (!IsRoomForStudent) //als er geen ruimte is voor studenten dan geef een error
                 throw new Exception($"Room {student.KamerNr} is full");
             Student? checkStudent = GetByName(student.Voornaam, student.Achternaam);
-            if (checkStudent != null)
+            if (checkStudent != null) //als er al een student is met die naam dan geef een error (IN ZO'N KLEINE SCOPE IS HET NULLABLE ALS ER IEMAND IS MET DEZELFDE VOOR EN ACHTERNAAM IN EEN ANDER DEEL VAN NEDERLAND) {implementatie is justified}
                 throw new Exception($"Student {student.Voornaam} {student.Achternaam} already exists!");
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -43,6 +44,7 @@ namespace Someren_Applicatie.Repositories.Students
 
         public bool IsBedAvailableInRoom(string roomNr)
         {
+            //Check methode om de kijken of er ruimte is in een kamer of niet
             int numberOfStudents = 0;
             int numberOfBeds = 0;
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -52,6 +54,7 @@ namespace Someren_Applicatie.Repositories.Students
                                 "JOIN dbo.SLAAPKAMER AS SK ON ST.kamernr = SK.kamernr " +
                                 "WHERE ST.kamernr = @kamernr " +
                                 "GROUP BY SK.aantal_slaapplekken;";
+                //deze lange query geeft het aantal slaapplekken en de aantal studenten in die slaapkamer
                 SqlCommand command = new SqlCommand(query, connection);
 
                 command.Parameters.AddWithValue("@kamernr", roomNr);
@@ -80,10 +83,7 @@ namespace Someren_Applicatie.Repositories.Students
 
                 command.Connection.Open();
                 int nRowsAffected = command.ExecuteNonQuery();
-                if (nRowsAffected == 0)
-                {
-                    throw new Exception("Geen studenten gedelete");
-                }
+                if (nRowsAffected == 0) throw new Exception("Geen studenten gedelete");
             }
         }
 
@@ -93,6 +93,12 @@ namespace Someren_Applicatie.Repositories.Students
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
+                //Niet makkelijk om een unified GET methode te maken want als je een filter er op wil zetten zoals GetId of GetLastName
+                //dan moet je een parameter gebruiken maar je kan niet de parameter customizen want het is niet een string die je kan aanpassen ofzo
+                //het is een apparte regel met code en als je bijvoorbeeld 2 parameters wilt doorgeven dan moet je ook 2 input parameter op de methode hebben
+                //en dat kan oneindig doorgaan, wat ook moeilijk wordt is dat GetAll een while gebruikt bij read en GetById een if gebruikt en dan moet je gaan switchen tussen if en while
+                //EN dat allemaal zit in 1 using.
+                //Het is te doen maar het is de moeite niet waard.
                 string query = "SELECT studentennr, voornaam, achternaam, telefoonnr, klas, kamernr FROM dbo.STUDENT ORDER BY achternaam";
                 SqlCommand command = new SqlCommand(query, connection);
 
@@ -124,8 +130,7 @@ namespace Someren_Applicatie.Repositories.Students
                 command.Connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
 
-                if (reader.Read())
-                    student = ReadStudent(reader);
+                if (reader.Read()) student = ReadStudent(reader);
                 reader.Close();
             }
 
@@ -135,6 +140,8 @@ namespace Someren_Applicatie.Repositories.Students
         public Student? GetByName(string firstName, string lastName)
         {
             Student student = null;
+
+            //Met GetByName bedoel ik voor- en achternaam
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -147,8 +154,7 @@ namespace Someren_Applicatie.Repositories.Students
                 command.Connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
 
-                if (reader.Read())
-                    student = ReadStudent(reader);
+                if (reader.Read()) student = ReadStudent(reader);
                 reader.Close();
             }
 
@@ -157,17 +163,16 @@ namespace Someren_Applicatie.Repositories.Students
 
         public void Update(Student student)
         {
-            Student previousStudent = GetById(student.StudentNr);
-            Student? checkStudent = GetByName(student.Voornaam, student.Achternaam);
-            //fix Jan Verhoef > Dion Verhoef > changed student to [Dion Verhoef] while [Dion Verhoef] already exists
-            //    Previous      Change
-            //  geef error als nieuwe naam al bestaat (als nieuwe naam niet bestaat dan is check een null) en nieuwe naam niet hetzelfde is als vorige naam
-            //  bestaande naam kan null zijn
+            Student previousStudent = GetById(student.StudentNr); //Info dat er origineel in stond
+            Student? checkStudent = GetByName(student.Voornaam, student.Achternaam); //Student met dezelfde naam (als hij bestaat)
             if (checkStudent != null)
             {
+                //deze lange [if] checkt eerst of de naam die je wilt hetzelfde is als een naam in de database EN als de naam die je wilt niet hetzelfde is als de vorige naam,
+                //ALS dat allemaal waar is dan geeft hij een fout.
                 if (((student.Voornaam + student.Achternaam) == (checkStudent.Voornaam + checkStudent.Achternaam)) && (student.Voornaam + student.Achternaam) != (previousStudent.Voornaam + previousStudent.Achternaam))
                     throw new Exception($"Student {student.Voornaam} {student.Achternaam} already exists!");
             }
+            //check of vorige kamernummer niet hetzelfde is als het nieuwe kamernummer
             if (previousStudent.KamerNr != student.KamerNr)
             {
                 bool IsRoomForStudent = IsBedAvailableInRoom(student.KamerNr);
@@ -190,10 +195,7 @@ namespace Someren_Applicatie.Repositories.Students
 
                 command.Connection.Open();
                 int nRowsAffected = command.ExecuteNonQuery();
-                if (nRowsAffected == 0)
-                {
-                    throw new Exception("No records updated.");
-                }
+                if (nRowsAffected == 0) throw new Exception("Geen studenten aangepast.");
             }
         }
 
@@ -207,6 +209,32 @@ namespace Someren_Applicatie.Repositories.Students
             string kamernr = (string)reader["kamernr"];
 
             return new Student(studentnr, voornaam, achternaam, telefoonnr, klas, kamernr);
+        }
+
+        public List<Student> GetByLastName(string lastName)
+        {
+            List<Student> students = new List<Student>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = "SELECT studentennr, voornaam, achternaam, telefoonnr, klas, kamernr FROM dbo.STUDENT " +
+                                "WHERE achternaam = @achternaam;";
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("@achternaam", lastName);
+
+                command.Connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Student student = ReadStudent(reader);
+                    students.Add(student);
+                }
+                reader.Close();
+            }
+
+            return students;
         }
     }
 }

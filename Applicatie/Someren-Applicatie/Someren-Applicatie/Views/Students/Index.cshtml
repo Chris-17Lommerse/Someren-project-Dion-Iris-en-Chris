@@ -4,40 +4,54 @@
 @model List<Someren_Applicatie.Models.Student>
 @{
     ViewData["Title"] = "Studenten";
+    if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger" role="alert">@ViewBag.ErrorMessage</div>
+    }
 }
 
-<h3>Studenten</h3>
-<a href="/Students/Create">Student aanmaken</a>
+<form method="GET" action="/Students/Index">
+    <div class="form-group">
+        <label for="filter">Filteren op achternaam:</label>
+        <input type="text" id="filter" name="filter" class="form-control w-25 m-2" placeholder="Vul achternaam in">
+    </div>
+    <button type="submit" class="btn btn-primary">Filteren</button>
+</form>
 
-<table class="table table-info table-hover">
-    <thead>
-        <tr class="table-dark">
-            <th>StudentNr</th>
-            <th>Voornaam</th>
-            <th>Achternaam</th>
-            <th>Telefoon nummer</th>
-            <th>Klas</th>
-            <th>KamerNr</th>
-            <th>Acties</th>
-        </tr>
-    </thead>
-    <tbody>
-        @{
-            foreach (var student in Model)
-            {
-                <tr>
-                    <td>@student.StudentNr</td>
-                    <td>@student.Voornaam</td>
-                    <td>@student.Achternaam</td>
-                    <td>@student.TelefoonNr</td>
-                    <td>@student.Klas</td>
-                    <td>@student.KamerNr</td>
-                    <td>
-                        <a href="/Students/Edit/@student.StudentNr" class="btn btn-dark">Bewerken</a>
-                        <a href="/Students/Delete/@student.StudentNr" class="btn btn-danger">Verwijderen</a>
-                    </td>
-                </tr>
+<div class="text-center">
+    <h1 class="display-4">Studenten</h1>
+    <a href="/Students/Create" class="btn btn-success">Student toevoegen</a>
+    <p>Aantal studenten: @Model.Count</p>
+    <table class="table table-info table-hover">
+        <thead>
+            <tr class="table-dark">
+                <th>StudentNr</th>
+                <th>Voornaam</th>
+                <th>Achternaam</th>
+                <th>Telefoon nummer</th>
+                <th>Klas</th>
+                <th>KamerNr</th>
+                <th>Acties</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var student in Model)
+                {
+                    <tr>
+                        <td>@student.StudentNr</td>
+                        <td>@student.Voornaam</td>
+                        <td>@student.Achternaam</td>
+                        <td>@student.TelefoonNr</td>
+                        <td>@student.Klas</td>
+                        <td>@student.KamerNr</td>
+                        <td>
+                            <a href="/Students/Edit/@student.StudentNr" class="btn btn-dark">Bewerken</a>
+                            <a href="/Students/Delete/@student.StudentNr" class="btn btn-danger">Verwijderen</a>
+                        </td>
+                    </tr>
+                }
             }
-        }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>
