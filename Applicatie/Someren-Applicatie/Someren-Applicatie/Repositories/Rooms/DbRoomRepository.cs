@@ -13,6 +13,7 @@ namespace Someren_Applicatie.Repositories.Rooms
         {
             _connectionString = configuration.GetConnectionString("SomerenDatabase");
         }
+        // Add room functionality via query 
         public void Add(Room room)
         {
             Room? checkRoom = GetById(room.KamerNummer);
@@ -44,11 +45,12 @@ namespace Someren_Applicatie.Repositories.Rooms
             }
         }
 
-        private string ReadQuery()
+        private string BaseQuery()
         {
             string query = $"SELECT kamernr, aantal_slaapplekken, type_kamer FROM SLAAPKAMER";
             return query;
         }
+        // Delete functionality via query
         public void Delete(Room room)
         {
             try
@@ -73,6 +75,7 @@ namespace Someren_Applicatie.Repositories.Rooms
                 throw new Exception("Kamer kan niet worden verwijderd.");
             }
         }
+        // Select all rooms
         public List<Room> GetAll()
         {
             List<Room> rooms = new List<Room>();
@@ -80,7 +83,7 @@ namespace Someren_Applicatie.Repositories.Rooms
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
-                    string query = $"{ReadQuery()} ORDER BY kamernr";
+                    string query = $"{BaseQuery()} ORDER BY kamernr";
                     SqlCommand command = new SqlCommand(query, connection);
 
                     command.Connection.Open();
@@ -119,6 +122,7 @@ namespace Someren_Applicatie.Repositories.Rooms
                 throw new Exception("Something went wrong");
             }
         }
+        // Get room by id via query
         public Room? GetById(string roomId)
         {
             Room? room = null;
@@ -126,7 +130,7 @@ namespace Someren_Applicatie.Repositories.Rooms
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
-                    string query = $"{ReadQuery()} WHERE kamernr = @KamerNr";
+                    string query = $"{BaseQuery()} WHERE kamernr = @KamerNr";
                     SqlCommand command = new SqlCommand(query, connection);
 
                     command.Parameters.AddWithValue("@KamerNr", roomId);
@@ -147,13 +151,14 @@ namespace Someren_Applicatie.Repositories.Rooms
             }
             return room;
         }
+        // filter query functionality
         public List<Room> GetByRoomSize(string aantalSlaapplekken)
         {
             List<Room> rooms = new List<Room>();
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = $"{ReadQuery()} WHERE aantal_slaapplekken LIKE @aantal_slaapplekken ORDER BY aantal_slaapplekken";
+                string query = $"{BaseQuery()} WHERE aantal_slaapplekken LIKE @aantal_slaapplekken ORDER BY aantal_slaapplekken";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@aantal_slaapplekken", aantalSlaapplekken);
 
@@ -169,6 +174,7 @@ namespace Someren_Applicatie.Repositories.Rooms
             }
             return rooms;
         }
+        // Update room functionality via query
         public void Update(Room room)
         {
             try

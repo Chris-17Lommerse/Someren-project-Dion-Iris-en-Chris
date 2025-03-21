@@ -13,6 +13,7 @@ namespace Someren_Applicatie.Repositories.Activities
         {
             _connectionString = configuration.GetConnectionString("SomerenDatabase");
         }
+        // Add activity functionality via query
         public void Add(Activiteit activiteit)
         {
             Activiteit? checkActiviteit = GetByActivityName(activiteit.Naam);
@@ -45,7 +46,7 @@ namespace Someren_Applicatie.Repositories.Activities
                 throw new Exception("Kan activiteit niet toevoegen");
             }
         }
-
+        // Delete functionality via query
         public void Delete(Activiteit activiteit)
         {
             try
@@ -72,7 +73,7 @@ namespace Someren_Applicatie.Repositories.Activities
                 throw new Exception("Activititeit kan niet worden verwijderd");
             }
         }
-
+        // Get all rooms via query
         public List<Activiteit> GetAll()
         {
             List<Activiteit> activiteiten = new List<Activiteit>();
@@ -80,7 +81,7 @@ namespace Someren_Applicatie.Repositories.Activities
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
-                    string query = $"{ReadQuery()} ORDER BY starttijd";
+                    string query = $"{BaseQuery()} ORDER BY starttijd";
                     SqlCommand command = new SqlCommand(query, connection);
 
                     command.Connection.Open();
@@ -101,6 +102,7 @@ namespace Someren_Applicatie.Repositories.Activities
             return activiteiten;
         }
 
+        // Read the data via SqlDataReader
         private Activiteit ReadActivity(SqlDataReader reader)
         {
             // retrieve data from fields
@@ -111,13 +113,14 @@ namespace Someren_Applicatie.Repositories.Activities
 
             return new Activiteit(activiteitId, naam, startTijd, eindTijd);
         }
-
-        private string ReadQuery()
+        // Base query
+        private string BaseQuery()
         {
             string query = $"SELECT activiteitid, naam, starttijd, eindtijd FROM ACTIVITEIT";
             return query;
         }
 
+        // Get Activity by id via query
         public Activiteit? GetById(int activiteitId)
         {
             Activiteit? activiteit = null;
@@ -125,7 +128,7 @@ namespace Someren_Applicatie.Repositories.Activities
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
-                    string query = $"{ReadQuery()} WHERE activiteitid = @activiteitId";
+                    string query = $"{BaseQuery()} WHERE activiteitid = @activiteitId";
                     SqlCommand command = new SqlCommand(query, connection);
 
                     command.Parameters.AddWithValue("@activiteitId", activiteitId);
@@ -145,7 +148,7 @@ namespace Someren_Applicatie.Repositories.Activities
             }
             return activiteit;
         }
-
+        // Filter activities by activity name via query
         public Activiteit? GetByActivityName(string activityName)
         {
             Activiteit? activiteit = null;
@@ -153,7 +156,7 @@ namespace Someren_Applicatie.Repositories.Activities
             {
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
-                    string query = $"{ReadQuery()} WHERE naam = @naam";
+                    string query = $"{BaseQuery()} WHERE naam = @naam";
                     SqlCommand command = new SqlCommand(query, connection);
 
                     command.Parameters.AddWithValue("@naam", activityName);
@@ -174,6 +177,7 @@ namespace Someren_Applicatie.Repositories.Activities
             }
             return activiteit;
         }
+        // Update activity via query
         public void Update(Activiteit activiteit)
         {
             try
@@ -205,7 +209,7 @@ namespace Someren_Applicatie.Repositories.Activities
                 throw new Exception("Activiteit kan niet worden aangepast");
             }
         }
-
+        // Get activity by name via query
         public List<Activiteit> GetByName(string Naam)
         {
             List<Activiteit> activiteit = new List<Activiteit>();
