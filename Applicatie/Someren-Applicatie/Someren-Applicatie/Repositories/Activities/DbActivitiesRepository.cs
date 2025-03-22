@@ -14,6 +14,7 @@ namespace Someren_Applicatie.Repositories.Activities
         {
             _connectionString = configuration.GetConnectionString("SomerenDatabase");
         }
+        // Add activity functionality via query
         public void Add(Activiteit activiteit)
         {
             Activiteit? checkActiviteit = GetByActivityName(activiteit.Naam);
@@ -81,6 +82,7 @@ namespace Someren_Applicatie.Repositories.Activities
             return activiteiten;
         }
 
+        // Read the data via SqlDataReader
         private Activiteit ReadActivity(SqlDataReader reader)
         {
                 // retrieve data from fields
@@ -92,6 +94,7 @@ namespace Someren_Applicatie.Repositories.Activities
                 return new Activiteit(activiteitId, naam, startTijd, eindTijd);
         }
 
+        // Get Activity by id via query
         public Activiteit? GetById(int activiteitId)
         {
             Activiteit? activiteit = null;
@@ -113,7 +116,7 @@ namespace Someren_Applicatie.Repositories.Activities
             }
             return activiteit;
         }
-
+        // Filter activities by activity name via query
         public Activiteit? GetByActivityName(string activityName)
         {
             Activiteit? activiteit = null;
@@ -135,6 +138,7 @@ namespace Someren_Applicatie.Repositories.Activities
             }
             return activiteit;
         }
+        // Update activity via query
         public void Update(Activiteit activiteit)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -159,7 +163,7 @@ namespace Someren_Applicatie.Repositories.Activities
                 }
             }
         }
-
+        // Get activity by name via query
         public List<Activiteit> GetByName(string Naam)
         {
             List<Activiteit> activiteit = new List<Activiteit>();

@@ -14,6 +14,7 @@ namespace Someren_Applicatie.Repositories.Rooms
         {
             _connectionString = configuration.GetConnectionString("SomerenDatabase");
         }
+        // Add room functionality via query 
         public void Add(Room room)
         {
             Room? checkRoom = GetById(room.KamerNummer);
@@ -108,6 +109,7 @@ namespace Someren_Applicatie.Repositories.Rooms
             }
             return room;
         }
+        // filter query functionality
         public List<Room> GetByRoomSize(string aantalSlaapplekken)
         {
             List<Room> rooms = new List<Room>();
@@ -130,6 +132,7 @@ namespace Someren_Applicatie.Repositories.Rooms
             }
             return rooms;
         }
+        // Update room functionality via query
         public void Update(Room room)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))

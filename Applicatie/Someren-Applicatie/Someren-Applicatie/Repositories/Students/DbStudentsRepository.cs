@@ -163,17 +163,17 @@ namespace Someren_Applicatie.Repositories.Students
 
         public void Update(Student student)
         {
-            Student previousStudent = GetById(student.StudentNr); //Info dat er origineel in stond
+            Student? previousStudent = GetById(student.StudentNr); //Info dat er origineel in stond
             Student? checkStudent = GetByName(student.Voornaam, student.Achternaam); //Student met dezelfde naam (als hij bestaat)
             if (checkStudent != null)
             {
                 //deze lange [if] checkt eerst of de naam die je wilt hetzelfde is als een naam in de database EN als de naam die je wilt niet hetzelfde is als de vorige naam,
                 //ALS dat allemaal waar is dan geeft hij een fout.
-                if (((student.Voornaam + student.Achternaam) == (checkStudent.Voornaam + checkStudent.Achternaam)) && (student.Voornaam + student.Achternaam) != (previousStudent.Voornaam + previousStudent.Achternaam))
+                if (((student.Voornaam + student.Achternaam) == (checkStudent.Voornaam + checkStudent.Achternaam)) && (student.Voornaam + student.Achternaam) != (previousStudent?.Voornaam + previousStudent?.Achternaam))
                     throw new Exception($"Student {student.Voornaam} {student.Achternaam} already exists!");
             }
             //check of vorige kamernummer niet hetzelfde is als het nieuwe kamernummer
-            if (previousStudent.KamerNr != student.KamerNr)
+            if (previousStudent?.KamerNr != student.KamerNr)
             {
                 bool IsRoomForStudent = IsBedAvailableInRoom(student.KamerNr);
                 if (!IsRoomForStudent)
