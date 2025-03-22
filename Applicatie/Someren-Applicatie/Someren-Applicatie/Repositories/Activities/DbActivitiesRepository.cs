@@ -6,6 +6,7 @@ namespace Someren_Applicatie.Repositories.Activities
 {
     public class DbActivitiesRepository : IActivitiesRepository
     {
+        const string BaseSelectQuery = "SELECT activiteitid, naam, starttijd, eindtijd FROM ACTIVITEIT";
         private readonly string? _connectionString;
 
         // Connection to the database will be defined in the constructor
@@ -20,91 +21,68 @@ namespace Someren_Applicatie.Repositories.Activities
             {
                 throw new Exception($"Activiteit {activiteit.Naam} bestaat al");
             }
-            try
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                using (SqlConnection connection = new SqlConnection(_connectionString))
-                {
-                    // Query to add an activity to the database
-                    string query = $"INSERT INTO ACTIVITEIT (naam, starttijd, eindtijd)" +
+                // Query to add an activity to the database
+                string query = $"INSERT INTO ACTIVITEIT (naam, starttijd, eindtijd)" +
                                    "VALUES (@naam, @starttijd, @eindtijd); " +
                                    "SELECT SCOPE_IDENTITY();";
-                    SqlCommand command = new SqlCommand(query, connection);
+                SqlCommand command = new SqlCommand(query, connection);
 
-                    // Parameters will be combined with the activity 
-                    command.Parameters.AddWithValue("@naam", activiteit.Naam);
-                    command.Parameters.AddWithValue("@starttijd", activiteit.StartTijd);
-                    command.Parameters.AddWithValue("@eindtijd", activiteit.EindTijd);
+                // Parameters will be combined with the activity 
+                command.Parameters.AddWithValue("@naam", activiteit.Naam);
+                command.Parameters.AddWithValue("@starttijd", activiteit.StartTijd);
+                command.Parameters.AddWithValue("@eindtijd", activiteit.EindTijd);
 
-                    // Query will be exexcuted
-                    command.Connection.Open();
-                    command.ExecuteNonQuery();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Kan activiteit niet toevoegen");
+                // Query will be exexcuted
+                command.Connection.Open();
+                command.ExecuteNonQuery();
             }
         }
 
         public void Delete(Activiteit activiteit)
         {
-            try
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                using (SqlConnection connection = new SqlConnection(_connectionString))
+                // Query to delete an activity
+                string query = $"DELETE FROM ACTIVITEIT WHERE activiteitid = @activiteitId";
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("@activiteitId", activiteit.ActiviteitId);
+
+                command.Connection.Open();
+                // Query will be executed
+                int nrOfAffectedRows = command.ExecuteNonQuery();
+                if (nrOfAffectedRows == 0)
                 {
-                    // Query to delete an activity
-                    string query = $"DELETE FROM ACTIVITEIT WHERE activiteitid = @activiteitId";
-                    SqlCommand command = new SqlCommand(query, connection);
-
-                    command.Parameters.AddWithValue("@activiteitId", activiteit.ActiviteitId);
-
-                    command.Connection.Open();
-                    // Query will be executed
-                    int nrOfAffectedRows = command.ExecuteNonQuery();
-                    if (nrOfAffectedRows == 0)
-                    {
-                        throw new Exception("No records deleted");
-                    }
+                    throw new Exception("Activiteit kan niet verwijderd worden");
                 }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Activititeit kan niet worden verwijderd");
             }
         }
 
         public List<Activiteit> GetAll()
         {
             List<Activiteit> activiteiten = new List<Activiteit>();
-            try
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                using (SqlConnection connection = new SqlConnection(_connectionString))
+                string query = $"{BaseSelectQuery} ORDER BY starttijd";
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
                 {
-                    string query = $"{ReadQuery()} ORDER BY starttijd";
-                    SqlCommand command = new SqlCommand(query, connection);
-
-                    command.Connection.Open();
-                    SqlDataReader reader = command.ExecuteReader();
-
-                    while(reader.Read())
-                    {
-                        Activiteit activiteit = ReadActivity(reader);
-                        activiteiten.Add(activiteit);
-                    }
-                    reader.Close();
+                    Activiteit activiteit = ReadActivity(reader);
+                    activiteiten.Add(activiteit);
                 }
-            } 
-            catch (Exception ex)
-            {
-                throw new Exception("Activiteiten kunnen niet worden geladen");
+                reader.Close();
             }
             return activiteiten;
         }
 
         private Activiteit ReadActivity(SqlDataReader reader)
         {
-            try
-            {
                 // retrieve data from fields
                 int activiteitId = (int)reader["activiteitid"];
                 string naam = (string)reader["naam"];
@@ -112,43 +90,26 @@ namespace Someren_Applicatie.Repositories.Activities
                 DateTime eindTijd = (DateTime)reader["eindtijd"];
 
                 return new Activiteit(activiteitId, naam, startTijd, eindTijd);
-            } catch (Exception ex)
-            {
-                throw new Exception("Kan activiteiten niet lezen.");
-            } 
-            
-        }
-
-        private string ReadQuery()
-        {
-            string query = $"SELECT activiteitid, naam, starttijd, eindtijd FROM ACTIVITEIT";
-            return query;
         }
 
         public Activiteit? GetById(int activiteitId)
         {
             Activiteit? activiteit = null;
-            try
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                using (SqlConnection connection = new SqlConnection(_connectionString))
+                string query = $"{BaseSelectQuery} WHERE activiteitid = @activiteitId";
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("@activiteitId", activiteitId);
+
+                command.Connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
                 {
-                    string query = $"{ReadQuery()} WHERE activiteitid = @activiteitId";
-                    SqlCommand command = new SqlCommand(query, connection);
-
-                    command.Parameters.AddWithValue("@activiteitId", activiteitId);
-
-                    command.Connection.Open();
-                    SqlDataReader reader = command.ExecuteReader();
-
-                    if(reader.Read())
-                    {
-                        activiteit = ReadActivity(reader);
-                    }
-                    reader.Close();
+                    activiteit = ReadActivity(reader);
                 }
-            } catch (Exception ex)
-            {
-                throw new Exception("Kan de activiteit niet laden.");
+                reader.Close();
             }
             return activiteit;
         }
@@ -156,60 +117,46 @@ namespace Someren_Applicatie.Repositories.Activities
         public Activiteit? GetByActivityName(string activityName)
         {
             Activiteit? activiteit = null;
-            try
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                using (SqlConnection connection = new SqlConnection(_connectionString))
+                string query = $"{BaseSelectQuery} WHERE naam = @naam";
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("@naam", activityName);
+
+                command.Connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
                 {
-                    string query = $"{ReadQuery()} WHERE naam = @naam";
-                    SqlCommand command = new SqlCommand(query, connection);
-
-                    command.Parameters.AddWithValue("@naam", activityName);
-
-                    command.Connection.Open();
-                    SqlDataReader reader = command.ExecuteReader();
-
-                    if(reader.Read())
-                    {
-                        activiteit = ReadActivity(reader);
-                    }
-                    reader.Close();
+                    activiteit = ReadActivity(reader);
                 }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Kan activiteit niet laden");
+                reader.Close();
             }
             return activiteit;
         }
         public void Update(Activiteit activiteit)
         {
-            try
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                using (SqlConnection connection = new SqlConnection(_connectionString))
+                // Query to update an activity
+                string query = "UPDATE ACTIVITEIT SET naam = @naam, starttijd = @startTijd, eindtijd = @eindTijd " +
+                           "WHERE activiteitid = @activiteitId";
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("@activiteitId", activiteit.ActiviteitId);
+                command.Parameters.AddWithValue("@naam", activiteit.Naam);
+                command.Parameters.AddWithValue("@startTijd", activiteit.StartTijd);
+                command.Parameters.AddWithValue("@eindTijd", activiteit.EindTijd);
+
+                command.Connection.Open();
+                // Query will be executed
+                int nrOfAffectedRows = command.ExecuteNonQuery();
+
+                if (nrOfAffectedRows == 0)
                 {
-                    // Query to update an activity
-                    string query = "UPDATE ACTIVITEIT SET naam = @naam, starttijd = @startTijd, eindtijd = @eindTijd " +
-                               "WHERE activiteitid = @activiteitId";
-                    SqlCommand command = new SqlCommand(query, connection);
-
-                    command.Parameters.AddWithValue("@activiteitId", activiteit.ActiviteitId);
-                    command.Parameters.AddWithValue("@naam", activiteit.Naam);
-                    command.Parameters.AddWithValue("@startTijd", activiteit.StartTijd);
-                    command.Parameters.AddWithValue("@eindTijd", activiteit.EindTijd);
-
-                    command.Connection.Open();
-                    // Query will be executed
-                    int nrOfAffectedRows = command.ExecuteNonQuery();
-
-                    if (nrOfAffectedRows == 0)
-                    {
-                        throw new Exception("No records updated");
-                    }
+                    throw new Exception("No records updated");
                 }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Activiteit kan niet worden aangepast");
             }
         }
 
@@ -219,8 +166,7 @@ namespace Someren_Applicatie.Repositories.Activities
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = "SELECT activiteitid, naam, starttijd, eindtijd " +
-                               "FROM ACTIVITEIT WHERE naam LIKE @naam ORDER BY naam";
+                string query = BaseSelectQuery + " WHERE naam LIKE @naam ORDER BY naam";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@naam", "%" + Naam + "%");
 

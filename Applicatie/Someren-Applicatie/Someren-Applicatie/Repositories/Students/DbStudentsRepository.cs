@@ -6,7 +6,7 @@ namespace Someren_Applicatie.Repositories.Students
     public class DbStudentsRepository : IStudentsRepository
     {
         // DONT USE CREATE IF NO ROOMS ARE MADE
-
+        const string BaseSelectQuery = "SELECT studentennr, voornaam, achternaam, telefoonnr, klas, kamernr FROM dbo.STUDENT";
         private readonly string? _connectionString;
 
         public DbStudentsRepository(IConfiguration configuration)
@@ -99,7 +99,7 @@ namespace Someren_Applicatie.Repositories.Students
                 //en dat kan oneindig doorgaan, wat ook moeilijk wordt is dat GetAll een while gebruikt bij read en GetById een if gebruikt en dan moet je gaan switchen tussen if en while
                 //EN dat allemaal zit in 1 using.
                 //Het is te doen maar het is de moeite niet waard.
-                string query = "SELECT studentennr, voornaam, achternaam, telefoonnr, klas, kamernr FROM dbo.STUDENT ORDER BY achternaam";
+                string query = BaseSelectQuery + " ORDER BY achternaam";
                 SqlCommand command = new SqlCommand(query, connection);
 
                 command.Connection.Open();
@@ -118,11 +118,11 @@ namespace Someren_Applicatie.Repositories.Students
 
         public Student? GetById(int studentNr)
         {
-            Student student = null;
+            Student? student = null;
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = "SELECT studentennr, voornaam, achternaam, telefoonnr, klas, kamernr FROM dbo.STUDENT WHERE studentennr = @studentnr";
+                string query = BaseSelectQuery + " WHERE studentennr = @studentnr";
                 SqlCommand command = new SqlCommand(query, connection);
 
                 command.Parameters.AddWithValue("@studentnr", studentNr);
@@ -139,13 +139,13 @@ namespace Someren_Applicatie.Repositories.Students
 
         public Student? GetByName(string firstName, string lastName)
         {
-            Student student = null;
+            Student? student = null;
 
             //Met GetByName bedoel ik voor- en achternaam
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = "SELECT studentennr, voornaam, achternaam, telefoonnr, klas, kamernr FROM dbo.STUDENT WHERE voornaam = @voornaam AND achternaam = @achternaam";
+                string query = BaseSelectQuery + " WHERE voornaam = @voornaam AND achternaam = @achternaam";
                 SqlCommand command = new SqlCommand(query, connection);
 
                 command.Parameters.AddWithValue("@voornaam", firstName);
@@ -217,8 +217,7 @@ namespace Someren_Applicatie.Repositories.Students
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = "SELECT studentennr, voornaam, achternaam, telefoonnr, klas, kamernr FROM dbo.STUDENT " +
-                                "WHERE achternaam = @achternaam;";
+                string query = BaseSelectQuery + " WHERE achternaam = @achternaam;";
                 SqlCommand command = new SqlCommand(query, connection);
 
                 command.Parameters.AddWithValue("@achternaam", lastName);

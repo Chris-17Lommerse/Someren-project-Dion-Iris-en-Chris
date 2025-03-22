@@ -14,14 +14,22 @@ namespace Someren_Applicatie.Controllers
 
         public IActionResult Index(string? filter)
         {
-            List<Student> students;  
-            if(filter != null) //als filter leeg dan sla de IF over
+            List<Student> students = [];
+            try
             {
-                students = _studentsRepository.GetByLastName(filter);
+                if (filter != null) //als filter leeg dan sla de IF over
+                {
+                    students = _studentsRepository.GetByLastName(filter);
+                    return View(students);
+                }
+                students = _studentsRepository.GetAll();
                 return View(students);
             }
-            students = _studentsRepository.GetAll();
-            return View(students);
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+                return View(students);
+            }
         }
 
         [HttpGet]

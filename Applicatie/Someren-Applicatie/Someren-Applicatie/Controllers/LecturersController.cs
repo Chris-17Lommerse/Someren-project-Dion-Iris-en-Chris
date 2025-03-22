@@ -25,7 +25,6 @@ namespace Someren_Applicatie.Controllers
             {
                 lecturers = _lecturersRepository.GetAll();
             }
-
             return View(lecturers);
         }
 
@@ -69,7 +68,6 @@ namespace Someren_Applicatie.Controllers
             try
             {
                 _lecturersRepository.Update(lecturer);
-
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -86,7 +84,6 @@ namespace Someren_Applicatie.Controllers
             {
                 return NotFound();
             }
-
             Lecturer? lecturer = _lecturersRepository.GetById((int)id);
             return View(lecturer);
         }
@@ -97,7 +94,6 @@ namespace Someren_Applicatie.Controllers
             try
             {
                 _lecturersRepository.Delete(lecturer);
-
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -106,7 +102,5 @@ namespace Someren_Applicatie.Controllers
                 return View(lecturer);
             }
         }
-
-        
     }
 }
