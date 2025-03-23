@@ -10,7 +10,7 @@
 }
 <div class="text-center">
     <h1 class="display-4">Drankjes</h1>
-    <a href="/Rooms/Create" class="btn btn-success">Voeg een drankje toe</a>
+    <a href="/Drinks/Create" class="btn btn-success">Voeg een drankje toe</a>
     <p>Aantal drankjes: @Model.Count</p>
         <table class="table table-info table-hover">
             <thead>
@@ -33,7 +33,7 @@
                             <td>@drink.Prijs</td>
                             <td>
                                 <a href="/Drinks/Edit/@drink.DrankId" class="btn btn-dark btn-hover">Aanpassen</a>
-                                <a href="/Rooms/Delete/@drink.DrankId" class="btn btn-danger btn-hover">Verwijderen</a>
+                                <a href="/Drinks/Delete/@drink.DrankId" class="btn btn-danger btn-hover">Verwijderen</a>
                             </td>
                         </tr>
                     }
@@ -41,4 +41,4 @@
             </tbody>
         </table>
     </div>
-}
+
