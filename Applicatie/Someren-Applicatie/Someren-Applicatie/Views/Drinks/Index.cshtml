@@ -1,0 +1,44 @@
+﻿@model List<Someren_Applicatie.Models.Drink>
+@{
+    ViewData["Title"] = "Drinks";
+ }
+@{
+    if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger" role="alert">@ViewBag.ErrorMessage</div>
+    }
+}
+<div class="text-center">
+    <h1 class="display-4">Drankjes</h1>
+    <a href="/Rooms/Create" class="btn btn-success">Voeg een drankje toe</a>
+    <p>Aantal drankjes: @Model.Count</p>
+        <table class="table table-info table-hover">
+            <thead>
+                <tr class="table-dark">
+                    <th>Naam drankje</th>
+                    <th>Aantal drankjes in voorraad</th>
+                    <th>Alcoholisch?</th>
+                    <th>Prijs</th>
+                    <th>Acties</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (Drink drink in Model)
+                    {
+                        <tr>
+                            <td>@drink.DrankNaam</td>
+                            <td>@drink.Aantal</td>
+                            <td>@drink.IsAlcoholisch</td>
+                            <td>@drink.Prijs</td>
+                            <td>
+                                <a href="/Drinks/Edit/@drink.DrankId" class="btn btn-dark btn-hover">Aanpassen</a>
+                                <a href="/Rooms/Delete/@drink.DrankId" class="btn btn-danger btn-hover">Verwijderen</a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+}
