@@ -18,19 +18,8 @@ namespace Someren_Applicatie.Controllers
 
         public IActionResult Index()
         {
-            try
-            {
-                List<Drink> drinks =
-                [
-                    new Drink(1, "Cola", 50, false, 1),
-                    new Drink(2, "Wijn", 40, true, 2)
-                    ];
-                return View(drinks);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            List<Drink> drinks = _drinksRepository.GetAll();
+            return View(drinks);
         }
 
         // GET: RoomsController/Create
@@ -42,108 +31,108 @@ namespace Someren_Applicatie.Controllers
         }
 
         // POST: RoomsController/Create
-        //        [HttpPost]
-        //        public ActionResult Create(Room room)
-        //        {
-        //            try
-        //            {
-        //                // add room via repository
-        //                _roomsRepository.Add(room);
+        [HttpPost]
+        public ActionResult Create(Drink drink)
+        {
+            try
+            {
+                // add room via repository
+                _drinksRepository.Add(drink);
 
-        //                // Go back to list (Via Index)
-        //                return RedirectToAction("Index");
-        //            }
-        //            catch (Exception ex)
-        //            {
-        //                // Something went wrong, go back to Index
-        //                ViewBag.ErrorMessage = ex.Message;
-        //                return View(room);
-        //            }
-        //        }
+                // Go back to list (Via Index)
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                // Something went wrong, go back to Index
+                ViewBag.ErrorMessage = ex.Message;
+                return View(drink);
+            }
+        }
 
-        //        // GET: RoomsController/Edit/5
-        //        [HttpGet]
-        //        public ActionResult Edit(string? id)
-        //        {
-        //            try
-        //            {
-        //                // 404 Not Found error
-        //                if (id == null)
-        //                {
-        //                    return NotFound();
-        //                }
+        // GET: RoomsController/Edit/5
+        [HttpGet]
+        public ActionResult Edit(int? id)
+        {
+            try
+            {
+                // 404 Not Found error
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
-        //                // get room via repository
-        //                Room? room = _roomsRepository.GetById((string)id);
-        //                return View(room);
-        //            }
-        //            catch (Exception ex)
-        //            {
-        //                throw new Exception(ex.Message);
-        //            }
-        //        }
+                // get room via repository
+                Drink? drink = _drinksRepository.GetById((int)id);
+                return View(drink);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
 
-        //        [HttpPost]
-        //        // POST: RoomsController/Edit
-        //        public ActionResult Edit(Room room)
-        //        {
-        //            try
-        //            {
-        //                // Edit room via repository
-        //                _roomsRepository.Update(room);
+        [HttpPost]
+        // POST: RoomsController/Edit
+        public ActionResult Edit(Drink drink)
+        {
+            try
+            {
+                // Edit room via repository
+                _drinksRepository.Update(drink);
 
-        //                // Go back to list (Via Index)
-        //                return RedirectToAction("Index");
-        //            }
-        //            catch (Exception ex)
-        //            {
-        //                // Something went wrong, go back to Index
-        //                ViewBag.ErrorMessage = ex.Message;
-        //                return View(room);
-        //            }
-        //        }
-        //        [HttpGet]
-        //        // GET: RoomsController/Delete
-        //        public ActionResult Delete(string? id)
-        //        {
-        //            try
-        //            {
-        //                // 404 Not Found error
-        //                if (id == null)
-        //                {
-        //                    return NotFound();
-        //                }
+                // Go back to list (Via Index)
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                // Something went wrong, go back to Index
+                ViewBag.ErrorMessage = ex.Message;
+                return View(drink);
+            }
+        }
+        [HttpGet]
+        // GET: RoomsController/Delete
+        public ActionResult Delete(int? id)
+        {
+            try
+            {
+                // 404 Not Found error
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
-        //                // get room via repository
-        //                Room? room = _roomsRepository.GetById((string)id);
-        //                return View(room);
-        //            }
-        //            catch (Exception ex)
-        //            {
-        //                {
-        //                    throw new Exception(ex.Message);
-        //                }
-        //            }
-        //        }
-        //        [HttpPost]
-        //        // POST: RoomsController/Delete
-        //        public ActionResult Delete(Room room)
-        //        {
-        //            try
-        //            {
-        //                // Delete room via repository
-        //                _roomsRepository.Delete(room);
+                // get room via repository
+                Drink? drink = _drinksRepository.GetById((int)id);
+                return View(drink);
+            }
+            catch (Exception ex)
+            {
+                {
+                    throw new Exception(ex.Message);
+                }
+            }
+        }
+        [HttpPost]
+        // POST: RoomsController/Delete
+        public ActionResult Delete(Drink drink)
+        {
+            try
+            {
+                // Delete room via repository
+                _drinksRepository.Delete(drink);
 
-        //                // Go back to list (Via Index)
-        //                return RedirectToAction("Index");
-        //            }
-        //            catch (Exception ex)
-        //            {
-        //                // Something went wrong, go back to Index
-        //                ViewBag.ErrorMessage = ex.Message;
-        //                return View(room);
-        //            }
-        //        }
-        //    }
+                // Go back to list (Via Index)
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                // Something went wrong, go back to Index
+                ViewBag.ErrorMessage = ex.Message;
+                return View(drink);
+            }
+        }
     }
 }
+
