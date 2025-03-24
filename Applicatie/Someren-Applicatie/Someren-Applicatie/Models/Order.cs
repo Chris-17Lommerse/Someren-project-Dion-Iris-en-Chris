@@ -2,17 +2,16 @@
 {
     public class Order
     {
-        public int StudentNr { get; set; }
-        public int DrankId { get; set; }
+        public Student StudentNr { get; set; }
+        public Drink DrankId { get; set; }
         public int Aantal {  get; set; }
-
         public Order()
         {
-            StudentNr = 0;
-            DrankId = 0;
+            StudentNr = new Student();
+            DrankId = new Drink();
             Aantal = 0;
         }
-        public Order(int studentNr, int drankId, int aantal)
+        public Order(Student studentNr, Drink drankId, int aantal)
         {
             StudentNr = studentNr;
             DrankId = drankId;
