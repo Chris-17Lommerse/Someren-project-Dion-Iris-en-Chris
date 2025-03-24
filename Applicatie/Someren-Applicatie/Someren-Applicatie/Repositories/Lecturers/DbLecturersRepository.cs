@@ -4,14 +4,14 @@ using Someren_Applicatie.Models.Enums;
 
 namespace Someren_Applicatie.Repositories.Lecturers
 {
-    public class DbLecturersRepository : ILecturersRepository
+    public class DbLecturersRepository : BaseRepository, ILecturersRepository
     {
         const string BaseSelectQuery = "SELECT docentnr, voornaam, achternaam, telefoonnr, leeftijd, kamernr FROM DOCENT";
-        private readonly string? _connectionString;
 
-        public DbLecturersRepository(IConfiguration configuration)
+
+        public DbLecturersRepository(IConfiguration configuration) : base(configuration)
         {
-            _connectionString = configuration.GetConnectionString("SomerenDatabase");
+
         }
         public void Add(Lecturer lecturer)
         {
@@ -117,12 +117,12 @@ namespace Someren_Applicatie.Repositories.Lecturers
 
         public void Update(Lecturer lecturer)
         {
-            Lecturer previousLecturer = GetById(lecturer.DocentNr);
+            Lecturer? previousLecturer = GetById(lecturer.DocentNr);
             Lecturer? checkLecturer = GetByName(lecturer.Voornaam, lecturer.Achternaam);
 
             if (checkLecturer != null)
             {
-                if (((lecturer.Voornaam + lecturer.Achternaam) == (checkLecturer.Voornaam + checkLecturer.Achternaam)) && (lecturer.Voornaam + lecturer.Achternaam) != (previousLecturer.Voornaam + previousLecturer.Achternaam))
+                if (((lecturer.Voornaam + lecturer.Achternaam) == (checkLecturer.Voornaam + checkLecturer.Achternaam)) && (lecturer.Voornaam + lecturer.Achternaam) != (previousLecturer?.Voornaam + previousLecturer?.Achternaam))
                     throw new Exception($"Docent {lecturer.Voornaam} {lecturer.Achternaam} bestaat al!");
             }
 

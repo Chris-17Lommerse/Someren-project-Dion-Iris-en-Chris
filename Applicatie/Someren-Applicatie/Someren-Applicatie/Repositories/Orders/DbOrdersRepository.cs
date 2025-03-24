@@ -2,13 +2,12 @@
 
 namespace Someren_Applicatie.Repositories.Orders
 {
-    public class DbOrdersRepository : IOrdersRepository
+    public class DbOrdersRepository : BaseRepository, IOrdersRepository
     {
-        private readonly string? _connectionString;
 
-        public DbOrdersRepository(IConfiguration configuration)
+        public DbOrdersRepository(IConfiguration configuration) : base(configuration)
         {
-            _connectionString = configuration.GetConnectionString("SomerenDatabase");
+            
         }
 
         public void Add(Order order)

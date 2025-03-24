@@ -3,15 +3,14 @@ using Someren_Applicatie.Models;
 
 namespace Someren_Applicatie.Repositories.Students
 {
-    public class DbStudentsRepository : IStudentsRepository
+    public class DbStudentsRepository : BaseRepository, IStudentsRepository
     {
         // DONT USE CREATE IF NO ROOMS ARE MADE
         const string BaseSelectQuery = "SELECT studentennr, voornaam, achternaam, telefoonnr, klas, kamernr FROM dbo.STUDENT";
-        private readonly string? _connectionString;
 
-        public DbStudentsRepository(IConfiguration configuration)
+        public DbStudentsRepository(IConfiguration configuration) : base(configuration)
         {
-            _connectionString = configuration.GetConnectionString("SomerenDatabase");
+
         }
 
         public void Add(Student student)

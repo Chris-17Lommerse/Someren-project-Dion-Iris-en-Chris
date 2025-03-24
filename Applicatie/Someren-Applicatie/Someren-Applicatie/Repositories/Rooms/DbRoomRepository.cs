@@ -4,15 +4,15 @@ using Someren_Applicatie.Models.Enums;
 
 namespace Someren_Applicatie.Repositories.Rooms
 {
-    public class DbRoomRepository : IRoomRepository
+    public class DbRoomRepository : BaseRepository, IRoomRepository
     {
         const string BaseSelectQuery = "SELECT kamernr, aantal_slaapplekken, type_kamer FROM SLAAPKAMER";
-        private readonly string? _connectionString;
+
 
         // Connection to the database will be set 
-        public DbRoomRepository(IConfiguration configuration)
+        public DbRoomRepository(IConfiguration configuration) : base(configuration)
         {
-            _connectionString = configuration.GetConnectionString("SomerenDatabase");
+
         }
         // Add room functionality via query 
         public void Add(Room room)

@@ -4,14 +4,14 @@ using Someren_Applicatie.Models.Enums;
 
 namespace Someren_Applicatie.Repositories.Drinks
 {
-    public class DbDrinksRepository : IDrinksRepository
+    public class DbDrinksRepository : BaseRepository, IDrinksRepository
     {
         const string BaseSelectQuery = "SELECT drankid, dranknaam, aantal, alcoholisch, prijs FROM DRANKJE";
-        private readonly string? _connectionString;
 
-        public DbDrinksRepository(IConfiguration configuration)
+
+        public DbDrinksRepository(IConfiguration configuration) : base(configuration)
         {
-            _connectionString = configuration.GetConnectionString("SomerenDatabase");
+
         }
 
         public void Add(Drink drink)

@@ -4,15 +4,15 @@ using Someren_Applicatie.Models.Enums;
 
 namespace Someren_Applicatie.Repositories.Activities
 {
-    public class DbActivitiesRepository : IActivitiesRepository
+    public class DbActivitiesRepository : BaseRepository, IActivitiesRepository
     {
         const string BaseSelectQuery = "SELECT activiteitid, naam, starttijd, eindtijd FROM ACTIVITEIT";
-        private readonly string? _connectionString;
+
 
         // Connection to the database will be defined in the constructor
-        public DbActivitiesRepository(IConfiguration configuration)
+        public DbActivitiesRepository(IConfiguration configuration) : base(configuration)
         {
-            _connectionString = configuration.GetConnectionString("SomerenDatabase");
+
         }
         // Add activity functionality via query
         public void Add(Activiteit activiteit)
