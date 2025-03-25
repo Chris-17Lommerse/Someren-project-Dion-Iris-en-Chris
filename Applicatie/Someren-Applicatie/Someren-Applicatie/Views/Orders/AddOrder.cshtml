@@ -13,20 +13,20 @@
 }
 <form action="/Orders/AddOrder" method="post">
 
-    <input hidden type="number" name="DrankId" value="@Model?.DrankId" />
-    <input hidden type="number" name="StudentNr" value="@Model?.StudentNr" />
     <div class="form-group py-2">
-        <label asp-for="StudentNr">Naam student:</label>
-        <select id="StudentNr" name="StudentNr" class="form-control">
-            <option value="@Model?.StudentNr">@Model?.StudentNr</option>
+        <label asp-for="StudentNr" class="form-control">Naam student:</label>
+        <select asp-for="StudentNr" asp-items="ViewBag.Students" class="form-control">
+            <option value="">Kies een student</option>
         </select>
+        <span asp-validation-for="StudentNr" class="text-danger"></span>
     </div>
 
     <div class="form-group py-2">
-        <label for="DrankId">Wat wil je bestellen?</label>
-        <select id="DrankId" name="DrankId" class="form-control">
-            <option value="@Model?.DrankId">@Model?.DrankId</option>
+        <label asp-for="DrankId">Wat wil je bestellen?</label>
+        <select asp-for="DrankId" asp-items="ViewBag.Drinks" class="form-control">
+            <option value="">Kies een drankje</option>
         </select>
+        <span asp-validation-for="DrankId" class="text-danger"></span>
     </div>
     <div class="form-group py-2">
         <label asp-for="Aantal">Aantal drankjes</label>

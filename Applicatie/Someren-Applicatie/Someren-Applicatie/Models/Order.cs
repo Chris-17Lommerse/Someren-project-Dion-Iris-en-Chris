@@ -2,19 +2,27 @@
 {
     public class Order
     {
-        public Student StudentNr { get; set; }
-        public Drink DrankId { get; set; }
+
+        public int StudentNr { get; set; }
+        public string StudentNaam { get; set; }
+        public int DrankId { get; set; }
+        public string DrankNaam { get; set; }
         public int Aantal {  get; set; }
         public Order()
         {
-            StudentNr = new Student();
-            DrankId = new Drink();
+            StudentNr = 0;
+            StudentNaam = "";
+            DrankId = 0;
+            DrankNaam = "";
             Aantal = 0;
         }
-        public Order(Student studentNr, Drink drankId, int aantal)
+
+        public Order(int studentNr, string studentNaam, int drankId, string drankNaam, int aantal)
         {
             StudentNr = studentNr;
+            StudentNaam = studentNaam;
             DrankId = drankId;
+            DrankNaam = drankNaam;
             Aantal = aantal;
         }
     }

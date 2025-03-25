@@ -1,17 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Someren_Applicatie.Models;
+using Someren_Applicatie.Repositories.Drinks;
 using Someren_Applicatie.Repositories.Orders;
 using Someren_Applicatie.Repositories.Rooms;
+using Someren_Applicatie.Repositories.Students;
 
 namespace Someren_Applicatie.Controllers
 {
     public class OrdersController : Controller
     {
         private readonly IOrdersRepository _ordersRepository;
-
-        public OrdersController(IOrdersRepository ordersRepository)
+        private readonly IStudentsRepository _studentsRepository;
+        private readonly IDrinksRepository _drinksRepository;
+        public OrdersController(IOrdersRepository ordersRepository, IDrinksRepository drinksRepository, IStudentsRepository studentsRepository)
         {
             _ordersRepository = ordersRepository;
+            _studentsRepository = studentsRepository;
+            _drinksRepository = drinksRepository;
         }
 
         public IActionResult Index()
@@ -23,7 +29,9 @@ namespace Someren_Applicatie.Controllers
         [HttpGet]
         public IActionResult AddOrder()
         {
-            return View();
+            ViewBag.Students = new SelectList(_studentsRepository.GetAll(), "StudentNr", "Voornaam");
+            ViewBag.Drinks = new SelectList(_drinksRepository.GetAll(), "DrankId", "DrankNaam");
+            return View(new Order());
         }
 
         [HttpPost]
