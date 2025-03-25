@@ -41,12 +41,31 @@ namespace Someren_Applicatie.Controllers
             {
                 _ordersRepository.Add(order);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { id1 = order.DrankId, id2 = order.StudentNr });
             }
             catch (Exception ex)
             {
                 ViewBag.ErrorMessage = ex.Message;
                 return View(order);
+            }
+        }
+
+        [HttpGet]
+        public IActionResult Details(int? studentNr, int? drankId)
+        {
+            try
+            {
+                if (studentNr == null || drankId == null)
+                {
+                    return NotFound();
+                }
+
+                Order? order = _ordersRepository.GetById((int)studentNr, (int)drankId);
+                return View(order);
+            } 
+            catch(Exception)
+            {
+                throw new Exception("Cannot load the order from the database");
             }
         }
     }

@@ -5,7 +5,7 @@ namespace Someren_Applicatie.Repositories.Orders
     public interface IOrdersRepository
     {
         List<Order> GetAll();
-        Order? GetById(int orderId);
+        Order? GetById(int studentNr, int drankId);
         void Add(Order order);
     }
 }

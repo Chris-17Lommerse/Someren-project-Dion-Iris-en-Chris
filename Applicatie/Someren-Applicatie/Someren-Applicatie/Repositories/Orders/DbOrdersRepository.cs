@@ -11,7 +11,7 @@ namespace Someren_Applicatie.Repositories.Orders
                                        "INNER JOIN DRANKJE AS D ON B.drankid = D.drankid";
         public DbOrdersRepository(IConfiguration configuration) : base(configuration)
         {
-            
+
         }
 
         public void Add(Order order)
@@ -37,7 +37,7 @@ namespace Someren_Applicatie.Repositories.Orders
         {
             List<Order> orders = new List<Order>();
 
-            using(SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 string query = $"{BaseSelectQuery}";
                 SqlCommand command = new SqlCommand(query, connection);
@@ -65,9 +65,27 @@ namespace Someren_Applicatie.Repositories.Orders
 
             return new Order(studentNr, studentNaam, drankId, drankNaam, aantal);
         }
-        public Order? GetById(int orderId)
+        public Order? GetById(int studentNr, int drankId)
         {
-            throw new NotImplementedException();
+            Order? order = null;
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = $"{BaseSelectQuery} WHERE studentennr = @studentnr AND drankid = @drankid";
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("@studentnr", studentNr);
+                command.Parameters.AddWithValue("@drankid", drankId);
+
+                command.Connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    order = ReadOrder(reader);
+                }
+                reader.Close();
+            }
+            return order;
         }
     }
 }
