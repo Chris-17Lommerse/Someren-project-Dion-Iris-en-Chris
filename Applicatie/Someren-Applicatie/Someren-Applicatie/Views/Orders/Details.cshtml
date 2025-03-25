@@ -1,20 +1,15 @@
-﻿@model List<Someren_Applicatie.Models.Order>
+﻿@model Someren_Applicatie.Models.Order
 @{
     ViewData["Title"] = "Order Details";
 }
 
 <h1>Gegegevens van de bestelling</h1>
 <form action="/Orders/Details" method="get">
-    <input hidden type="number" name="StudentNr" />
-    <input hidden type="number" name="DrankId" />
+    <input hidden type="number" name="StudentNr" value="@Model?.StudentNr" />
+    <input hidden type="number" name="DrankId" value="@Model?.DrankId" />
 </form>
 <div>
-    @{
-        foreach (Order order in Model)
-        {
-            <h4>@order.StudentNaam heeft @order.Aantal @order.DrankNaam besteld</h4>
-        }
-    }
+    <h4>@Model?.StudentNaam heeft @Model?.Aantal @Model?.DrankNaam besteld</h4>
 </div>
 
 <div>

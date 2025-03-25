@@ -40,8 +40,7 @@ namespace Someren_Applicatie.Controllers
             try
             {
                 _ordersRepository.Add(order);
-
-                return RedirectToAction("Details", new { id1 = order.DrankId, id2 = order.StudentNr });
+                return View("Details");
             }
             catch (Exception ex)
             {

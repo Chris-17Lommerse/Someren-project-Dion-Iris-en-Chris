@@ -32,6 +32,6 @@
         <label asp-for="Aantal">Aantal drankjes</label>
         <input asp-for="Aantal" class="form-control" required value="@Model?.Aantal" />
     </div>
-    <button type="submit" class="btn btn-success btn-hover m-1">Opslaan</button>
+    <a href="/Orders/Details/@Model?.StudentNr/@Model?.DrankId"><button type="submit" class="btn btn-success btn-hover m-1">Opslaan</button></a>
 </form>
 

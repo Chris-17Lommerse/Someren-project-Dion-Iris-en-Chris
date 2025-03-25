@@ -37,6 +37,24 @@ namespace Someren_Applicatie.Controllers
                 throw new Exception(ex.Message);
             }
         }
+        [HttpGet]
+        public IActionResult Details(string? id)
+        {
+            try
+            {
+                if(id == null)
+                {
+                    return NotFound();
+                }
+
+                Room? room = _roomsRepository.GetById((string)id);
+                return View(room);
+            }
+            catch (Exception)
+            {
+                throw new Exception("Cannot load room from the database");
+            }
+        }
 
         // GET: RoomsController/Create
         [HttpGet]
