@@ -10,6 +10,8 @@ namespace Someren_Applicatie.Repositories.Participants
 
         public void Add(int studentnr, int activityid)
         {
+            if (DoesParticipantExist(studentnr, activityid))
+                throw new Exception("Deze student neemt al deel aan deze activiteit");
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 string query = $"INSERT INTO dbo.DEELNEMER (studentennr, activiteitid) " +
@@ -38,6 +40,27 @@ namespace Someren_Applicatie.Repositories.Participants
                 int nRowsAffected = command.ExecuteNonQuery();
                 if (nRowsAffected == 0) throw new Exception("Geen deelnemers verwijderd");
             }
+        }
+
+        public bool DoesParticipantExist(int studentnr, int activityid)
+        {
+            bool doesParticipantExist = false;
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = "SELECT * " +
+                                "FROM dbo.DEELNEMER " +
+                                "WHERE activiteitid = @activiteitid AND studentennr = @studentennr;";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@studentennr", studentnr);
+                command.Parameters.AddWithValue("@activiteitid", activityid);
+
+                command.Connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                doesParticipantExist = reader.Read();
+                reader.Close();
+            }
+            return doesParticipantExist;
         }
 
         public string? GetActivityName(int? id)
