@@ -1,14 +1,32 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Someren_Applicatie.Models.Activiteit
 @{
-}
-@model List<Someren_Applicatie.Models.Activiteit>
-
-@{
-    ViewData["Title"] = "Activity";
+    ViewData["Title"] = "View Activity";
 }
 
+<h4> View activity</h4>
+@{
+    if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger" role="alert">@ViewBag.ErrorMessage</div>
+    }
+}
+<form action="/Activities/Edit" method="post">
+    <input hidden type="number" name="Activiteitid" value="@Model?.ActiviteitId" />
 
+    <div class="form-group py-2">
+        <label asp-for="Naam">Naam activiteit:</label>
+        <input asp-for="Naam" class="form-control" required value="@Model?.Naam" />
+    </div>
+    <div class="form-group py-2">
+        <label asp-for="StartTijd">Starttijd:</label>
+        <input asp-for="StartTijd" class="form-control" required value="@Model?.StartTijd.ToString("yyyy-MM-ddTHH:mm")" />
+    </div>
+    <div class="form-group py-2">
+        <label asp-for="EindTijd">Eindtijd:</label>
+        <input asp-for="EindTijd" class="form-control" required value="@Model?.EindTijd.ToString("yyyy-MM-ddTHH:mm")" />
+    </div>
 
+    
+</form>
 
+<a href="/Activities/Index" class="btn btn-dark m-1">Ga terug naar de lijst van activiteiten</a>

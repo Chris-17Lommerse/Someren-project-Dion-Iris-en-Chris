@@ -82,6 +82,8 @@ namespace Someren_Applicatie.Controllers
             // returns a update forn to edit an activity
             return View();
         }
+        [HttpGet]
+       
 
         // GET: ActivitiesController/Edit/5
         [HttpGet]
@@ -164,6 +166,23 @@ namespace Someren_Applicatie.Controllers
                 ViewBag.ErrorMessage = ex.Message;
                 return View(activiteit);
             }
+        }
+
+        [HttpGet]
+        public ActionResult Supervisor(string? searchString)
+        {
+            List<Activiteit> activiteit;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                activiteit = _activitiesRepository.GetByName(searchString);
+            }
+            else
+            {
+                activiteit = _activitiesRepository.GetAll();
+            }
+
+            return View(activiteit);
         }
     }
 }
