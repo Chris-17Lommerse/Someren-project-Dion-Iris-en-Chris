@@ -37,9 +37,11 @@ namespace Someren_Applicatie.Controllers
         [HttpPost]
         public IActionResult AddOrder(Order order)
         {
+
             try
             {
                 _ordersRepository.Add(order);
+
                 return View("Details");
             }
             catch (Exception ex)
