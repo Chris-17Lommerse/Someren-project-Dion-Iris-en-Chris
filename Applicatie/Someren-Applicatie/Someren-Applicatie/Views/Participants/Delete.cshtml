@@ -1,0 +1,32 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Someren_Applicatie.Models.Student
+@{
+    ViewData["Title"] = "Deelnemer verwijderen";
+    if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger" role="alert">@ViewBag.ErrorMessage</div>
+    }
+    int activityId = (int)ViewData["ActivityId"];
+    string activityName = (string)ViewData["ActivityName"];
+}
+<p>Activiteit: @activityName</p>
+<form action="/Participants/Delete" method="POST">
+    <input hidden type="number" name="StudentNr" value="@Model?.StudentNr" />
+    <input hidden type="number" name="ActiviteitId" value="@activityId" />
+
+    <div class="form-group py-2">
+        <label for="Voornaam">Voornaam</label>
+        <input type="text" id="Voornaam" name="Voornaam" class="form-control" required readonly value="@Model?.Voornaam" />
+    </div>
+
+    <div class="form-group py-2">
+        <label for="Achternaam">Achternaam</label>
+        <input type="text" id="Achternaam" name="Achternaam" class="form-control" required readonly value="@Model?.Achternaam" />
+    </div>
+
+    <button type="submit" class="btn btn-success btn-hover m-1">Verwijderen</button>
+</form>
+
+<a href="/Participants/Index/@activityId" class="btn btn-dark btn-hover m-1">Terug naar deelnemers</a>

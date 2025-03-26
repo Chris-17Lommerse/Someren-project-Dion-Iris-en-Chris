@@ -7,6 +7,10 @@
 
 @{
     ViewData["Title"] = "Activities";
+    if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger" role="alert">@ViewBag.ErrorMessage</div>
+    }
 }
 
 
@@ -48,6 +52,7 @@
                     <td>
                         <a href="/Activities/Edit/@activiteit.ActiviteitId" class="btn btn-dark">Bewerken</a>
                         <a href="/Activities/Delete/@activiteit.ActiviteitId" class="btn btn-danger">Verwijderen</a>
+                        <a href="/Participants/Index/@activiteit.ActiviteitId" class="btn btn-success">Toon deelnemers</a>
                     </td>
                 </tr>
             }

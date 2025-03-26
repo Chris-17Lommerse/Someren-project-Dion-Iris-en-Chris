@@ -1,7 +1,7 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@model List<Someren_Applicatie.Models.Student>
+@model IEnumerable<Someren_Applicatie.Models.Student>
 @{
     ViewData["Title"] = "Studenten";
     if (ViewBag.ErrorMessage != null)
@@ -21,7 +21,7 @@
 <div class="text-center">
     <h1 class="display-4">Studenten</h1>
     <a href="/Students/Create" class="btn btn-success">Student toevoegen</a>
-    <p>Aantal studenten: @Model.Count</p>
+    <p>Aantal studenten: @Model.Count()</p>
     <table class="table table-info table-hover">
         <thead>
             <tr class="table-dark">

@@ -16,9 +16,9 @@ namespace Someren_Applicatie.Repositories.Students
         public void Add(Student student)
         {
             //Error handling (eigenlijk moet het in nog een andere layer maar dat hebben wij nog niet geleerd)
-            bool IsRoomForStudent = IsBedAvailableInRoom(student.KamerNr);
-            if (!IsRoomForStudent) //als er geen ruimte is voor studenten dan geef een error
-                throw new Exception($"Room {student.KamerNr} is full");
+            //bool IsRoomForStudent = IsBedAvailableInRoom(student.KamerNr);
+            //if (!IsRoomForStudent) //als er geen ruimte is voor studenten dan geef een error
+                //throw new Exception($"Room {student.KamerNr} is full");
             Student? checkStudent = GetByName(student.Voornaam, student.Achternaam);
             if (checkStudent != null) //als er al een student is met die naam dan geef een error (IN ZO'N KLEINE SCOPE IS HET NULLABLE ALS ER IEMAND IS MET DEZELFDE VOOR EN ACHTERNAAM IN EEN ANDER DEEL VAN NEDERLAND) {implementatie is justified}
                 throw new Exception($"Student {student.Voornaam} {student.Achternaam} already exists!");
@@ -41,7 +41,7 @@ namespace Someren_Applicatie.Repositories.Students
             }
         }
 
-        public bool IsBedAvailableInRoom(string roomNr)
+        /*public bool IsBedAvailableInRoom(string roomNr)
         {
             //Check methode om de kijken of er ruimte is in een kamer of niet
             int numberOfStudents = 0;
@@ -63,13 +63,15 @@ namespace Someren_Applicatie.Repositories.Students
 
                 if (reader.Read()) {
                     numberOfStudents = (int)reader["numberOfStudentsInRoom"];
+                    Console.WriteLine(numberOfStudents);
                     numberOfBeds = (int)reader["aantal_slaapplekken"];
+                    Console.WriteLine(numberOfBeds);
                 }
                 reader.Close();
             }
 
             return numberOfStudents < numberOfBeds;
-        }
+        }*/
 
         public void Delete(Student student)
         {
@@ -172,12 +174,12 @@ namespace Someren_Applicatie.Repositories.Students
                     throw new Exception($"Student {student.Voornaam} {student.Achternaam} already exists!");
             }
             //check of vorige kamernummer niet hetzelfde is als het nieuwe kamernummer
-            if (previousStudent?.KamerNr != student.KamerNr)
+            /*if (previousStudent?.KamerNr != student.KamerNr)
             {
                 bool IsRoomForStudent = IsBedAvailableInRoom(student.KamerNr);
                 if (!IsRoomForStudent)
                     throw new Exception($"Room {student.KamerNr} is full");
-            }
+            }*/
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {

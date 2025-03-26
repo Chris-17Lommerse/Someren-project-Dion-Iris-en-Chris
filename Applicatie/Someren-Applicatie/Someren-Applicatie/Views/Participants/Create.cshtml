@@ -1,0 +1,34 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model IEnumerable<Someren_Applicatie.Models.Student>
+@{
+    ViewData["Title"] = "Deelnemer toevoegen";
+    if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger" role="alert">@ViewBag.ErrorMessage</div>
+    }
+    int activityId = (int)ViewData["ActivityId"];
+}
+
+<form action="/Participants/Create" method="POST">
+    <div class="form-group">
+        <input hidden type="number" name="activiteitid" value="@activityId" />
+        <label for="deelnemer">Studenten</label>
+        <select id="deelnemer" , name="studentennr" class="form-control w-25 m-2">
+            <option>Kies een optie</option>
+            @{
+                foreach (Student student in Model)
+                {
+                    string studentennaam = $"{student.Voornaam} {student.Achternaam}";
+                    <option value=@student.StudentNr>@studentennaam</option>
+                }
+            }
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary m-2">Toevoegen aan activiteit</button>
+</form>
+
+<a href="/Participants/Index/@activityId" class="btn btn-dark btn-hover m-1">Terug naar deelnemers</a>
+

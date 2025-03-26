@@ -46,6 +46,11 @@ namespace Someren_Applicatie.Controllers
                 _studentsRepository.Add(student);
                 return RedirectToAction("Index");
             }
+            catch(InvalidOperationException ex)
+            {
+                ViewBag.ErrorMesssage = ex.Message;
+                return View(student);
+            }
             catch (Exception ex) // Try Catch in de controller omdat de Repository niet over erro handeling gaat
             {
                 ViewBag.ErrorMessage = ex.Message;

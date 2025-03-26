@@ -1,7 +1,48 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@model IEnumerable<Someren_Applicatie.Models.Student>
 @{
     ViewData["Title"] = "Deelnemers";
+    if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger" role="alert">@ViewBag.ErrorMessage</div>
+    }
+    string activityName = (string)ViewData["ActivityName"];
+    int activityId = (int)ViewData["ActivityId"];
 }
+
+<div class="text-center">
+    <h1 class="display-4">Deelnemers</h1>
+    <a href="/Participants/Create/@activityId" class="btn btn-success">Deelnemer toevoegen</a>
+    <p>Aantal Deelnemers: @Model.Count()</p>
+    <p>Activiteit: @activityName</p>
+    <table class="table table-info table-hover">
+        <thead>
+            <tr class="table-dark">
+                <th>StudentNr</th>
+                <th>Voornaam</th>
+                <th>Achternaam</th>
+                <th>Acties</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (Student deelnemer in Model)
+                {
+                    string joinedId = $"{deelnemer.StudentNr},{activityId}";
+                    <tr>
+                        <td>@deelnemer.StudentNr</td>
+                        <td>@deelnemer.Voornaam</td>
+                        <td>@deelnemer.Achternaam</td>
+                        <td>
+                            <a href="/Participants/Delete/@joinedId" class="btn btn-danger">Verwijderen</a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<a href="/Activities/Index" class="btn btn-dark btn-hover m-1">Terug naar activiteiten</a>
 
