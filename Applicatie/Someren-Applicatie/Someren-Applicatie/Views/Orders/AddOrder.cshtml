@@ -1,0 +1,37 @@
+﻿@model Someren_Applicatie.Models.Order
+
+@{
+    ViewData["Title"] = "Add Order";
+}
+
+<h1>Wat wil je bestellen?</h1>
+@{
+    if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger" role="alert">@ViewBag.ErrorMessage</div>
+    }
+}
+<form action="/Orders/AddOrder" method="post">
+
+    <div class="form-group py-2">
+        <label asp-for="StudentNr" class="form-control">Naam student:</label>
+        <select asp-for="StudentNr" asp-items="ViewBag.Students" class="form-control">
+            <option value="">Kies een student</option>
+        </select>
+        <span asp-validation-for="StudentNr" class="text-danger"></span>
+    </div>
+
+    <div class="form-group py-2">
+        <label asp-for="DrankId">Wat wil je bestellen?</label>
+        <select asp-for="DrankId" asp-items="ViewBag.Drinks" class="form-control">
+            <option value="">Kies een drankje</option>
+        </select>
+        <span asp-validation-for="DrankId" class="text-danger"></span>
+    </div>
+    <div class="form-group py-2">
+        <label asp-for="Aantal">Aantal drankjes</label>
+        <input asp-for="Aantal" class="form-control" required value="@Model?.Aantal" />
+    </div>
+    <a href="/Orders/Details/@Model?.StudentNr/@Model?.DrankId"><button type="submit" class="btn btn-success btn-hover m-1">Opslaan</button></a>
+</form>
+

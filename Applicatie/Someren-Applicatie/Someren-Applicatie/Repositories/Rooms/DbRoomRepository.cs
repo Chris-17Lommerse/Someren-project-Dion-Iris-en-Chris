@@ -101,7 +101,7 @@ namespace Someren_Applicatie.Repositories.Rooms
                 command.Connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
 
-                while (reader.Read())
+                if (reader.Read())
                 {
                     room = ReadRoom(reader);
                 }

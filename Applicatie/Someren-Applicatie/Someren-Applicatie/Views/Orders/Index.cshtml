@@ -1,0 +1,30 @@
+﻿@model List<Someren_Applicatie.Models.Order>
+@{
+    ViewData["Title"] = "Orders";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Bestellingen</h1>
+    <p>Aantal bestellingen: @Model.Count</p>
+    <table class="table table-info table-hover">
+        <thead>
+            <tr class="table-dark">
+                <th>Bestelling gedaan door:</th>
+                <th>Dranknaam</th>
+                <th>Aantal drankjes</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (Order order in Model)
+                {
+                    <tr>
+                        <td>@order.StudentNaam</td>
+                        <td>@order.DrankNaam</td>
+                        <td>@order.Aantal</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

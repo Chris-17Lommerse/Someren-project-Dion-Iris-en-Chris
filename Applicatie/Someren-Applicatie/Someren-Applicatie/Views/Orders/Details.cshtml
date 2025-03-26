@@ -1,0 +1,20 @@
+﻿@model Someren_Applicatie.Models.Order
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+<h1>Gegegevens van de bestelling</h1>
+<form action="/Orders/Details" method="get">
+    <input hidden type="number" name="StudentNr" value="@Model?.StudentNr" />
+    <input hidden type="number" name="DrankId" value="@Model?.DrankId" />
+</form>
+<div>
+    <h4>@Model?.StudentNaam heeft @Model?.Aantal @Model?.DrankNaam besteld</h4>
+</div>
+
+<div>
+    <h1>Wil je nog een drankje bestellen?</h1>
+    <a href="/Orders/Create" class="btn btn-success"><h3>Ja</h3></a>
+    <a href="/Home/Index" class="btn btn-danger"><h3>Nee</h3></a>
+</div>
+
