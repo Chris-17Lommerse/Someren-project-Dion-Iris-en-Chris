@@ -4,14 +4,14 @@
 @model IEnumerable<Someren_Applicatie.Models.Student>
 @{
     ViewData["Title"] = "Deelnemer toevoegen";
-    if (ViewBag.ErrorMessage != null)
+    if (TempData["ErrorMessage"] != null)
     {
-        <div class="alert alert-danger" role="alert">@ViewBag.ErrorMessage</div>
+        <div class="alert alert-danger" role="alert">@TempData["ErrorMessage"]</div>
     }
     int activityId = (int)ViewData["ActivityId"];
 }
 
-<form action="/Participants/Create" method="POST">
+<form action="/Participants/CreateConfirmed" method="POST">
     <div class="form-group">
         <input hidden type="number" name="activiteitid" value="@activityId" />
         <label for="deelnemer">Studenten</label>

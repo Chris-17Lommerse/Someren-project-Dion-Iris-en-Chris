@@ -4,9 +4,13 @@
 @model IEnumerable<Someren_Applicatie.Models.Student>
 @{
     ViewData["Title"] = "Deelnemers";
-    if (ViewBag.ErrorMessage != null)
+    if (TempData["ErrorMessage"] != null)
     {
-        <div class="alert alert-danger" role="alert">@ViewBag.ErrorMessage</div>
+        <div class="alert alert-danger" role="alert">@TempData["ErrorMessage"]</div>
+    }
+    if (TempData["ConfirmMessage"] != null)
+    {
+        <div class="alert alert-success" role="alert">@TempData["ConfirmMessage"]</div>
     }
     string activityName = (string)ViewData["ActivityName"];
     int activityId = (int)ViewData["ActivityId"];
@@ -14,7 +18,7 @@
 
 <div class="text-center">
     <h1 class="display-4">Deelnemers</h1>
-    <a href="/Participants/Create/@activityId" class="btn btn-success">Deelnemer toevoegen</a>
+    <a asp-controller="Participants" asp-action="Create" asp-route-id="@activityId" class="btn btn-success">Deelnemer toevoegen</a>
     <p>Aantal Deelnemers: @Model.Count()</p>
     <p>Activiteit: @activityName</p>
     <table class="table table-info table-hover">
@@ -30,13 +34,12 @@
             @{
                 foreach (Student deelnemer in Model)
                 {
-                    string joinedId = $"{deelnemer.StudentNr},{activityId}";
                     <tr>
                         <td>@deelnemer.StudentNr</td>
                         <td>@deelnemer.Voornaam</td>
                         <td>@deelnemer.Achternaam</td>
                         <td>
-                            <a href="/Participants/Delete/@joinedId" class="btn btn-danger">Verwijderen</a>
+                            <a asp-controller="Participants" asp-action="Delete" asp-route-studentnr="@deelnemer.StudentNr" asp-route-activityid="@activityId">Verwijderen</a>
                         </td>
                     </tr>
                 }

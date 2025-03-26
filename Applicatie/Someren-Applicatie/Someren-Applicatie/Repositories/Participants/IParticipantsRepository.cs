@@ -8,5 +8,6 @@ namespace Someren_Applicatie.Repositories.Participants
         string? GetActivityName(int? id);
         void Add(int studentnr, int activityid);
         void Delete(int studentnr, int activityid);
+        bool DoesParticipantExist(int studentnr, int activityid);
     }
 }
