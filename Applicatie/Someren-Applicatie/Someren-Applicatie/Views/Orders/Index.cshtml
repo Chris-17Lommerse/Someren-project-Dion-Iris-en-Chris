@@ -12,6 +12,7 @@
                 <th>Bestelling gedaan door:</th>
                 <th>Dranknaam</th>
                 <th>Aantal drankjes</th>
+                <th>Acties</th>
             </tr>
         </thead>
         <tbody>
@@ -22,6 +23,9 @@
                         <td>@order.StudentNaam</td>
                         <td>@order.DrankNaam</td>
                         <td>@order.Aantal</td>
+                        <td>
+                        <a href="/Orders/Details/@order.BestellingId" class="btn btn-dark">Zie gegevens van de bestelling</a>
+                        </td>
                     </tr>
                 }
             }
