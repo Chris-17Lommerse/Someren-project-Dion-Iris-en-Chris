@@ -5,7 +5,7 @@ namespace Someren_Applicatie.Repositories.Orders
 {
     public class DbOrdersRepository : BaseRepository, IOrdersRepository
     {
-        const string BaseSelectQuery = "SELECT B.studentennr, S.voornaam AS studentnaam, B.drankid, D.dranknaam AS dranknaam, B.aantal " +
+        const string BaseSelectQuery = "SELECT B.bestellingid, B.studentennr, S.voornaam AS studentnaam, B.drankid, D.dranknaam AS dranknaam, B.aantal " +
                                        "FROM BESTELLING AS B " +
                                        "INNER JOIN STUDENT AS S ON B.studentennr = S.studentennr " +
                                        "INNER JOIN DRANKJE AS D ON B.drankid = D.drankid";
@@ -57,24 +57,24 @@ namespace Someren_Applicatie.Repositories.Orders
 
         private Order ReadOrder(SqlDataReader reader)
         {
+            int bestellingId = (int)reader["bestellingid"];
             int studentNr = (int)reader["studentennr"];
             string studentNaam = (string)reader["studentnaam"];
             int drankId = (int)reader["drankid"];
             string drankNaam = (string)reader["dranknaam"];
             int aantal = (int)reader["aantal"];
 
-            return new Order(studentNr, studentNaam, drankId, drankNaam, aantal);
+            return new Order(bestellingId, studentNr, studentNaam, drankId, drankNaam, aantal);
         }
-        public Order? GetById(int studentNr, int drankId)
+        public Order? GetById(int bestellingId)
         {
             Order? order = null;
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = $"{BaseSelectQuery} WHERE studentennr = @studentnr AND drankid = @drankid";
+                string query = $"{BaseSelectQuery} WHERE bestellingid = @bestellingId";
                 SqlCommand command = new SqlCommand(query, connection);
 
-                command.Parameters.AddWithValue("@studentnr", studentNr);
-                command.Parameters.AddWithValue("@drankid", drankId);
+                command.Parameters.AddWithValue("@bestellingId", bestellingId);
 
                 command.Connection.Open();
                 SqlDataReader reader = command.ExecuteReader();

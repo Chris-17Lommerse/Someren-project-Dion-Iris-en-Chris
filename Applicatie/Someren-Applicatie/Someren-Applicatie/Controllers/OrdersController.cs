@@ -42,7 +42,7 @@ namespace Someren_Applicatie.Controllers
             {
                 _ordersRepository.Add(order);
 
-                return View("Details");
+                return RedirectToAction("Details", new { id = order.BestellingId });
             }
             catch (Exception ex)
             {
@@ -52,16 +52,16 @@ namespace Someren_Applicatie.Controllers
         }
 
         [HttpGet]
-        public IActionResult Details(int? studentNr, int? drankId)
+        public IActionResult Details(int? id)
         {
             try
             {
-                if (studentNr == null || drankId == null)
+                if (id == null)
                 {
                     return NotFound();
                 }
 
-                Order? order = _ordersRepository.GetById((int)studentNr, (int)drankId);
+                Order? order = _ordersRepository.GetById((int)id);
                 return View(order);
             } 
             catch(Exception)
