@@ -7,7 +7,7 @@ using Someren_Applicatie.Repositories.Students;
 
 namespace Someren_Applicatie.Controllers
 {
-    [Route("Participants")] //delete if no worky
+    [Route("Participants")]
     public class ParticipantsController : Controller
     {
         private readonly IParticipantsRepository _participantsRepository;

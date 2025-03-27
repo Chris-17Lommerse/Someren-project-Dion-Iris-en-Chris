@@ -24,7 +24,6 @@
     <table class="table table-info table-hover">
         <thead>
             <tr class="table-dark">
-                <th>StudentNr</th>
                 <th>Voornaam</th>
                 <th>Achternaam</th>
                 <th>Acties</th>
@@ -35,11 +34,10 @@
                 foreach (Student deelnemer in Model)
                 {
                     <tr>
-                        <td>@deelnemer.StudentNr</td>
                         <td>@deelnemer.Voornaam</td>
                         <td>@deelnemer.Achternaam</td>
                         <td>
-                            <a asp-controller="Participants" asp-action="Delete" asp-route-studentnr="@deelnemer.StudentNr" asp-route-activityid="@activityId">Verwijderen</a>
+                            <a asp-controller="Participants" asp-action="Delete" asp-route-studentnr="@deelnemer.StudentNr" asp-route-activityid="@activityId" class="btn btn-danger">Verwijderen</a>
                         </td>
                     </tr>
                 }
