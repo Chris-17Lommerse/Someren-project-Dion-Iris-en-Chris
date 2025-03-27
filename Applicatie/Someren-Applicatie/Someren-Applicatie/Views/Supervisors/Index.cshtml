@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Someren_Applicatie.Models.Lecturer>
+@{
+    ViewData["Title"] = "Begeleiders";
+    if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger" role="alert">@TempData["ErrorMessage"]</div>
+    }
+    if (TempData["ConfirmMessage"] != null)
+    {
+        <div class="alert alert-success" role="alert">@TempData["ConfirmMessage"]</div>
+    }
+    string activityName = (string)ViewData["ActivityName"];
+    int activityId = (int)ViewData["ActivityId"];
+}
+
+<div class="text-center">
+    <h1 class="display-4">Begeleiders</h1>
+    <a asp-controller="Supervisors" asp-action="Create" asp-route-id="@activityId" class="btn btn-success">Begeleider toevoegen</a>
+    <p>Activiteit: @activityName</p>
+    <table class="table table-info table-hover">
+        <thead>
+            <tr class="table-dark">
+              
+                <th>Voornaam</th>
+                <th>Achternaam</th>
+                <th>Acties</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (Lecturer begeleider in Model)
+                {
+                    <tr>
+                        
+                        <td>@begeleider.Voornaam</td>
+                        <td>@begeleider.Achternaam</td>
+                        <td>
+                            <a asp-controller="Supervisors" asp-action="Delete" asp-route-studentnr="@begeleider.DocentNr" asp-route-activityid="@activityId">Verwijderen</a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<a href="/Activities/Index" class="btn btn-dark btn-hover m-1">Terug naar activiteiten</a>
+

@@ -1,0 +1,29 @@
+﻿@model Someren_Applicatie.Models.Lecturer
+@{
+    ViewData["Title"] = "Begeleider verwijderen";
+    if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger" role="alert">@TempData["ErrorMessage"]</div>
+    }
+    int activityId = (int)ViewData["ActivityId"];
+    string activityName = (string)ViewData["ActivityName"];
+}
+<p>Activiteit: @activityName</p>
+<form action="/Supervisors/Delete" method="POST">
+    <input hidden type="number" name="DocentNr" value="@Model?.DocentNr" />
+    <input hidden type="number" name="ActiviteitId" value="@activityId" />
+
+    <div class="form-group py-2">
+        <label for="Voornaam">Voornaam</label>
+        <input type="text" id="Voornaam" name="Voornaam" class="form-control" required readonly value="@Model?.Voornaam" />
+    </div>
+
+    <div class="form-group py-2">
+        <label for="Achternaam">Achternaam</label>
+        <input type="text" id="Achternaam" name="Achternaam" class="form-control" required readonly value="@Model?.Achternaam" />
+    </div>
+
+    <button type="submit" class="btn btn-success btn-hover m-1">Verwijderen</button>
+</form>
+
+<a href="/Supervisors/Index/@activityId" class="btn btn-dark btn-hover m-1">Terug naar begeleiders</a>

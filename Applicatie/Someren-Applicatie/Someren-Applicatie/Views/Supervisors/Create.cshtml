@@ -1,0 +1,34 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model IEnumerable<Someren_Applicatie.Models.Lecturer>
+@{
+    ViewData["Title"] = "Begeleider toevoegen";
+    if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger" role="alert">@TempData["ErrorMessage"]</div>
+    }
+    int activityId = (int)ViewData["ActivityId"];
+}
+
+<form action="/Supervisors/Create" method="POST">
+    <div class="form-group">
+        <input hidden type="number" name="activiteitid" value="@activityId" />
+        <label for="begeleider">Docenten</label>
+        <select id="begeleider" , name="docentnr" class="form-control w-25 m-2">
+            <option>Kies een optie</option>
+            @{
+                foreach (Lecturer lecturer in Model)
+                {
+                    string docentnaam = $"{lecturer.Voornaam} {lecturer.Achternaam}";
+                    <option value=@lecturer.DocentNr>@docentnaam</option>
+                }
+            }
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary m-2">Toevoegen aan activiteit</button>
+</form>
+
+<a href="/Supervisors/Index/@activityId" class="btn btn-dark btn-hover m-1">Terug naar begeleiders</a>
+
