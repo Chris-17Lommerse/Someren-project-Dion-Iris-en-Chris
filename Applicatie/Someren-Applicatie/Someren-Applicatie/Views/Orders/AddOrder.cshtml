@@ -1,4 +1,4 @@
-﻿@model Someren_Applicatie.Models.Order
+﻿@model Someren_Applicatie.Models.DrinkOrderViewModel 
 
 @{
     ViewData["Title"] = "Add Order";
@@ -14,19 +14,19 @@
 <form action="/Orders/AddOrder" method="post">
 
     <div class="form-group py-2">
-        <label asp-for="StudentNr" class="form-control">Naam student:</label>
-        <select asp-for="StudentNr" asp-items="ViewBag.Students" class="form-control">
+        <label asp-for="Students">Naam Student</label>
+        <select id="Students" name="Students" asp-items="ViewBag.Students" class="form-control">
             <option value="">Kies een student</option>
+            <option value="Students">@Model?.Students</option>
         </select>
-        <span asp-validation-for="StudentNr" class="text-danger"></span>
     </div>
 
     <div class="form-group py-2">
-        <label asp-for="DrankId">Wat wil je bestellen?</label>
-        <select asp-for="DrankId" asp-items="ViewBag.Drinks" class="form-control">
-            <option value="">Kies een drankje</option>
+        <label asp-for="Drinks">Wat wil je bestellen?</label>
+        <select id="Drinks" name="Drinks" asp-items="ViewBag.Drinks" class="form-control">
+            <option value="">Selecteer een drankje</option>
+            <option value="Drinks">@Model?.Drinks</option>
         </select>
-        <span asp-validation-for="DrankId" class="text-danger"></span>
     </div>
     <div class="form-group py-2">
         <label asp-for="Aantal">Aantal drankjes</label>

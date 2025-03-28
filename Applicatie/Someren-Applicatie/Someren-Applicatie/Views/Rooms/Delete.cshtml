@@ -14,15 +14,15 @@
 
         <div class="form-group py-2">
             <label asp-for="KamerNummer">Kamernummer:</label>
-            <input asp-for="KamerNummer" class="form-control" required value="@Model?.KamerNummer" />
+            <input asp-for="KamerNummer" class="form-control" required readonly value="@Model?.KamerNummer" />
         </div>
         <div class="form-group py-2">
             <label asp-for="AantalSlaaplekken">Aantal slaaplekken:</label>
-            <input asp-for="AantalSlaaplekken" class="form-control" required value="@Model?.AantalSlaaplekken" />
+            <input asp-for="AantalSlaaplekken" class="form-control" required readonly value="@Model?.AantalSlaaplekken" />
         </div>
         <div class="form-group py-2">
             <label for="TypeKamer">Type kamer:</label>
-            <select id="TypeKamer" name="TypeKamer" class="form-control">
+            <select id="TypeKamer" name="TypeKamer" class="form-control" required readonly>
                 <option value="Student">Student</option>
                 <option value="Lecturer">Docent</option>
             </select>

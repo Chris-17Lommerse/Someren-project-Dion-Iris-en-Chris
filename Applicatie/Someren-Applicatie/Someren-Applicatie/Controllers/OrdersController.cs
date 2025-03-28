@@ -11,13 +11,9 @@ namespace Someren_Applicatie.Controllers
     public class OrdersController : Controller
     {
         private readonly IOrdersRepository _ordersRepository;
-        private readonly IStudentsRepository _studentsRepository;
-        private readonly IDrinksRepository _drinksRepository;
         public OrdersController(IOrdersRepository ordersRepository, IDrinksRepository drinksRepository, IStudentsRepository studentsRepository)
         {
             _ordersRepository = ordersRepository;
-            _studentsRepository = studentsRepository;
-            _drinksRepository = drinksRepository;
         }
 
         public IActionResult Index()
@@ -29,9 +25,10 @@ namespace Someren_Applicatie.Controllers
         [HttpGet]
         public IActionResult AddOrder()
         {
-            ViewBag.Students = new SelectList(_studentsRepository.GetAll(), "StudentNr", "Voornaam");
-            ViewBag.Drinks = new SelectList(_drinksRepository.GetAll(), "DrankId", "DrankNaam");
-            return View(new Order());
+            DrinkOrderViewModel drinkOrderViewModel = new DrinkOrderViewModel();
+            ViewBag.Students = new SelectList(drinkOrderViewModel.Students);
+            ViewBag.Drinks = new SelectList(drinkOrderViewModel.Drinks);
+            return View(new DrinkOrderViewModel());
         }
 
         [HttpPost]
@@ -42,7 +39,7 @@ namespace Someren_Applicatie.Controllers
             {
                 _ordersRepository.Add(order);
 
-                return RedirectToAction("Details", new { id = order.BestellingId });
+                return RedirectToAction("Details");
             }
             catch (Exception ex)
             {
