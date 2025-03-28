@@ -5,6 +5,7 @@ using Someren_Applicatie.Repositories.Orders;
 using Someren_Applicatie.Repositories.Participants;
 using Someren_Applicatie.Repositories.Rooms;
 using Someren_Applicatie.Repositories.Students;
+using Someren_Applicatie.Repositories.Supervisors;
 
 namespace Someren_Applicatie
 {
@@ -23,7 +24,7 @@ namespace Someren_Applicatie
             builder.Services.AddSingleton<IDrinksRepository, DbDrinksRepository>();
             builder.Services.AddSingleton<IOrdersRepository, DbOrdersRepository>();
             builder.Services.AddSingleton<IParticipantsRepository, DbParticipantsRepository>();
-            builder.Services.AddSingleton<ISupervisorsRepository, DbSupervisorsRepository>();
+            //builder.Services.AddSingleton<ISupervisorsRepository, DbSupervisorsRepository>();
 
             var app = builder.Build();
 
