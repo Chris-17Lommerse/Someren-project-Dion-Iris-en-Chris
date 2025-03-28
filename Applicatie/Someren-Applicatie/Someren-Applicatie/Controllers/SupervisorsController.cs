@@ -18,5 +18,3 @@ namespace Someren_Applicatie.Controllers
             _supervisorsRepository = supervisorsRepository;
             _lecturersRepository = lecturersRepository;
         }
-    }
-}
