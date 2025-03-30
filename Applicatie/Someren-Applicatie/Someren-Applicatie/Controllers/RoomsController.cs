@@ -53,7 +53,6 @@ namespace Someren_Applicatie.Controllers
 
             return View(dormitoryStudentsViewModel);
         }
-
         // GET: RoomsController/Create
         [HttpGet]
         public ActionResult Create()
