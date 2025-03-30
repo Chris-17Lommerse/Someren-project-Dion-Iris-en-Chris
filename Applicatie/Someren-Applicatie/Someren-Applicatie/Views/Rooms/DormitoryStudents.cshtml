@@ -1,0 +1,21 @@
+﻿@model Someren_Applicatie.Models.Room
+@{
+    ViewData["Title"] = "Room";
+}
+<form action="Rooms/DormitoryStudents" method="get">
+    <input hidden type="number" name="KamerNummer" required value="@Model?.KamerNummer" />
+    <h2>Studenten die op kamer: @Model?.KamerNummer slapen </h2>
+
+    <table class="table table-info table-hover">
+        <thead>
+            <tr class="table-dark">
+                <th>Voornaam</th>
+                <th>Achternaam</th>
+        </thead>
+        <tbody>
+            @{
+            }
+        </tbody>
+</form>
+
+

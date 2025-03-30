@@ -2,6 +2,7 @@
 using Someren_Applicatie.Models;
 using Someren_Applicatie.Repositories.Rooms;
 using Someren_Applicatie.Models.Enums;
+using Someren_Applicatie.Repositories.Students;
 
 namespace Someren_Applicatie.Controllers
 {
@@ -9,11 +10,12 @@ namespace Someren_Applicatie.Controllers
     {
         // Repository variable will be declared
         private readonly IRoomRepository _roomsRepository;
-
+        private readonly IStudentsRepository _studentsRepository;
         // Constructor
-        public RoomsController(IRoomRepository roomsRepository)
+        public RoomsController(IRoomRepository roomsRepository, IStudentsRepository studentsRepository)
         {
             _roomsRepository = roomsRepository;
+            _studentsRepository = studentsRepository;
         }
 
         public IActionResult Index(string? searchString)
@@ -38,22 +40,15 @@ namespace Someren_Applicatie.Controllers
             }
         }
         [HttpGet]
-        public IActionResult Details(string? id)
+        public IActionResult DormitoryStudents(string? id)
         {
-            try
+            if(id == null)
             {
-                if(id == null)
-                {
-                    return NotFound();
-                }
+                return NotFound();
+            }
 
-                Room? room = _roomsRepository.GetById((string)id);
-                return View(room);
-            }
-            catch (Exception)
-            {
-                throw new Exception("Cannot load room from the database");
-            }
+            Room? room = _roomsRepository.GetById((string)id); 
+            return View(room);
         }
 
         // GET: RoomsController/Create

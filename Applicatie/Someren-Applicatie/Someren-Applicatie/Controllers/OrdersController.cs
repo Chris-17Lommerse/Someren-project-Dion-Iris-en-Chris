@@ -29,25 +29,39 @@ namespace Someren_Applicatie.Controllers
         [HttpGet]
         public IActionResult AddOrder()
         {
-            ViewBag.Students = new SelectList(_studentsRepository.GetAll(), "StudentNr", "Voornaam");
-            ViewBag.Drinks = new SelectList(_drinksRepository.GetAll(), "DrankId", "DrankNaam");
-            return View(new Order());
+            List<Student> students =_studentsRepository.GetAll();
+            List<Drink> drinks = _drinksRepository.GetAll();
+
+            DrinkOrderViewModel drinkOrderViewModel = new DrinkOrderViewModel(students, drinks);
+            return View(drinkOrderViewModel);
         }
 
         [HttpPost]
-        public IActionResult AddOrder(Order order)
+        public IActionResult AddOrder(DrinkOrderViewModel drinkOrderViewModel)
         {
 
             try
             {
+                Order order = new Order()
+                {
+                    StudentNr = drinkOrderViewModel.SelectedStudentNr,
+                    DrankId = drinkOrderViewModel.SelectedDrankId,
+                    Aantal = drinkOrderViewModel.Aantal
+                };
                 _ordersRepository.Add(order);
-
-                return RedirectToAction("Details", new { id = order.BestellingId });
+                Student student = _studentsRepository.GetById(order.StudentNr);
+                order.StudentNaam = student?.Voornaam;
+                Drink drink = _drinksRepository.GetById(order.DrankId);
+                order.DrankNaam = drink.DrankNaam.ToLower();
+                TempData["ConfirmMessage"] = $"{order.StudentNaam} heeft {order.Aantal} {order.DrankNaam} besteld";
+                return View(new DrinkOrderViewModel());
             }
             catch (Exception ex)
             {
                 ViewBag.ErrorMessage = ex.Message;
-                return View(order);
+                drinkOrderViewModel.Students = _studentsRepository.GetAll();
+                drinkOrderViewModel.Drinks = _drinksRepository.GetAll();
+                return View(drinkOrderViewModel);
             }
         }
 
