@@ -18,18 +18,37 @@ namespace Someren_Applicatie.Repositories.Orders
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                // Query to add a room to the database
-                string query = $"INSERT INTO BESTELLING (studentennr, drankid, aantal)" +
+                connection.Open();
+
+                SqlTransaction transaction = connection.BeginTransaction();
+                // Query to add an order to the database
+                string insertQuery = $"INSERT INTO BESTELLING (studentennr, drankid, aantal)" +
                                "VALUES (@studentNr, @drankId, @aantal); " +
                                "SELECT SCOPE_IDENTITY();";
-                SqlCommand command = new SqlCommand(query, connection);
+                SqlCommand insertCommand = new SqlCommand(insertQuery, connection, transaction);
 
-                command.Parameters.AddWithValue("@studentNr", order.StudentNr);
-                command.Parameters.AddWithValue("@drankId", order.DrankId);
-                command.Parameters.AddWithValue("@aantal", order.Aantal);
+                insertCommand.Parameters.AddWithValue("@studentNr", order.StudentNr);
+                insertCommand.Parameters.AddWithValue("@drankId", order.DrankId);
+                insertCommand.Parameters.AddWithValue("@aantal", order.Aantal);
 
-                command.Connection.Open();
-                command.ExecuteNonQuery();
+                insertCommand.ExecuteNonQuery();
+
+                // Query om het aantal drankkjes te verminderen
+                string updateQuery = $"UPDATE DRANKJE SET aantal = aantal - @aantal WHERE drankid = @drankId AND aantal >= @aantal";
+                SqlCommand updateCommand = new SqlCommand(updateQuery, connection, transaction);
+
+                updateCommand.Parameters.AddWithValue("@drankId", order.DrankId);
+                updateCommand.Parameters.AddWithValue("@aantal", order.Aantal);
+
+                int rowsAffected = updateCommand.ExecuteNonQuery();
+
+                if(rowsAffected == 0)
+                {
+                    throw new Exception("Onvoldoende voorraad van de drankjes of drankje niet gevobden");
+                }
+
+                transaction.Commit();
+                connection.Close();
             }
         }
 
