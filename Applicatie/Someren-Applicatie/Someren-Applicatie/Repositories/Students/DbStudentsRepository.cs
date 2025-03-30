@@ -162,6 +162,28 @@ namespace Someren_Applicatie.Repositories.Students
             return student;
         }
 
+        public List<Student> GetByRoomNumber(string roomNumber)
+        {
+            List<Student> students = new List<Student>();
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = BaseSelectQuery + " WHERE kamernr = @kamerNr";
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("@kamerNr", roomNumber);
+
+                command.Connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Student student = ReadStudent(reader);
+                    students.Add(student);
+                }
+            }
+            return students;
+        }
+
         public void Update(Student student)
         {
             Student? previousStudent = GetById(student.StudentNr); //Info dat er origineel in stond

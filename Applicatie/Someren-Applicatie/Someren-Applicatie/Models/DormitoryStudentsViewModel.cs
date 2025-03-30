@@ -2,22 +2,20 @@
 {
     public class DormitoryStudentsViewModel
     {
-        public int KamerNummer { get; set; }
+        public Room? Room { get; set; }
         public List<Student> StudentsWithARoom { get; set; }
-        public List<Student> StudentsWithoutARoom { get; set; }
+
 
         public DormitoryStudentsViewModel()
         {
-            KamerNummer = 0;
+            Room = new Room();
             StudentsWithARoom = new List<Student>();
-            StudentsWithoutARoom = new List<Student>();
         }
 
-        public DormitoryStudentsViewModel(int kamerNummer, List<Student> studentsWithARoom, List<Student> studentsWithoutARoom)
+        public DormitoryStudentsViewModel(Room? room, List<Student> studentsWithARoom)
         {
-            KamerNummer = kamerNummer;
+            Room = room;
             StudentsWithARoom = studentsWithARoom;
-            StudentsWithoutARoom = studentsWithoutARoom;
         }
     }
 }

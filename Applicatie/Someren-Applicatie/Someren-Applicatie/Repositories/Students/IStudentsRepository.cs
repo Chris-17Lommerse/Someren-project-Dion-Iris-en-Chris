@@ -6,11 +6,13 @@ namespace Someren_Applicatie.Repositories.Students
     {
         List<Student> GetAll();
         List<Student> GetByLastName(string lastName);
+        List<Student> GetByRoomNumber(string roomNumber);
         Student? GetById(int studentNr);
         void Add(Student student);
         void Update(Student student);
         void Delete(Student student);
         Student? GetByName(string firstName, string lastName);
         //bool IsBedAvailableInRoom(string roomNr);
+        
     }
 }

@@ -1,21 +1,34 @@
-﻿@model Someren_Applicatie.Models.Room
+﻿@model Someren_Applicatie.Models.DormitoryStudentsViewModel
 @{
     ViewData["Title"] = "Room";
 }
 <form action="Rooms/DormitoryStudents" method="get">
-    <input hidden type="number" name="KamerNummer" required value="@Model?.KamerNummer" />
-    <h2>Studenten die op kamer: @Model?.KamerNummer slapen </h2>
+
+    <h2>Studenten die op kamer: @Model.Room.KamerNummer slapen </h2>
 
     <table class="table table-info table-hover">
         <thead>
             <tr class="table-dark">
                 <th>Voornaam</th>
                 <th>Achternaam</th>
+                <th>Acties</th>
         </thead>
         <tbody>
             @{
+                foreach(Student student in Model?.StudentsWithARoom)
+                {
+                    <tr>
+                    <td>@student.Voornaam</td>
+                    <td>@student.Achternaam</td>
+                    <td>
+                            <a href="/Rooms/Create" class="btn btn-success">Voeg een slaapkamer toe</a>
+                            <a href="/Rooms/Create" class="btn btn-danger btn-hover">Verwijderen</a>
+                    </td>
+                    </tr>
+                }
             }
         </tbody>
+        </table>
 </form>
 
 

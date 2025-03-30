@@ -41,14 +41,17 @@ namespace Someren_Applicatie.Controllers
         }
         [HttpGet]
         public IActionResult DormitoryStudents(string? id)
-        {
-            if(id == null)
-            {
-                return NotFound();
-            }
+        { 
+            Room? room = _roomsRepository.GetById(id);
+            List<Student> students = _studentsRepository.GetByRoomNumber(id) ?? new List<Student>();
 
-            Room? room = _roomsRepository.GetById((string)id); 
-            return View(room);
+            DormitoryStudentsViewModel dormitoryStudentsViewModel = new DormitoryStudentsViewModel
+            {
+                Room = room,
+                StudentsWithARoom = students
+            };
+
+            return View(dormitoryStudentsViewModel);
         }
 
         // GET: RoomsController/Create
