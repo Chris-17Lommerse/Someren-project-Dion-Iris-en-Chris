@@ -16,11 +16,11 @@
 
     <div class="form-group py-2">
         <label asp-for="DrankNaam">Naam drankje:</label>
-        <input asp-for="DrankNaam" class="form-control" required value="@Model?.DrankNaam" />
+        <input asp-for="DrankNaam" class="form-control" required readonly value="@Model?.DrankNaam" />
     </div>
     <div class="form-group py-2">
         <label asp-for="Aantal">Aantal drankjes in de voorraad:</label>
-        <input asp-for="Aantal" class="form-control" required value="@Model?.Aantal" />
+        <input asp-for="Aantal" class="form-control" required readonly value="@Model?.Aantal" />
     </div>
     <div class="form-group py-2">
         <label asp-for="IsAlcoholisch">Alcoholisch of non-alcoholisch:</label>
