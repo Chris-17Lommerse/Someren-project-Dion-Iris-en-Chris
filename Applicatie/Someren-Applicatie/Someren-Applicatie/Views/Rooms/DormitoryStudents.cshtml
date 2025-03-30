@@ -15,20 +15,19 @@
         </thead>
         <tbody>
             @{
-                foreach(Student student in Model?.StudentsWithARoom)
+                foreach (Student student in Model?.StudentsWithARoom)
                 {
                     <tr>
-                    <td>@student.Voornaam</td>
-                    <td>@student.Achternaam</td>
-                    <td>
-                            <a href="/Rooms/Create" class="btn btn-success">Voeg een slaapkamer toe</a>
-                            <a href="/Rooms/Create" class="btn btn-danger btn-hover">Verwijderen</a>
-                    </td>
+                        <td>@student.Voornaam</td>
+                        <td>@student.Achternaam</td>
+                        <td>
+                            <a href="/Rooms/DeleteStudent/@student.StudentNr/@student.KamerNr" class="btn btn-danger btn-hover">Verwijderen</a>
+                        </td>
                     </tr>
                 }
             }
         </tbody>
-        </table>
+    </table>
 </form>
 
 
