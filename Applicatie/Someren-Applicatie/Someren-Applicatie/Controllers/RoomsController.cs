@@ -39,20 +39,6 @@ namespace Someren_Applicatie.Controllers
                 throw new Exception(ex.Message);
             }
         }
-        [HttpGet]
-        public IActionResult DormitoryStudents(string? id)
-        { 
-            Room? room = _roomsRepository.GetById(id);
-            List<Student> students = _studentsRepository.GetByRoomNumber(id) ?? new List<Student>();
-
-            DormitoryStudentsViewModel dormitoryStudentsViewModel = new DormitoryStudentsViewModel
-            {
-                Room = room,
-                StudentsWithARoom = students
-            };
-
-            return View(dormitoryStudentsViewModel);
-        }
         // GET: RoomsController/Create
         [HttpGet]
         public ActionResult Create()

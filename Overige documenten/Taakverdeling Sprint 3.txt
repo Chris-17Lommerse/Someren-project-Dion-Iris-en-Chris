@@ -1,4 +1,4 @@
 Taakverdeling Sprint 3:
 Dion: User Story “Manage activity participants” (variant C)
 Iris: User Story “Manage activity supervisors” (variant B)
-Chris: User Story “Process drink orders” (variant A) en User Story “Manage dormitory students” (variant D)
+Chris: User Story “Process drink orders” (variant A)
