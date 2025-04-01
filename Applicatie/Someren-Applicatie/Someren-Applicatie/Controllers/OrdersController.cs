@@ -54,7 +54,13 @@ namespace Someren_Applicatie.Controllers
                 Drink drink = _drinksRepository.GetById(order.DrankId);
                 order.DrankNaam = drink.DrankNaam.ToLower();
                 TempData["ConfirmMessage"] = $"{order.StudentNaam} heeft {order.Aantal} {order.DrankNaam} besteld";
-                return View(new DrinkOrderViewModel());
+
+                DrinkOrderViewModel viewModel = new DrinkOrderViewModel
+                {
+                    Students = _studentsRepository.GetAll(),
+                    Drinks = _drinksRepository.GetAll()
+                };
+                return View(viewModel);
             }
             catch (Exception ex)
             {
