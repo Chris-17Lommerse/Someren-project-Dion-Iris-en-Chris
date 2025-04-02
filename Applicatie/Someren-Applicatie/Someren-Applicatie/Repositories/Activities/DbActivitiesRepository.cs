@@ -108,10 +108,11 @@ namespace Someren_Applicatie.Repositories.Activities
                 command.Connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
 
-                if (reader.Read())
+                if (!reader.Read())
                 {
-                    activiteit = ReadActivity(reader);
+                    throw new Exception("Geen activiteit met dat id");  
                 }
+                activiteit = ReadActivity(reader);
                 reader.Close();
             }
             return activiteit;
@@ -130,10 +131,11 @@ namespace Someren_Applicatie.Repositories.Activities
                 command.Connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
 
-                if (reader.Read())
+                if (!reader.Read())
                 {
-                    activiteit = ReadActivity(reader);
+                    throw new Exception("Geen activiteit met die naam");
                 }
+                activiteit = ReadActivity(reader);
                 reader.Close();
             }
             return activiteit;
