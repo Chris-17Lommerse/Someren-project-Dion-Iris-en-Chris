@@ -9,7 +9,7 @@
     string activityName = (string)ViewData["ActivityName"];
 }
 <p>Activiteit: @activityName</p>
-<form action="/Supervisors/Delete" method="POST">
+<form action="/Supervisors/DeletePost" method="POST">
     <input hidden type="number" name="DocentNr" value="@Model?.DocentNr" />
     <input hidden type="number" name="ActiviteitId" value="@activityId" />
 

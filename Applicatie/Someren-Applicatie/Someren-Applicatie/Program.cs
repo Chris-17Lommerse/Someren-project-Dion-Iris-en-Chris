@@ -24,7 +24,8 @@ namespace Someren_Applicatie
             builder.Services.AddSingleton<IDrinksRepository, DbDrinksRepository>();
             builder.Services.AddSingleton<IOrdersRepository, DbOrdersRepository>();
             builder.Services.AddSingleton<IParticipantsRepository, DbParticipantsRepository>();
-            //builder.Services.AddSingleton<ISupervisorsRepository, DbSupervisorsRepository>();
+            builder.Services.AddSingleton<ISupervisorsRepository, DbSupervisorsRepository>();
+           
 
             var app = builder.Build();
 
