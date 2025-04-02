@@ -121,6 +121,7 @@ namespace Someren_Applicatie.Controllers
                 }
 
                 // get room via repository
+                
                 Room? room = _roomsRepository.GetById((string)id);
                 return View(room);
             }
