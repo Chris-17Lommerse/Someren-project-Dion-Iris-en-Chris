@@ -6,8 +6,8 @@ namespace Someren_Applicatie.Repositories.Drinks
 {
     public class DbDrinksRepository : BaseRepository, IDrinksRepository
     {
+        // Base query
         const string BaseSelectQuery = "SELECT drankid, dranknaam, aantal, alcoholisch, prijs FROM DRANKJE";
-
 
         public DbDrinksRepository(IConfiguration configuration) : base(configuration)
         {
@@ -18,7 +18,7 @@ namespace Someren_Applicatie.Repositories.Drinks
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                // Query to add an activity to the database
+                // Query to add a drink to the database
                 string query = $"INSERT INTO DRANKJE (dranknaam, aantal, alcoholisch, prijs)" +
                                    "VALUES (@drankNaam, @aantal, @alcoholisch, @prijs); " +
                                    "SELECT SCOPE_IDENTITY();";
@@ -40,7 +40,7 @@ namespace Someren_Applicatie.Repositories.Drinks
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                // Query to delete an activity
+                // Query to delete a drink
                 string query = $"DELETE FROM DRANKJE WHERE drankid = @drankId";
                 SqlCommand command = new SqlCommand(query, connection);
 
@@ -92,7 +92,7 @@ namespace Someren_Applicatie.Repositories.Drinks
             return new Drink(drankId, drankNaam, aantal, typeDrankje, prijs);
         }
 
-        // Get Activity by id via query
+        // Get Drink by id via query
         public Drink? GetById(int drankId)
         {
             Drink? drink = null;

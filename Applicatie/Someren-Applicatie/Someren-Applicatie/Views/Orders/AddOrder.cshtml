@@ -4,6 +4,7 @@
     ViewData["Title"] = "Add Order";
 }
 
+<!---Form to add an order -->
 <h1>Wat wil je bestellen?</h1>
 @{
     if (ViewBag.ErrorMessage != null)
@@ -39,5 +40,9 @@
     </div>
 <button type="submit" class="btn btn-success btn-hover m-1">Opslaan</button>
 </form>
-<a href="/Home/Index" class="btn btn-dark btn-hover m-1">Ga terug naar de home pagina</a>
+<div class="form-control">
+    <a href="/Home/Index" class="btn btn-dark btn-hover m-1">Ga terug naar de home pagina</a>
+    <a href="/Orders/Index" class="btn btn-light btn-hover m-1">Toon alle bestellingen</a>
+</div>
+
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
 using Someren_Applicatie.Models;
 using Someren_Applicatie.Repositories.Drinks;
 using Someren_Applicatie.Repositories.Orders;
@@ -10,9 +11,12 @@ namespace Someren_Applicatie.Controllers
 {
     public class OrdersController : Controller
     {
+        // Interfaces are defined here
         private readonly IOrdersRepository _ordersRepository;
         private readonly IStudentsRepository _studentsRepository;
         private readonly IDrinksRepository _drinksRepository;
+
+        // Constructor
         public OrdersController(IOrdersRepository ordersRepository, IDrinksRepository drinksRepository, IStudentsRepository studentsRepository)
         {
             _ordersRepository = ordersRepository;
@@ -20,26 +24,42 @@ namespace Someren_Applicatie.Controllers
             _drinksRepository = drinksRepository;
         }
 
+        // GET: DrinksController/Index
         public IActionResult Index()
         {
-            List<Order> orders = _ordersRepository.GetAll();
-            return View(orders);
+            try
+            {
+                List<Order> orders = _ordersRepository.GetAll();
+                return View(orders);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
+        // GET: DrinksController/AddOrder
         [HttpGet]
         public IActionResult AddOrder()
         {
-            List<Student> students =_studentsRepository.GetAll();
-            List<Drink> drinks = _drinksRepository.GetAll();
+            try
+            {
+                List<Student> students = _studentsRepository.GetAll();
+                List<Drink> drinks = _drinksRepository.GetAll();
 
-            DrinkOrderViewModel drinkOrderViewModel = new DrinkOrderViewModel(students, drinks);
-            return View(drinkOrderViewModel);
+                DrinkOrderViewModel drinkOrderViewModel = new DrinkOrderViewModel(students, drinks);
+                return View(drinkOrderViewModel);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
+        // POST: DrinksController/AddOrder
         [HttpPost]
         public IActionResult AddOrder(DrinkOrderViewModel drinkOrderViewModel)
         {
-
             try
             {
                 Order order = new Order()
@@ -48,10 +68,11 @@ namespace Someren_Applicatie.Controllers
                     DrankId = drinkOrderViewModel.SelectedDrankId,
                     Aantal = drinkOrderViewModel.Aantal
                 };
+
                 _ordersRepository.Add(order);
-                Student student = _studentsRepository.GetById(order.StudentNr);
+                Student? student = _studentsRepository.GetById(order.StudentNr);
                 order.StudentNaam = student?.Voornaam;
-                Drink drink = _drinksRepository.GetById(order.DrankId);
+                Drink? drink = _drinksRepository.GetById(order.DrankId);
                 order.DrankNaam = drink.DrankNaam.ToLower();
                 TempData["ConfirmMessage"] = $"{order.StudentNaam} heeft {order.Aantal} {order.DrankNaam} besteld";
 
@@ -71,6 +92,7 @@ namespace Someren_Applicatie.Controllers
             }
         }
 
+        // GET: DrinksController/Details
         [HttpGet]
         public IActionResult Details(int? id)
         {

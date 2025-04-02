@@ -1,9 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-@model List<Someren_Applicatie.Models.Activiteit>
+﻿@model List<Someren_Applicatie.Models.Activiteit>
 
 @{
     ViewData["Title"] = "Activities";
@@ -26,7 +21,7 @@
     <button type="submit" class="btn btn-primary">Zoek</button>
 </form>
 
-
+<!--Overview of all activities-->
 <div class="text-center">
     <h1 class="display-4">Activiteiten</h1>
     <a href="/Activities/Create" class="btn btn-success">Voeg een activiteit toe</a>
@@ -60,3 +55,4 @@
         }
     </tbody>
 </table>
+</div>

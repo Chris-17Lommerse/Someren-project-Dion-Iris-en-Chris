@@ -62,11 +62,11 @@ namespace Someren_Applicatie.Controllers
             try
             {
                 _participantsRepository.Add(studentennr, activiteitid);
-                Student student = _studentsRepository.GetById(studentennr);
-                TempData["ConfirmMessage"] = $"{student.Voornaam} {student.Achternaam} toegevoegd aan activiteit als deelnemer";
+                Student? student = _studentsRepository.GetById(studentennr);
+                TempData["ConfirmMessage"] = $"{student?.Voornaam} {student?.Achternaam} toegevoegd aan activiteit als deelnemer";
                 return RedirectToAction("Index", "Participants", new { id = activiteitid });
             }
-            catch (SqlException ex)
+            catch (SqlException)
             {
                 TempData["ErrorMessage"] = "kies een student";
                 return RedirectToAction("Create", "Participants", new { id = activiteitid });
@@ -84,7 +84,7 @@ namespace Someren_Applicatie.Controllers
             if (studentnr == null || activityid == null) return NotFound();
             try
             {
-                Student student = _studentsRepository.GetById(studentnr);
+                Student? student = _studentsRepository.GetById(studentnr);
                 ViewData["ActivityId"] = activityid;
                 ViewData["ActivityName"] = _participantsRepository.GetActivityName(activityid);
                 return View(student);
@@ -102,7 +102,7 @@ namespace Someren_Applicatie.Controllers
             try
             {
                 _participantsRepository.Delete(StudentNr, ActiviteitId);
-                Student student = _studentsRepository.GetById(StudentNr);
+                Student? student = _studentsRepository.GetById(StudentNr);
                 TempData["ConfirmMessage"] = $"{student.Voornaam} {student.Achternaam} verwijderd van activiteit als deelnemer";
                 return RedirectToAction("Index", "Participants", new { id = ActiviteitId });
             }
