@@ -11,9 +11,12 @@ namespace Someren_Applicatie.Controllers
 {
     public class OrdersController : Controller
     {
+        // Interfaces are defined here
         private readonly IOrdersRepository _ordersRepository;
         private readonly IStudentsRepository _studentsRepository;
         private readonly IDrinksRepository _drinksRepository;
+
+        // Constructor
         public OrdersController(IOrdersRepository ordersRepository, IDrinksRepository drinksRepository, IStudentsRepository studentsRepository)
         {
             _ordersRepository = ordersRepository;
@@ -21,6 +24,7 @@ namespace Someren_Applicatie.Controllers
             _drinksRepository = drinksRepository;
         }
 
+        // Index method
         public IActionResult Index()
         {
             try
@@ -34,6 +38,7 @@ namespace Someren_Applicatie.Controllers
             }
         }
 
+        // AddOrder method
         [HttpGet]
         public IActionResult AddOrder()
         {
@@ -51,6 +56,7 @@ namespace Someren_Applicatie.Controllers
             }
         }
 
+        // POST method for AddOrder 
         [HttpPost]
         public IActionResult AddOrder(DrinkOrderViewModel drinkOrderViewModel)
         {
@@ -62,10 +68,11 @@ namespace Someren_Applicatie.Controllers
                     DrankId = drinkOrderViewModel.SelectedDrankId,
                     Aantal = drinkOrderViewModel.Aantal
                 };
+
                 _ordersRepository.Add(order);
-                Student student = _studentsRepository.GetById(order.StudentNr);
+                Student? student = _studentsRepository.GetById(order.StudentNr);
                 order.StudentNaam = student?.Voornaam;
-                Drink drink = _drinksRepository.GetById(order.DrankId);
+                Drink? drink = _drinksRepository.GetById(order.DrankId);
                 order.DrankNaam = drink.DrankNaam.ToLower();
                 TempData["ConfirmMessage"] = $"{order.StudentNaam} heeft {order.Aantal} {order.DrankNaam} besteld";
 
@@ -85,6 +92,7 @@ namespace Someren_Applicatie.Controllers
             }
         }
 
+        // Details GET method
         [HttpGet]
         public IActionResult Details(int? id)
         {

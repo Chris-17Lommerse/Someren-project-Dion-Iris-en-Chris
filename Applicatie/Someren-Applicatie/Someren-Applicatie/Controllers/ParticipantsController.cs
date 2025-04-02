@@ -66,7 +66,7 @@ namespace Someren_Applicatie.Controllers
                 TempData["ConfirmMessage"] = $"{student.Voornaam} {student.Achternaam} toegevoegd aan activiteit als deelnemer";
                 return RedirectToAction("Index", "Participants", new { id = activiteitid });
             }
-            catch (SqlException ex)
+            catch (SqlException)
             {
                 TempData["ErrorMessage"] = "kies een student";
                 return RedirectToAction("Create", "Participants", new { id = activiteitid });

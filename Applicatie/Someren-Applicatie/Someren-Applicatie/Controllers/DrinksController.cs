@@ -16,6 +16,7 @@ namespace Someren_Applicatie.Controllers
             _drinksRepository = drinksRepository;
         }
 
+        // DrinksController/Index
         public IActionResult Index()
         {
             try
@@ -29,7 +30,7 @@ namespace Someren_Applicatie.Controllers
             }
         }
 
-        // GET: RoomsController/Create
+        // GET: DrinksController/Create
         [HttpGet]
         public ActionResult Create()
         {
