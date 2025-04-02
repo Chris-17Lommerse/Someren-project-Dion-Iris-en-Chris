@@ -34,17 +34,17 @@ namespace Someren_Applicatie.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            // Returns a create form to add a room
+            // Returns a create form to add a drink
             return View();
         }
 
-        // POST: RoomsController/Create
+        // POST: DrinksController/Create
         [HttpPost]
         public ActionResult Create(Drink drink)
         {
             try
             {
-                // add room via repository
+                // add drink via repository
                 _drinksRepository.Add(drink);
 
                 // Go back to list (Via Index)
@@ -58,7 +58,7 @@ namespace Someren_Applicatie.Controllers
             }
         }
 
-        // GET: RoomsController/Edit/5
+        // GET: DrinksController/Edit/5
         [HttpGet]
         public ActionResult Edit(int? id)
         {
@@ -70,7 +70,7 @@ namespace Someren_Applicatie.Controllers
                     return NotFound();
                 }
 
-                // get room via repository
+                // get drink via repository
                 Drink? drink = _drinksRepository.GetById((int)id);
                 return View(drink);
             }
@@ -81,12 +81,12 @@ namespace Someren_Applicatie.Controllers
         }
 
         [HttpPost]
-        // POST: RoomsController/Edit
+        // POST: DrinksController/Edit
         public ActionResult Edit(Drink drink)
         {
             try
             {
-                // Edit room via repository
+                // Edit drink via repository
                 _drinksRepository.Update(drink);
 
                 // Go back to list (Via Index)
@@ -100,7 +100,7 @@ namespace Someren_Applicatie.Controllers
             }
         }
         [HttpGet]
-        // GET: RoomsController/Delete
+        // GET: DrinksController/Delete
         public ActionResult Delete(int? id)
         {
             try
@@ -111,7 +111,7 @@ namespace Someren_Applicatie.Controllers
                     return NotFound();
                 }
 
-                // get room via repository
+                // get drink via repository
                 Drink? drink = _drinksRepository.GetById((int)id);
                 return View(drink);
             }
@@ -123,7 +123,7 @@ namespace Someren_Applicatie.Controllers
             }
         }
         [HttpPost]
-        // POST: RoomsController/Delete
+        // POST: DrinksController/Delete
         public ActionResult Delete(Drink drink)
         {
             try

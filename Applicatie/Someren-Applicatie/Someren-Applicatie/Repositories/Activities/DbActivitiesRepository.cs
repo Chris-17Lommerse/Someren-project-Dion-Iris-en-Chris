@@ -6,8 +6,8 @@ namespace Someren_Applicatie.Repositories.Activities
 {
     public class DbActivitiesRepository : BaseRepository, IActivitiesRepository
     {
+        // Base query
         const string BaseSelectQuery = "SELECT activiteitid, naam, starttijd, eindtijd FROM ACTIVITEIT";
-
 
         // Connection to the database will be defined in the constructor
         public DbActivitiesRepository(IConfiguration configuration) : base(configuration)
@@ -41,6 +41,7 @@ namespace Someren_Applicatie.Repositories.Activities
             }
         }
 
+        // Delete method
         public void Delete(Activiteit activiteit)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -61,6 +62,7 @@ namespace Someren_Applicatie.Repositories.Activities
             }
         }
 
+        // Get All method
         public List<Activiteit> GetAll()
         {
             List<Activiteit> activiteiten = new List<Activiteit>();

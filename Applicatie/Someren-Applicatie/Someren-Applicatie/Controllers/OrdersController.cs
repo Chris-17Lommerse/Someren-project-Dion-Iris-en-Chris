@@ -24,7 +24,7 @@ namespace Someren_Applicatie.Controllers
             _drinksRepository = drinksRepository;
         }
 
-        // Index method
+        // GET: DrinksController/Index
         public IActionResult Index()
         {
             try
@@ -38,7 +38,7 @@ namespace Someren_Applicatie.Controllers
             }
         }
 
-        // AddOrder method
+        // GET: DrinksController/AddOrder
         [HttpGet]
         public IActionResult AddOrder()
         {
@@ -56,7 +56,7 @@ namespace Someren_Applicatie.Controllers
             }
         }
 
-        // POST method for AddOrder 
+        // POST: DrinksController/AddOrder
         [HttpPost]
         public IActionResult AddOrder(DrinkOrderViewModel drinkOrderViewModel)
         {
@@ -92,7 +92,7 @@ namespace Someren_Applicatie.Controllers
             }
         }
 
-        // Details GET method
+        // GET: DrinksController/Details
         [HttpGet]
         public IActionResult Details(int? id)
         {

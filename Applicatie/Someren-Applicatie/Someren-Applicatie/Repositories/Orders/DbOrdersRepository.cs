@@ -5,15 +5,16 @@ namespace Someren_Applicatie.Repositories.Orders
 {
     public class DbOrdersRepository : BaseRepository, IOrdersRepository
     {
+        // Base query
         const string BaseSelectQuery = "SELECT B.bestellingid, B.studentennr, S.voornaam AS studentnaam, B.drankid, D.dranknaam AS dranknaam, B.aantal " +
                                        "FROM BESTELLING AS B " +
                                        "INNER JOIN STUDENT AS S ON B.studentennr = S.studentennr " +
                                        "INNER JOIN DRANKJE AS D ON B.drankid = D.drankid";
         public DbOrdersRepository(IConfiguration configuration) : base(configuration)
         {
-
         }
 
+        // Insert query 
         public void Add(Order order)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -52,6 +53,7 @@ namespace Someren_Applicatie.Repositories.Orders
             }
         }
 
+        // Get all orders
         public List<Order> GetAll()
         {
             List<Order> orders = new List<Order>();
@@ -73,7 +75,7 @@ namespace Someren_Applicatie.Repositories.Orders
             return orders;
         }
 
-
+        // Retrieve data from the database
         private Order ReadOrder(SqlDataReader reader)
         {
             int bestellingId = (int)reader["bestellingid"];
@@ -85,6 +87,7 @@ namespace Someren_Applicatie.Repositories.Orders
 
             return new Order(bestellingId, studentNr, studentNaam, drankId, drankNaam, aantal);
         }
+        // Selected Order will be retrieved from the database
         public Order? GetById(int bestellingId)
         {
             Order? order = null;
