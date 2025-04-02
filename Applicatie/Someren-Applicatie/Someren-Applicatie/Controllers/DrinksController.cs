@@ -18,8 +18,15 @@ namespace Someren_Applicatie.Controllers
 
         public IActionResult Index()
         {
-            List<Drink> drinks = _drinksRepository.GetAll();
-            return View(drinks);
+            try
+            {
+                List<Drink> drinks = _drinksRepository.GetAll();
+                return View(drinks);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         // GET: RoomsController/Create
