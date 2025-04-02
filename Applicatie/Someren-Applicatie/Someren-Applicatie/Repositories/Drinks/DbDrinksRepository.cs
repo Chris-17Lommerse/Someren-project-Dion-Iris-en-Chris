@@ -106,10 +106,11 @@ namespace Someren_Applicatie.Repositories.Drinks
                 command.Connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
 
-                if (reader.Read())
+                if (!reader.Read())
                 {
-                    drink = ReadDrink(reader);
+                    throw new Exception("Geen activiteit gevonden met die naam");
                 }
+                drink = ReadDrink(reader);
                 reader.Close();
             }
             return drink;
