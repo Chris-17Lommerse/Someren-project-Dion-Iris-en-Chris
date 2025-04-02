@@ -1,4 +1,7 @@
-﻿@model IEnumerable<Someren_Applicatie.Models.Lecturer>
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model IEnumerable<Someren_Applicatie.Models.Lecturer>
 @{
     ViewData["Title"] = "Begeleiders";
     if (TempData["ErrorMessage"] != null)
@@ -16,11 +19,11 @@
 <div class="text-center">
     <h1 class="display-4">Begeleiders</h1>
     <a asp-controller="Supervisors" asp-action="Create" asp-route-id="@activityId" class="btn btn-success">Begeleider toevoegen</a>
+    <p>Aantal Begeleiders: @Model.Count()</p>
     <p>Activiteit: @activityName</p>
     <table class="table table-info table-hover">
         <thead>
             <tr class="table-dark">
-              
                 <th>Voornaam</th>
                 <th>Achternaam</th>
                 <th>Acties</th>
@@ -31,11 +34,10 @@
                 foreach (Lecturer begeleider in Model)
                 {
                     <tr>
-                        
                         <td>@begeleider.Voornaam</td>
                         <td>@begeleider.Achternaam</td>
                         <td>
-                            <a asp-controller="Supervisors" asp-action="Delete" asp-route-studentnr="@begeleider.DocentNr" asp-route-activityid="@activityId">Verwijderen</a>
+                            <a asp-controller="Supervisors" asp-action="Delete" asp-route-docentnr="@begeleider.DocentNr" asp-route-activityid="@activityId" class="btn btn-danger">Verwijderen</a>
                         </td>
                     </tr>
                 }
