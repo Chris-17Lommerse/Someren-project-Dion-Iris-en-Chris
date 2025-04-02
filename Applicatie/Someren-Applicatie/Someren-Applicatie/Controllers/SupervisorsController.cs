@@ -7,7 +7,7 @@ using Someren_Applicatie.Repositories.Lecturers;
 
 namespace Someren_Applicatie.Controllers
 {
-    [Route("Supervisors")] //delete if no worky
+    [Route("Supervisors")] 
     public class SupervisorsController : Controller
     {
         private readonly ISupervisorsRepository _supervisorsRepository;
