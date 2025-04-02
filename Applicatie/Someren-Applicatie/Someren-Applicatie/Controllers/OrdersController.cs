@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
 using Someren_Applicatie.Models;
 using Someren_Applicatie.Repositories.Drinks;
 using Someren_Applicatie.Repositories.Orders;
@@ -22,24 +23,37 @@ namespace Someren_Applicatie.Controllers
 
         public IActionResult Index()
         {
-            List<Order> orders = _ordersRepository.GetAll();
-            return View(orders);
+            try
+            {
+                List<Order> orders = _ordersRepository.GetAll();
+                return View(orders);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         [HttpGet]
         public IActionResult AddOrder()
         {
-            List<Student> students =_studentsRepository.GetAll();
-            List<Drink> drinks = _drinksRepository.GetAll();
+            try
+            {
+                List<Student> students = _studentsRepository.GetAll();
+                List<Drink> drinks = _drinksRepository.GetAll();
 
-            DrinkOrderViewModel drinkOrderViewModel = new DrinkOrderViewModel(students, drinks);
-            return View(drinkOrderViewModel);
+                DrinkOrderViewModel drinkOrderViewModel = new DrinkOrderViewModel(students, drinks);
+                return View(drinkOrderViewModel);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         [HttpPost]
         public IActionResult AddOrder(DrinkOrderViewModel drinkOrderViewModel)
         {
-
             try
             {
                 Order order = new Order()
