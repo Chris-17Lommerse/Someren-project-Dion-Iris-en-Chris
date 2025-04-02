@@ -101,10 +101,11 @@ namespace Someren_Applicatie.Repositories.Rooms
                 command.Connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
 
-                if (reader.Read())
+                if (!reader.Read())
                 {
-                    room = ReadRoom(reader);
+                    throw new Exception("Geen kamer met dit nummer gevonden.");
                 }
+                room = ReadRoom(reader);
                 reader.Close();
             }
             return room;

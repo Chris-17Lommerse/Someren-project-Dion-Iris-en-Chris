@@ -101,10 +101,11 @@ namespace Someren_Applicatie.Repositories.Orders
                 command.Connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
 
-                if (reader.Read())
+                if (!reader.Read())
                 {
-                    order = ReadOrder(reader);
+                    throw new Exception("Geen bestelling gevonden");
                 }
+                order = ReadOrder(reader);
                 reader.Close();
             }
             return order;
